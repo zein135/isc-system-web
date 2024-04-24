@@ -1,0 +1,122 @@
+{
+  "mentors": [
+    {
+      "value": 1,
+      "label": "Juliet Oma"
+    },
+    {
+      "value": 2,
+      "label": "James Williams"
+    },
+    {
+      "value": 3,
+      "label": "Ahmed Ali"
+    },
+    {
+      "value": 4,
+      "label": "Grace Funsho"
+    }
+  ],
+  "reviewers": [
+    {
+      "value": 1,
+      "label": "Juliet Oma"
+    },
+    {
+      "value": 2,
+      "label": "James Williams"
+    },
+    {
+      "value": 3,
+      "label": "Ahmed Ali"
+    },
+    {
+      "value": 4,
+      "label": "Grace Funsho"
+    }
+  ],
+  "presidents": [
+    {
+      "value": 1,
+      "label": "Juliet Oma"
+    },
+    {
+      "value": 2,
+      "label": "James Williams"
+    },
+    {
+      "value": 3,
+      "label": "Ahmed Ali"
+    },
+    {
+      "value": 4,
+      "label": "Grace Funsho"
+    }
+  ],
+  "secretaries": [
+    {
+      "value": 1,
+      "label": "Juliet Oma"
+    },
+    {
+      "value": 2,
+      "label": "James Williams"
+    },
+    {
+      "value": 3,
+      "label": "Ahmed Ali"
+    },
+    {
+      "value": 4,
+      "label": "Grace Funsho"
+    }
+  ],
+  "modes": [
+    {
+      "value": 1,
+      "label": "Trabajo Dirigido"
+    },
+    {
+      "value": 2,
+      "label": "Proyecto de Grado"
+    },
+    {
+      "value": 3,
+      "label": "Tesis"
+    }
+  ],
+  "process": [
+    {
+      "studentId": 12345,
+      "studentName": "Juan Perez",
+      "phoneNumber": "555-1234",
+      "mode": "Trabajo Dirigido",
+      "titleProject": "nombre del proyecto",
+      "state": "Revisor",
+      "graduationSteps": {
+        "registrationStage": {
+          "passed": true,
+          "date": "25/03/2024"
+        },
+        "tutorStage": {
+          "passed": true,
+          "tutorName": "Dr. Ana López",
+          "date": "02/06/2024"
+        },
+        "reviewerStage": {
+          "passed": true,
+          "reviewerName": "Dr. Carlos Gómez",
+          "date": "12/09/2024"
+        },
+        "internalDefenseStage": {
+          "passed": false,
+          "scheduledDate": "2024-05-20"
+        },
+        "externalDefenseStage": {
+          "passed": false,
+          "scheduledDate": "2024-05-20"
+        }
+      }
+    }
+  ]
+}
