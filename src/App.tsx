@@ -11,7 +11,7 @@ import StudentsPage from "./pages/StudentsPage";
 import LoginPage from "./pages/LoginPage";
 import Layout from "./layout/Layout";
 import DashboardPage from "./pages/DashboardPage";
-import CreateProcessPage from './pages/createProcessPage';
+import CreateProcessPage from './pages/CreateGraduation/CreateProcessPage';
 import ProfessorPage from "./pages/ProfessorPage";
 import CreateProfessorPage from "./pages/CreateProfessorPage";
 

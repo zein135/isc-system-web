@@ -7,7 +7,7 @@ const authenticateUser = async (
   password: string
 ): Promise<LoginResponse> => {
   try {
-    const response = await apiClient.post(`/auth/login`, { email, password });
+    const response = await apiClient.post(`auth/login`, { email, password });
     if (response.status === 200) {
       return response.data;
     } else {
