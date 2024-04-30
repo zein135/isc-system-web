@@ -10,7 +10,7 @@ interface GraduationProcessFormValues {
 interface TextFieldProps {
   label: string;
   name: keyof GraduationProcessFormValues;
-  formik: FormikProps<GraduationProcessFormValues>; // Ajusta según tus necesidades específicas de tipado.
+  formik: FormikProps<GraduationProcessFormValues>;
 }
 export const TextField: React.FC<TextFieldProps> = ({
   label,
