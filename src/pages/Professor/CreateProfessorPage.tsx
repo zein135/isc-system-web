@@ -9,17 +9,8 @@ const validationSchema = Yup.object({
   phoneNumber: Yup.string()
     .matches(/^[0-9]+$/, "Solo números son permitidos")
     .optional(),
-  address: Yup.string().optional(),
-  department: Yup.string().required("El departamento es obligatorio"),
   academicTitle: Yup.string().required("El título académico es obligatorio"),
-  dateOfBirth: Yup.date().optional(),
   employeeNumber: Yup.string().optional(),
-  password: Yup.string()
-    .required("La contraseña es obligatoria")
-    .min(8, "La contraseña debe tener al menos 8 caracteres"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Las contraseñas deben coincidir")
-    .required("Confirmar contraseña es obligatorio"),
 });
 
 const CreateProfessorPage = () => {
@@ -28,13 +19,8 @@ const CreateProfessorPage = () => {
       fullName: "",
       email: "",
       phoneNumber: "",
-      address: "",
-      department: "",
       academicTitle: "",
-      dateOfBirth: "",
       employeeNumber: "",
-      password: "",
-      confirmPassword: "",
     },
     validationSchema,
     onSubmit: (values) => {
