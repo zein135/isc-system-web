@@ -12,7 +12,7 @@ interface SelectFieldProps {
   label: string;
   name: keyof GraduationProcessFormValues;
   options: Array<{
-    id: string;
+    id: number;
     name?: string;
     student_name?: string;
     value?: string;

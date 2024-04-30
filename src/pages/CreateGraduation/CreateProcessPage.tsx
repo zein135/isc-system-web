@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { periods } from "../../data/periods";
 import { Modes } from "../../models/modeInterface";
@@ -26,22 +26,22 @@ const CreateProcessPage = () => {
   const [, setError] = useState<string | null>(null);
   const [modes, setModes] = useState<Modes[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
+  
+  const fetchData = useCallback(async () => {
+    try {
+      const responseModes = await getModes();
+      const responseStudents = await getProcess();
+      setModes(responseModes.data);
+      setStudents(responseStudents.data);
+    } catch (error) {
+      console.error("Failed to fetch data: ", error);
+      setError("Failed to load data, please try again.");
+    }
+  }, []); 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseModes = await getModes();
-        const responseStudents = await getProcess();
-        setModes(responseModes.data);
-        setStudents(responseStudents.data);
-        //setPresidents(response.data);
-      } catch (error) {
-        setError("error");
-      }
-    };
-
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const formik = useFormik({
     initialValues: {
