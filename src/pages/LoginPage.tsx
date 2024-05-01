@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LogoUPB from "../assets/Logo-UPB.png";
+import LogoUPB from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
 import { authenticateUser } from "../services/authService";
 import { useFormik } from "formik";

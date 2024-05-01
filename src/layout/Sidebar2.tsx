@@ -8,8 +8,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import { Divider, ListItemButton } from "@mui/material";
-import HomeIcon from '@mui/icons-material/Home';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import HomeIcon from "@mui/icons-material/Home";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import UPB_LOGO from "../assets/upb_logo.png";
 
 const drawerWidth = 240;
 
@@ -73,6 +74,11 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
+        <img
+          src={UPB_LOGO}
+          style={{ width: "100%", height: "auto", maxWidth: "125px" }}
+          className="h-10 ms-6 me-1"
+        />
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === "rtl" ? (
             <ChevronRightIcon />
@@ -83,7 +89,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
       </DrawerHeader>
       <Divider />
       <List>
-        <ListItem key={'dashboard'} disablePadding sx={{ display: "block" }}>
+        <ListItem key={"dashboard"} disablePadding sx={{ display: "block" }}>
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -100,10 +106,13 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             >
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary={'Dashboard'} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText
+              primary={"Dashboard"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
           </ListItemButton>
         </ListItem>
-        <ListItem key={'professors'} disablePadding sx={{ display: "block" }}>
+        <ListItem key={"professors"} disablePadding sx={{ display: "block" }}>
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -120,7 +129,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             >
               <SupervisorAccountIcon />
             </ListItemIcon>
-            <ListItemText primary={'Docentes'} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primary={"Docentes"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
       </List>
