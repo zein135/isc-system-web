@@ -1,5 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { ProfessorInterface } from "../../services/models/Professor";
+import { createProfessor } from "../../services/mentorsService";
 
 const validationSchema = Yup.object({
   fullName: Yup.string().required("El nombre completo es obligatorio"),
@@ -14,7 +16,7 @@ const validationSchema = Yup.object({
 });
 
 const CreateProfessorPage = () => {
-  const formik = useFormik({
+  const formik = useFormik<ProfessorInterface>({
     initialValues: {
       fullName: "",
       email: "",
@@ -23,9 +25,13 @@ const CreateProfessorPage = () => {
       employeeNumber: "",
     },
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log(values);
-      // TODO: call API to create professor
+      try {
+        await createProfessor(values);
+      } catch (error) {
+        console.error("Error al crear el docente:", error);
+      }
     },
   });
   return (

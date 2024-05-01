@@ -1,5 +1,4 @@
 export interface LoginResponse {
-    token: string;
-    userId: number;
-  }
-  
+  token: string;
+  userId: number;
+}
