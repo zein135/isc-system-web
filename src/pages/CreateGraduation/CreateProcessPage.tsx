@@ -14,6 +14,7 @@ import { GraduationProcess } from "../../services/models/GraduationProcess";
 import { FormContainer } from "./components/FormContainer";
 import { SelectField } from "./components/SelectField";
 import { TextField } from "./components/TextField";
+import ProcessForm from "./components/ProcessForm";
 
 const validationSchema = Yup.object({
   student_id: Yup.string().required("* Debe seleccionar un estudiante"),
@@ -60,7 +61,7 @@ const CreateProcessPage = () => {
   return (
     <FormContainer>
       <div className="txt p-5">Crear Proceso de Graduación</div>
-      <form onSubmit={formik.handleSubmit} className="mx-16">
+      {/* <form onSubmit={formik.handleSubmit} className="mx-16">
         <SelectField
           label="1. Seleccione un estudiante"
           name="student_id"
@@ -89,7 +90,9 @@ const CreateProcessPage = () => {
             Crear
           </button>
         </div>
-      </form>
+      </form> */}
+
+      <ProcessForm/>
     </FormContainer>
   );
 };

@@ -1,4 +1,8 @@
 import { Container } from "@mui/material";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
 
 interface FormContainerProps {
   children: React.ReactNode;
@@ -6,8 +10,12 @@ interface FormContainerProps {
 
 export const FormContainer: React.FC<FormContainerProps> = ({ children }) => (
   <Container fixed>
-    <div className="bg-white lg:w-1/2 m-10 p-5 shadow-md rounded-lg h-full md:w-2/3 sm:w-full">
-      {children}
-    </div>
+    <Card sx={{ maxWidth: 800 }}>
+      <CardContent>{children}</CardContent>
+      <CardActions>
+        <Button size="small">Share</Button>
+        <Button size="small">Learn More</Button>
+      </CardActions>
+    </Card>
   </Container>
 );
