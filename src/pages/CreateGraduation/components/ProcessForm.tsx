@@ -17,20 +17,27 @@ function ProcessForm() {
       <Grid item xs={12}>
         <Grid container spacing={2}>
           <Grid item xs={3}>
-            <Typography variant="h6">Informacion Estudiante</Typography>
+            <Typography variant="body2">Informacion Estudiante</Typography>
           </Grid>
           <Grid item xs={9}>
             <TextField
               fullWidth
               select
-              label="Country"
+              label="Nombre Estudiante"
               value=""
               onChange={() => {}}
               variant="outlined"
+              margin="normal"
             >
-              <MenuItem value="Estonia">Estonia</MenuItem>
+              <MenuItem value="Estonia">Paul Landaeta</MenuItem>
             </TextField>
-            <TextField fullWidth my-5 label="Last name" variant="outlined" />
+            <TextField
+              fullWidth
+              my-5
+              label="Código Estudiante"
+              variant="outlined"
+              margin="normal"
+            />
           </Grid>
         </Grid>
         <Divider flexItem sx={{ my: 2 }} />
@@ -39,20 +46,54 @@ function ProcessForm() {
       <Grid item xs={12}>
         <Grid container spacing={2}>
           <Grid item xs={3}>
-            <Typography variant="h6">Informacion Modalidad</Typography>
+            <Typography variant="body2">Informacion Modalidad</Typography>
           </Grid>
           <Grid item xs={9}>
-            <TextField fullWidth my-5 label="Last name" variant="outlined" />
-            <TextField fullWidth my-5 label="Last name" variant="outlined" />
-            <TextField fullWidth my-5 label="Last name" variant="outlined" />
+          <TextField
+              fullWidth
+              select
+              label="Seleccionar Modalidad"
+              value=""
+              onChange={() => {}}
+              variant="outlined"
+              margin="normal"
+            >
+              <MenuItem value="1">Trabajo Dirigido</MenuItem>
+              <MenuItem value="2">Proyecto de Grado</MenuItem>
+              <MenuItem value="3">Tesis</MenuItem>
+            </TextField>
+            <TextField
+              fullWidth
+              my-5
+              label="Titulo de Proyecto"
+              variant="outlined"
+              margin="normal"
+            />
+             <TextField
+              fullWidth
+              select
+              label="Seleccionar Periodo"
+              value=""
+              onChange={() => {}}
+              variant="outlined"
+              margin="normal"
+            >
+              <MenuItem value="1">Segundo 2024</MenuItem>
+              <MenuItem value="2">Primero 2025</MenuItem>
+              <MenuItem value="3">Segundo 2025</MenuItem>
+            </TextField>
           </Grid>
         </Grid>
         <Divider flexItem sx={{ my: 2 }} />
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" color="primary">
-          Update details
-        </Button>
+        <Grid container spacing={2} justifyContent="flex-end">
+          <Grid item>
+            <Button variant="contained" color="primary">
+              GUARDAR
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );

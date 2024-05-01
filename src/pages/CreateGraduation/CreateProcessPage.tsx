@@ -60,7 +60,6 @@ const CreateProcessPage = () => {
   });
   return (
     <FormContainer>
-      <div className="txt p-5">Crear Proceso de Graduación</div>
       {/* <form onSubmit={formik.handleSubmit} className="mx-16">
         <SelectField
           label="1. Seleccione un estudiante"
