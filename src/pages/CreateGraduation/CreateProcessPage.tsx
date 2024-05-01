@@ -6,8 +6,8 @@ import { Modes } from "../../models/modeInterface";
 import { getModes } from "../../services/modesService";
 import {
   createGraduationProcess,
-  getProcess,
 } from "../../services/processServicer";
+import { getStudents } from "../../services/studentService";
 import { Student } from "../../models/studentInterface";
 
 import { GraduationProcess } from "../../services/models/GraduationProcess";
@@ -30,7 +30,7 @@ const CreateProcessPage = () => {
   const fetchData = useCallback(async () => {
     try {
       const responseModes = await getModes();
-      const responseStudents = await getProcess();
+      const responseStudents = await getStudents();
       setModes(responseModes.data);
       setStudents(responseStudents.data);
     } catch (error) {
