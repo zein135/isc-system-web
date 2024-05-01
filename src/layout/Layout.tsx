@@ -72,10 +72,14 @@ const Layout = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar 
+        position="fixed"
+        open={open}
+        sx={{ bgcolor: '#ffffff' }}
+        >
         <Toolbar>
           <IconButton
-            color="inherit"
+            color="primary"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
