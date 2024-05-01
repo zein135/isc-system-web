@@ -4,11 +4,11 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import ProcessInfoPage from "./pages/ProcessInfoPage";
+import ProcessInfoPage from "./pages/graduation/ProcessInfoPage";
 import ErrorPage from "./pages/ErrorPage";
 import { getProcess, getStundentById } from "./services/processServicer";
 import StudentsPage from "./pages/StudentsPage";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./layout/Layout";
 import DashboardPage from "./pages/DashboardPage";
 import CreateProcessPage from "./pages/CreateGraduation/CreateProcessPage";

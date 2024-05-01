@@ -16,6 +16,7 @@ export interface Seminar {
     tutor_id: number | undefined;
     tutor_letter: boolean | null;
     tutor_name: string;
+    stage_id: number;
 }
 
 
@@ -33,4 +34,5 @@ export interface GraduationProcess {
     reviewer_letter: boolean;
     reviewer_id?: number;
     reviewer_approval: boolean;
+    stage_id: number;
 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GraduationProcess, Seminar } from "../models/studentProcess";
+import { Seminar } from "../models/studentProcess";
 import { convertSeminarToGraduationProcess } from "../helper/process";
 import { GraduationProcess as InitGraduationProcess } from "../services/models/GraduationProcess";
 import apiClient from "./apiInstance";
@@ -8,7 +8,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const getProcess = async () => {
   try {
-    const response = await axios.get(`${API_URL}student`);
+    const response = await apiClient.get('graduation');
     return response.data;
   } catch (error) {
     console.error("Error al obtener los procesos:", error);

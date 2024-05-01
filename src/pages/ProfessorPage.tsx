@@ -3,14 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/material";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "Código", width: 100 },
-  { field: "fullName", headerName: "Nombre", width: 230 },
-  { field: "academicTitle", headerName: "Título", width: 130 },
+  { field: "id", headerName: "Código", 
+    width: 100,
+    headerAlign: "center",
+    align: "center",
+  },
+  { field: "fullName", headerName: "Nombre",
+    width: 200,
+    headerAlign: "center",
+    align: "center",
+  },
+  { field: "academicTitle", headerName: "Título",
+    width: 200,
+    headerAlign: "center",
+    align: "center",
+   },
   {
     field: "phoneNumber",
     headerName: "Celular",
     type: "number",
-    width: 90,
+    minWidth: 150,
+    headerAlign: "center",
+    align: "center",
+
   },
 ];
 
@@ -40,7 +55,7 @@ const ProfessorPage = () => {
 
   return (
     <Container fixed>
-      <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 mb-8 mt-20 overflow-hidden justify-end">
+      <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 mb-8 mt-5 overflow-hidden justify-end">
         <button
           onClick={handleCreateTeacher}
           className="px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
@@ -58,8 +73,14 @@ const ProfessorPage = () => {
               paginationModel: { page: 0, pageSize: 5 },
             },
           }}
+          classes={{
+            root: "bg-white dark:bg-gray-800",
+            columnHeader: "bg-gray-200 dark:bg-gray-800 ",
+            cell: "bg-white dark:bg-gray-800",
+            row: "bg-white dark:bg-gray-800",
+            columnHeaderTitle: "!font-bold text-center",
+          }}
           pageSizeOptions={[5, 10]}
-          className="bg-white dark:bg-gray-800"
         />
       </div>
     </Container>

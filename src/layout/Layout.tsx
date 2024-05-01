@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import { styled } from "@mui/material/styles";
-import { Outlet } from "react-router-dom";
-import Sidebar from "./Sidebar2";
+import { Outlet, useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar";
 import Box from "@mui/material/Box";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -47,10 +47,24 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 const Layout = () => {
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const { clearUser } = useUserStore();
+  const settings = [
+    { title: "Profile", onClick: () => console.log("Profile Clicked") },
+    { title: "Account", onClick: () => console.log("Account Clicked") },
+    { title: "Dashboard", onClick: () => console.log("Dashboard Clicked") },
+    {
+      title: "Logout",
+      onClick: () => {
+        localStorage.removeItem("token");
+        clearUser();
+        navigate("/login", { replace: true });
+      },
+    },
+  ];
+
   const { user } = useUserStore();
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -72,11 +86,7 @@ const Layout = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar 
-        position="fixed"
-        open={open}
-        sx={{ bgcolor: '#ffffff' }}
-        >
+      <AppBar position="fixed" open={open} sx={{ bgcolor: "#ffffff" }}>
         <Toolbar>
           <IconButton
             color="primary"
@@ -113,8 +123,8 @@ const Layout = () => {
             onClose={handleCloseUserMenu}
           >
             {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
+              <MenuItem key={setting.title} onClick={setting.onClick}>
+                <Typography textAlign="center">{setting.title}</Typography>
               </MenuItem>
             ))}
           </Menu>

@@ -43,6 +43,7 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({ onPrevious, onNext 
       const { mentor, tutorDesignationLetterSubmitted } = formik.values;
       process.tutor_letter = tutorDesignationLetterSubmitted;
       process.tutor_id = mentor;
+      process.stage_id = 2;
       setProcess(process);
       await updateProcess(process);
       onNext();
