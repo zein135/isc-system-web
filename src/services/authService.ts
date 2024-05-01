@@ -9,7 +9,7 @@ const authenticateUser = async (
   try {
     const response = await apiClient.post(`auth/login`, { email, password });
     if (response.status === 200) {
-      return response.data;
+      return response.data.data;
     } else {
       throw new Error("Failed to authenticate");
     }
