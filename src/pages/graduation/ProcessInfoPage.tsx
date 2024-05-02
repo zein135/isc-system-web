@@ -5,11 +5,11 @@ import { Seminar } from "../../models/studentProcess";
 import { useProcessStore } from "../../store/store";
 import { Grid } from "@mui/material";
 import { useEffect } from "react";
+import { steps } from "../../data/steps";
 
 const ProcessInfoPage = () => {
   const updateProcess = useProcessStore((state) => state.setProcess);
   const process = useLoaderData() as { data: Seminar };
-  console.log(process);
   const { data } = process;
   updateProcess(data);
 
@@ -18,14 +18,13 @@ const ProcessInfoPage = () => {
   }, [data, updateProcess]);
   
   const stageProcess = data.stage_id;
-  debugger;
-  
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={false} sm={12} md={7} lg={8}>
         <ProgressTracker
           currentStepIndex={stageProcess}
-          status={"Revisor"}
+          status={steps[stageProcess]}
           studentProcess={data}
         />
       </Grid>

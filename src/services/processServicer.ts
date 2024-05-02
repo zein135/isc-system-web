@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Seminar } from "../models/studentProcess";
 import {
   convertSeminarToGraduationProcess,
@@ -6,8 +5,6 @@ import {
 } from "../helper/process";
 import { InitGraduationProcess } from "../services/models/GraduationProcess";
 import apiClient from "./apiInstance";
-
-const API_URL = import.meta.env.VITE_API_URL;
 
 const getProcess = async () => {
   try {
@@ -22,8 +19,8 @@ const getProcess = async () => {
 const updateProcess = async (seminar: Seminar) => {
   try {
     const graduation = convertSeminarToGraduationProcess(seminar);
-    const response = await axios.put(
-      `${API_URL}graduation/${seminar.id}`,
+    const response = await apiClient.put(
+      `graduation/${seminar.id}`,
       graduation
     );
     return response.data;
@@ -61,10 +58,4 @@ const createGraduationProcess = async (seminar: InitGraduationProcess) => {
   }
 };
 
-
-export {
-  getProcess,
-  getStundentById,
-  updateProcess,
-  createGraduationProcess,
-};
+export { getProcess, getStundentById, updateProcess, createGraduationProcess };
