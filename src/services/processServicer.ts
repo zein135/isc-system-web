@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Seminar } from "../models/studentProcess";
-import { convertSeminarToGraduationProcess } from "../helper/process";
-import { GraduationProcess as InitGraduationProcess } from "../services/models/GraduationProcess";
+import { convertSeminarToGraduationProcess, creationProcess } from "../helper/process";
+import { InitGraduationProcess } from "../services/models/GraduationProcess";
 import apiClient from "./apiInstance";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -42,8 +42,9 @@ const getStundentById = async (studentId: number) => {
 
 const createGraduationProcess = async (seminar: InitGraduationProcess) => {
   try {
-    // const graduation = convertSeminarToGraduationProcess(seminar);
-    const response = await apiClient.post(`graduation`, seminar);
+    const graduation = creationProcess(seminar);
+
+    const response = await apiClient.post(`graduation`, graduation);
     if (response.status === 200 && response.data) {
       return response.data;
     } else {
