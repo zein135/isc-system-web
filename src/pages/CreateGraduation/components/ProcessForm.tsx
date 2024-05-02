@@ -8,11 +8,15 @@ import { getStudents } from "../../../services/studentService";
 import { getModes } from "../../../services/modesService";
 import { Modes } from "../../../models/modeInterface";
 import { createGraduationProcess } from "../../../services/processServicer";
+import { useNavigate } from "react-router-dom";
+import { useProcessStore } from "../../../store/store";
 
 function ProcessForm() {
   const [, setError] = useState<string | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
   const [modes, setModes] = useState<Modes[]>([]);
+  const updateProcess = useProcessStore((state) => state.setProcess);
+  const navigate = useNavigate();
 
   const fetchData = useCallback(async () => {
     try {
@@ -37,10 +41,14 @@ function ProcessForm() {
       modeId: "",
       period: "",
       titleProject: "",
+      stageId: 1,
     },
     onSubmit: async (values) => {
-      console.log(values);
-      await createGraduationProcess(values);
+      const response = await createGraduationProcess(values);
+      if (response.success) {
+        updateProcess(response.data);
+        navigate(`/studentProfile/${response.data.id}`);
+      }
     },
   });
 
@@ -115,16 +123,14 @@ function ProcessForm() {
               <TextField
                 fullWidth
                 select
-                label="Seleccionar Modalidad"                 
+                label="Seleccionar Modalidad"
                 variant="outlined"
                 margin="normal"
                 name="modeId"
                 value={formik.values.modeId}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={
-                  formik.touched.modeId && Boolean(formik.errors.modeId)
-                }
+                error={formik.touched.modeId && Boolean(formik.errors.modeId)}
                 helperText={formik.touched.modeId && formik.errors.modeId}
               >
                 {modes.map((mode) => (
@@ -161,9 +167,7 @@ function ProcessForm() {
                 value={formik.values.period}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={
-                  formik.touched.period && Boolean(formik.errors.period)
-                }
+                error={formik.touched.period && Boolean(formik.errors.period)}
                 helperText={formik.touched.period && formik.errors.period}
               >
                 <MenuItem value="Segundo2024">Segundo 2024</MenuItem>

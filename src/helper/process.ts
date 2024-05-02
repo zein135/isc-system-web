@@ -43,5 +43,6 @@ export function creationProcess(values: InitGraduationProcess ): InitGraduationP
     period: values.period,
     modality_id: values.modeId,
     project_name: values.titleProject,
+    stage_id: 1,
   };
 }

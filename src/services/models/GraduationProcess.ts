@@ -4,6 +4,7 @@ export interface InitGraduationProcess {
   modeId: string;
   period: string;
   titleProject: string;
+  stageId: number;
 }
 
 export interface InitGraduationProcessDB {
@@ -12,4 +13,5 @@ export interface InitGraduationProcessDB {
   modality_id: string;
   period: string;
   project_name: string;
+  stage_id: number;
 }

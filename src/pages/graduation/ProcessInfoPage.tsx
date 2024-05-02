@@ -18,7 +18,8 @@ const ProcessInfoPage = () => {
   }, [data, updateProcess]);
   
   const stageProcess = data.stage_id;
-
+  debugger;
+  
   return (
     <Grid container spacing={2}>
       <Grid item xs={false} sm={12} md={7} lg={8}>
