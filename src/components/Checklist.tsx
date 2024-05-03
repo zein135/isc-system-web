@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { format } from "date-fns";
 import {
   FaEnvelope,
   FaCalendarCheck,
@@ -13,9 +14,16 @@ interface CheckListStageProps {
   process: Seminar;
 }
 
-const Checklist:FC<CheckListStageProps> = ({ process }) => {
-  
-  const { student_name: studentName, project_name: titleProject, modality_name: mode } = process;
+const Checklist: FC<CheckListStageProps> = ({ process }) => {
+  const formattedDate = process.tutor_approval_date
+    ? format(new Date(process.tutor_approval_date), "dd/MM/yyyy")
+    : "";
+
+  const {
+    student_name: studentName,
+    project_name: titleProject,
+    modality_name: mode,
+  } = process;
   const telegramLink = `https://t.me/+59176517816`;
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 m-4">
@@ -66,7 +74,7 @@ const Checklist:FC<CheckListStageProps> = ({ process }) => {
           </h3>
           {process.tutor_approval ? (
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-              Aprobación del Tutor el {}
+              Aprobación del Tutor el {formattedDate}
             </time>
           ) : (
             <span>Fase de Tutor no Aprobada</span>
@@ -81,7 +89,7 @@ const Checklist:FC<CheckListStageProps> = ({ process }) => {
           </h3>
           {process.reviewer_approval ? (
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-              Aprobación del Revisor on {}
+              Aprobación del Revisor on {formattedDate}
             </time>
           ) : (
             <span>Fase de Revisor no Aprobada</span>

@@ -69,7 +69,7 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({ onPrevious, onNext 
       mentor: process?.tutor_id,
     },
     validationSchema,
-    onSubmit: (_values) => {
+    onSubmit: () => {
       if (canApproveStage()) {
         setShowModal(true);
       }
