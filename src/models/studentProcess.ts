@@ -17,6 +17,9 @@ export interface Seminar {
     tutor_letter: boolean | null;
     tutor_name: string;
     stage_id: number;
+    date_tutor_assignament: Date | null;
+    tutor_approval_date: Date | null;
+    reviewer_approval_date: Date | null;
 }
 
 
@@ -35,4 +38,7 @@ export interface GraduationProcess {
     reviewer_id?: number;
     reviewer_approval: boolean;
     stage_id: number;
+    date_tutor_assignament: Date | null;
+    tutor_approval_date: Date | null;
+    reviewer_approval_date: Date | null;
 }

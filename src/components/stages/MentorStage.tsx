@@ -43,7 +43,15 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({ onPrevious, onNext 
       const { mentor, tutorDesignationLetterSubmitted } = formik.values;
       process.tutor_letter = tutorDesignationLetterSubmitted;
       process.tutor_id = mentor;
+      if(mentor) {
+        process.date_tutor_assignament = new Date();
+      }
       process.stage_id = 2;
+      if(isApproveButton) {
+        process.tutor_approval = true;
+        process.tutor_approval_date = new Date();
+      }
+      
       setProcess(process);
       await updateProcess(process);
       onNext();
@@ -61,8 +69,7 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({ onPrevious, onNext 
       mentor: process?.tutor_id,
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: (_values) => {
       if (canApproveStage()) {
         setShowModal(true);
       }
