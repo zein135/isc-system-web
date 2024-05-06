@@ -79,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   };
 
   const goToDashboard = () => {
-    navigate("/home");
+    navigate("/dashboard");
   };
 
   const goToStudents = () => {

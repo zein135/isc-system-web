@@ -1,7 +1,9 @@
 export interface ProfessorInterface {    
-    fullName: string;
+    name: string;
+    lastname?: string;
+    motherName?: string;
     email: string;
-    phoneNumber: string;
-    academicTitle: string;
-    employeeNumber: string;
+    phone: string;
+    degree: string;
+    code?: number;
 }

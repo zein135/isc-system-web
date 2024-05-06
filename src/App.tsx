@@ -10,11 +10,12 @@ import { getProcess, getStundentById } from "./services/processServicer";
 import StudentsPage from "./pages/StudentsPage";
 import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./layout/Layout";
-import DashboardPage from "./pages/DashboardPage";
+
 import CreateProcessPage from "./pages/CreateGraduation/CreateProcessPage";
 import ProfessorPage from "./pages/ProfessorPage";
 import CreateProfessorPage from "./pages/Professor/CreateProfessorPage";
 import { RequireAuth } from "./layout/RequireAuth";
+import { DashboardPage } from "./pages/dashboard/Dashboard";
 
 function loader() {
   return getProcess();

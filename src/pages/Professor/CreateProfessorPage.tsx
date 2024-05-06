@@ -13,25 +13,25 @@ import {
 } from "@mui/material";
 
 const validationSchema = Yup.object({
-  fullName: Yup.string().required("El nombre completo es obligatorio"),
+  name: Yup.string().required("El nombre completo es obligatorio"),
   email: Yup.string()
     .email("Ingrese un correo electrónico válido")
     .required("El correo electrónico es obligatorio"),
   phoneNumber: Yup.string()
     .matches(/^[0-9]+$/, "Solo números son permitidos")
     .optional(),
-  academicTitle: Yup.string().required("El título académico es obligatorio"),
-  employeeNumber: Yup.string().optional(),
+  degree: Yup.string().required("El título académico es obligatorio"),
+  code: Yup.number().optional(),
 });
 
 const CreateProfessorPage = () => {
   const formik = useFormik<ProfessorInterface>({
     initialValues: {
-      fullName: "",
+      name: "",
+      lastname: "",
       email: "",
-      phoneNumber: "",
-      academicTitle: "",
-      employeeNumber: "",
+      phone: "",
+      degree: "",
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -61,55 +61,65 @@ const CreateProfessorPage = () => {
                 <Typography variant="h6">Información del Docente</Typography>
               </Grid>
               <Grid item xs={9}>
-                <TextField
-                  id="fullName"
-                  name="fullName"
-                  label="Nombre Completo"
-                  variant="outlined"
-                  fullWidth
-                  value={formik.values.fullName}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.fullName && Boolean(formik.errors.fullName)
-                  }
-                  helperText={formik.touched.fullName && formik.errors.fullName}
-                  margin="normal"
-                />
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="name"
+                      name="name"
+                      label="Nombres"
+                      variant="outlined"
+                      fullWidth
+                      value={formik.values.name}
+                      onChange={formik.handleChange}
+                      error={formik.touched.name && Boolean(formik.errors.name)}
+                      helperText={formik.touched.name && formik.errors.name}
+                      margin="normal"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="lastname"
+                      name="lastname"
+                      label="Apellido Paterno"
+                      variant="outlined"
+                      fullWidth
+                      value={formik.values.lastname}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.lastname &&
+                        Boolean(formik.errors.lastname)
+                      }
+                      helperText={
+                        formik.touched.lastname && formik.errors.lastname
+                      }
+                      margin="normal"
+                    />
+                  </Grid>
+                </Grid>
 
                 <TextField
-                  id="employeeNumber"
-                  name="employeeNumber"
+                  id="code"
+                  name="code"
                   label="Codigo de Docente"
                   variant="outlined"
                   fullWidth
-                  value={formik.values.employeeNumber}
+                  value={formik.values.code}
                   onChange={formik.handleChange}
-                  error={
-                    formik.touched.employeeNumber &&
-                    Boolean(formik.errors.employeeNumber)
-                  }
-                  helperText={
-                    formik.touched.employeeNumber &&
-                    formik.errors.employeeNumber
-                  }
+                  error={formik.touched.code && Boolean(formik.errors.code)}
+                  helperText={formik.touched.code && formik.errors.code}
                   margin="normal"
                 />
                 <TextField
-                  id="academicTitle"
-                  name="academicTitle"
+                  id="degree"
+                  name="degree"
                   label="Título Académico"
                   variant="outlined"
                   fullWidth
                   select
-                  value={formik.values.academicTitle}
+                  value={formik.values.degree}
                   onChange={formik.handleChange}
-                  error={
-                    formik.touched.academicTitle &&
-                    Boolean(formik.errors.academicTitle)
-                  }
-                  helperText={
-                    formik.touched.academicTitle && formik.errors.academicTitle
-                  }
+                  error={formik.touched.degree && Boolean(formik.errors.degree)}
+                  helperText={formik.touched.degree && formik.errors.degree}
                   margin="normal"
                 >
                   <MenuItem value="">Seleccione un título</MenuItem>
@@ -141,20 +151,17 @@ const CreateProfessorPage = () => {
                   margin="normal"
                 />
                 <TextField
-                  id="phoneNumber"
-                  name="phoneNumber"
+                  id="phone"
+                  name="phone"
                   label="Número de Teléfono"
                   variant="outlined"
                   fullWidth
-                  value={formik.values.phoneNumber}
+                  value={formik.values.phone}
                   onChange={formik.handleChange}
                   error={
-                    formik.touched.phoneNumber &&
-                    Boolean(formik.errors.phoneNumber)
+                    formik.touched.phoneNumber && Boolean(formik.errors.phone)
                   }
-                  helperText={
-                    formik.touched.phoneNumber && formik.errors.phoneNumber
-                  }
+                  helperText={formik.touched.phone && formik.errors.phone}
                   margin="normal"
                 />
               </Grid>
