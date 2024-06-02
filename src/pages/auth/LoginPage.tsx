@@ -38,7 +38,7 @@ const LoginPage = () => {
         if (isAuthenticated) {
           localStorage.setItem("token", isAuthenticated.token);
           setUser(isAuthenticated);
-          navigate("/home");
+          navigate("/dashboard");
         } else {
           setError("Credenciales incorrectas");
         }

@@ -19,6 +19,7 @@ function NumberCard({
   count,
   percentage
 }: NumberCardProps) {
+  const roundedPercentage = Math.round(percentage);
   return (
     <Card sx={{ maxWidth: 345, background: backgroundColor, borderRadius: 3 }}>
       <CardContent>
@@ -47,8 +48,8 @@ function NumberCard({
           <Grid item xs={6} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
             <div style={{ width: "70%", height: 100 }}>
               <CircularProgressbar
-                value={percentage}
-                text={`${percentage}%`}
+                value={roundedPercentage}
+                text={`${roundedPercentage}%`}
                 background
                 backgroundPadding={6}
                 styles={buildStyles({

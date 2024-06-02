@@ -10,6 +10,8 @@ import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import { Divider, ListItemButton } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import UPB_LOGO from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
 
@@ -86,6 +88,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
     navigate("/students");
   }
 
+  const goToProcess = () => {
+    navigate("/process");
+  }
+
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
@@ -120,10 +126,35 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                 justifyContent: "center",
               }}
             >
-              <HomeIcon />
+              <HomeIcon color="primary"/>
             </ListItemIcon>
             <ListItemText
+              color="primary"
               primary={"Dashboard"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key={"process"} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToProcess}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <ChecklistOutlinedIcon color="primary"/>
+            </ListItemIcon>
+            <ListItemText
+              primary={"Procesos"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
@@ -144,7 +175,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                 justifyContent: "center",
               }}
             >
-              <SupervisorAccountIcon />
+              <SupervisorAccountIcon color="primary"/>
             </ListItemIcon>
             <ListItemText primary={"Docentes"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
@@ -165,7 +196,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                 justifyContent: "center",
               }}
             >
-              <SupervisorAccountIcon />
+              <SchoolOutlinedIcon color="primary"/>
             </ListItemIcon>
             <ListItemText primary={"Estudiantes"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>

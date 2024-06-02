@@ -41,8 +41,7 @@ export function convertSeminarToGraduationProcess(
 
 export function creationProcess(values: InitGraduationProcess ): InitGraduationProcessDB {
   return {
-    student_id: values.studentId,
-    // student_code: values.studentCode,
+    student_code: values.studentCode,
     period: values.period,
     modality_id: values.modeId,
     project_name: values.titleProject,

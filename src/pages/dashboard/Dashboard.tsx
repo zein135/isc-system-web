@@ -3,6 +3,8 @@ import ProjectCard from "../../components/common/ProjectCard";
 import NumberCard from "../../components/common/NumberCard";
 import AreaChartCard from "../../components/common/AreaChart";
 import CalendarCard from "../../components/common/CalendarComponent";
+import { useEffect, useState } from "react";
+import { getStats } from "../../services/statsService";
 const data = [
   { period: "2021 Q1", approved: 200 },
   { period: "2021 Q2", approved: 450 },
@@ -24,45 +26,76 @@ const myEventsList = [
   },
 ];
 
+interface Stats {
+  num_tutorias_progreso: number;
+  num_tutorias_aprobadas: number;
+  num_reviewers_progreso: number;
+  num_reviewers_aprobados: number;
+  total_procesos: number;
+  num_procesos_finalizados: number;
+}
+
 export const DashboardPage = () => {
+  // get stats from the server
+  const [stats, setStats] = useState<Stats>();
+  useEffect(() => {
+    getStats().then((result) => {
+      setStats(result.data);
+    });
+  }, []);
+
   return (
     <Container fixed>
       <Grid container spacing={3}>
         <Grid item xs={4}>
-          <ProjectCard />
-        </Grid>
-        <Grid item xs={4}>
           <NumberCard
-            backgroundColor="#1450A3"
-            textColor="#FFFFFF"
-            title="Tutorias finalizadas"
-            subtitle="2 en curso"
-            count={12}
-            percentage={75}
+            backgroundColor="#FAAA1E"
+            textColor="#ffffff"
+            title="Procesos Finalizados"
+            subtitle={`${
+              (stats?.total_procesos || 0) -
+              (stats?.num_procesos_finalizados || 0)
+            } en curso`}
+            count={stats?.num_procesos_finalizados || 0}
+            percentage={
+              ((stats?.num_procesos_finalizados || 0) * 100) /
+              (stats?.total_procesos || 1)
+            }
           />
         </Grid>
-        <Grid item xs={4}>
-          <NumberCard
-            backgroundColor="#337CCF"
-            textColor="#FFFFFF"
-            title="Revisiones finalizadas"
-            subtitle="3 en curso"
-            count={12}
-            percentage={75}
+        <Grid item xs={8}>
+          <AreaChartCard
+            title="Estudiantes Aprobados por Período"
+            data={data}
           />
         </Grid>
+
         <Grid item xs={4}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <AreaChartCard
-                title="Estudiantes Aprobados por Período"
-                data={data}
+              <NumberCard
+                backgroundColor="#1450A3"
+                textColor="#FFFFFF"
+                title="Tutorias finalizadas"
+                subtitle={`${stats?.num_tutorias_progreso || 0} en curso`}
+                count={stats?.num_tutorias_aprobadas || 0}
+                percentage={
+                  ((stats?.num_tutorias_aprobadas || 0) * 100) /
+                  (stats?.total_procesos || 1)
+                }
               />
             </Grid>
             <Grid item xs={12}>
-              <AreaChartCard
-                title="Estudiantes Aprobados por Período"
-                data={data}
+              <NumberCard
+                backgroundColor="#337CCF"
+                textColor="#FFFFFF"
+                title="Revisiones finalizadas"
+                subtitle={`${stats?.num_reviewers_progreso || 0} en curso`}
+                count={stats?.num_reviewers_aprobados || 0}
+                percentage={
+                  ((stats?.num_reviewers_aprobados || 0) * 100) /
+                  (stats?.total_procesos || 1)
+                }
               />
             </Grid>
           </Grid>

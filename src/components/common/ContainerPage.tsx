@@ -4,12 +4,14 @@ import PersonIcon from "@mui/icons-material/Person";
 
 interface ContainerPageProps {
   title: string;
+  subtitle: string;
   actions: ReactNode;
   children: ReactNode;
 }
 
 const ContainerPage: React.FC<ContainerPageProps> = ({
   title,
+  subtitle,
   actions,
   children,
 }) => {
@@ -33,7 +35,7 @@ const ContainerPage: React.FC<ContainerPageProps> = ({
                 color="textSecondary"
                 component="div"
               >
-                Lista de docentes
+                {subtitle}
               </Typography>
             </Grid>
             <Grid item xs={6}>

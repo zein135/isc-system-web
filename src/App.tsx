@@ -16,6 +16,9 @@ import ProfessorPage from "./pages/ProfessorPage";
 import CreateProfessorPage from "./pages/Professor/CreateProfessorPage";
 import { RequireAuth } from "./layout/RequireAuth";
 import { DashboardPage } from "./pages/dashboard/Dashboard";
+import StudentPage from "./pages/Student/StudentsPage";
+import CreateStudentPage from "./pages/Student/CreateStudentPage";
+import EditStudentPage from "./pages/Student/EditStudentPage";
 
 function loader() {
   return getProcess();
@@ -46,7 +49,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/home",
+        path: "/process",
         loader: loader,
         element: (
           <RequireAuth>
@@ -64,11 +67,38 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/students",
+        loader: loader,
+        element: (
+          <RequireAuth>
+            <StudentPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/edit-student/:id",
+        loader: loader,
+        element: (
+          <RequireAuth>
+            <EditStudentPage />
+          </RequireAuth>
+        ),
+      },
+      {
         path: "/create-professor",
         loader: loader,
         element: (
           <RequireAuth>
             <CreateProfessorPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/create-student",
+        loader: loader,
+        element: (
+          <RequireAuth>
+            <CreateStudentPage />
           </RequireAuth>
         ),
       },

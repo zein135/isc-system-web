@@ -1,5 +1,4 @@
 export interface InitGraduationProcess {
-  studentId: string;
   studentCode: string;
   modeId: string;
   period: string;
@@ -8,7 +7,6 @@ export interface InitGraduationProcess {
 }
 
 export interface InitGraduationProcessDB {
-  student_id: string;
   student_code?: string;
   modality_id: string;
   period: string;

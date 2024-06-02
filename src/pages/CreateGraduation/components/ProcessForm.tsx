@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { TextField, Button, Grid, Typography, MenuItem } from "@mui/material";
+import { TextField, Button, Grid, Typography, MenuItem, Autocomplete } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { useFormik } from "formik";
 
@@ -52,6 +52,11 @@ function ProcessForm() {
     },
   });
 
+  const handleStudentChange = (_event: React.ChangeEvent<object | null>, value: Student | null) => {
+    formik.setFieldValue('studentId', value ? value.id : '');
+    formik.setFieldValue('studentCode', value ? value.code : '');
+  };
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <Grid container spacing={2} sx={{ padding: 2 }}>
@@ -70,27 +75,23 @@ function ProcessForm() {
               <Typography variant="body2">Informacion Estudiante</Typography>
             </Grid>
             <Grid item xs={9}>
-              <TextField
+            <Autocomplete
                 fullWidth
-                select
-                label="Nombre Estudiante"
-                name="studentId"
-                value={formik.values.studentId}
-                onChange={formik.handleChange}
+                options={students}
+                getOptionLabel={(student) => `${student.name}`}
+                onChange={handleStudentChange}
                 onBlur={formik.handleBlur}
-                error={
-                  formik.touched.studentId && Boolean(formik.errors.studentId)
-                }
-                helperText={formik.touched.studentId && formik.errors.studentId}
-                variant="outlined"
-                margin="normal"
-              >
-                {students.map((student) => (
-                  <MenuItem key={student.id} value={student.id}>
-                    {student.name} {student.lastName}
-                  </MenuItem>
-                ))}
-              </TextField>
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Nombre Estudiante"
+                    variant="outlined"
+                    margin="normal"
+                    error={formik.touched.studentId && Boolean(formik.errors.studentId)}
+                    helperText={formik.touched.studentId && formik.errors.studentId}
+                  />
+                )}
+              />
               <TextField
                 fullWidth
                 my-5
@@ -154,6 +155,7 @@ function ProcessForm() {
                 helperText={
                   formik.touched.titleProject && formik.errors.titleProject
                 }
+                inputProps={{ maxLength: 80 }}
                 variant="outlined"
                 margin="normal"
               />
@@ -171,8 +173,8 @@ function ProcessForm() {
                 helperText={formik.touched.period && formik.errors.period}
               >
                 <MenuItem value="Segundo2024">Segundo 2024</MenuItem>
-                <MenuItem value="Primero2025">Primero 2025</MenuItem>
-                <MenuItem value="Segundo2025">Segundo 2025</MenuItem>
+                <MenuItem value="Primero2023">Primero 2025</MenuItem>
+                <MenuItem value="Segundo2023">Segundo 2025</MenuItem>
               </TextField>
             </Grid>
           </Grid>

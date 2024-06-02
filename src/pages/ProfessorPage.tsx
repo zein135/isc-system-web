@@ -44,7 +44,7 @@ const columns: GridColDef[] = [
     flex: 1,
   },
   {
-    field: "nroTutors",
+    field: "tutoring_count",
     headerName: "Tutorias",
     type: "number",
     headerAlign: "center",
@@ -52,7 +52,7 @@ const columns: GridColDef[] = [
     flex: 1,
   },
   {
-    field: "nroReviews",
+    field: "review_count",
     headerName: "Revisiones",
     type: "number",
     headerAlign: "center",
@@ -60,6 +60,7 @@ const columns: GridColDef[] = [
     flex: 1,
   },
 ];
+
 
 const ProfessorPage = () => {
   const navigate = useNavigate();
@@ -82,6 +83,7 @@ const ProfessorPage = () => {
   return (
     <ContainerPage
       title={"Docentes"}
+      subtitle={"Lista de docentes"}
       actions={
         <Button
           variant="contained"

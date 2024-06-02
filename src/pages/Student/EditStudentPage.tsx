@@ -27,7 +27,7 @@ const validationSchema = Yup.object({
   code: Yup.number().optional(),
 });
 
-const CreateProfessorPage = () => {
+const EditStudentPage = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('success');
@@ -208,4 +208,4 @@ const CreateProfessorPage = () => {
   );
 };
 
-export default CreateProfessorPage;
+export default EditStudentPage;
