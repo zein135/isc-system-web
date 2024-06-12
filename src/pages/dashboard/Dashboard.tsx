@@ -47,61 +47,64 @@ export const DashboardPage = () => {
   return (
     <Container fixed>
       <Grid container spacing={3}>
-        <Grid item xs={4}>
-          <NumberCard
-            backgroundColor="#FAAA1E"
-            textColor="#ffffff"
-            title="Procesos Finalizados"
-            subtitle={`${
-              (stats?.total_procesos || 0) -
-              (stats?.num_procesos_finalizados || 0)
-            } en curso`}
-            count={stats?.num_procesos_finalizados || 0}
-            percentage={
-              ((stats?.num_procesos_finalizados || 0) * 100) /
-              (stats?.total_procesos || 1)
-            }
-          />
+        <Grid item xs={12}>
+          <Grid container spacing={3}>
+            <Grid item xs={4}>
+              <Grid container spacing={3} marginTop={'15px'}>
+                <Grid item xs={12}>
+                  <NumberCard
+                    backgroundColor="#FAAA1E"
+                    textColor="#ffffff"
+                    title="Procesos Finalizados"
+                    subtitle={`${
+                      (stats?.total_procesos || 0) -
+                      (stats?.num_procesos_finalizados || 0)
+                    } en curso`}
+                    count={stats?.num_procesos_finalizados || 0}
+                    percentage={
+                      ((stats?.num_procesos_finalizados || 0) * 100) /
+                      (stats?.total_procesos || 1)
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <NumberCard
+                    backgroundColor="#1450A3"
+                    textColor="#FFFFFF"
+                    title="Tutorias finalizadas"
+                    subtitle={`${stats?.num_tutorias_progreso || 0} en curso`}
+                    count={stats?.num_tutorias_aprobadas || 0}
+                    percentage={
+                      ((stats?.num_tutorias_aprobadas || 0) * 100) /
+                      (stats?.total_procesos || 1)
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <NumberCard
+                    backgroundColor="#337CCF"
+                    textColor="#FFFFFF"
+                    title="Revisiones finalizadas"
+                    subtitle={`${stats?.num_reviewers_progreso || 0} en curso`}
+                    count={stats?.num_reviewers_aprobados || 0}
+                    percentage={
+                      ((stats?.num_reviewers_aprobados || 0) * 100) /
+                      (stats?.total_procesos || 1)
+                    }
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={8}>
+              <CalendarCard events={myEventsList} />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <AreaChartCard
             title="Estudiantes Aprobados por Período"
             data={data}
           />
-        </Grid>
-
-        <Grid item xs={4}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <NumberCard
-                backgroundColor="#1450A3"
-                textColor="#FFFFFF"
-                title="Tutorias finalizadas"
-                subtitle={`${stats?.num_tutorias_progreso || 0} en curso`}
-                count={stats?.num_tutorias_aprobadas || 0}
-                percentage={
-                  ((stats?.num_tutorias_aprobadas || 0) * 100) /
-                  (stats?.total_procesos || 1)
-                }
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <NumberCard
-                backgroundColor="#337CCF"
-                textColor="#FFFFFF"
-                title="Revisiones finalizadas"
-                subtitle={`${stats?.num_reviewers_progreso || 0} en curso`}
-                count={stats?.num_reviewers_aprobados || 0}
-                percentage={
-                  ((stats?.num_reviewers_aprobados || 0) * 100) /
-                  (stats?.total_procesos || 1)
-                }
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={8}>
-          <CalendarCard events={myEventsList} />
         </Grid>
       </Grid>
     </Container>
