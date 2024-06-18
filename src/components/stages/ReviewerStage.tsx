@@ -45,7 +45,10 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
     if (process) {
       const { reviewer, reviewerDesignationLetterSubmitted } = formik.values;
       process.reviewer_letter = reviewerDesignationLetterSubmitted;
-      process.reviewer_id = reviewer;
+      process.reviewer_id = Number(reviewer);
+      process.stage_id = 3;
+      process.reviewer_approval = true;
+      process.reviewer_approval_date = new Date();
       setProcess(process);
       await updateProcess(process);
       onNext();

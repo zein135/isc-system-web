@@ -1,69 +1,126 @@
 import {
   createBrowserRouter,
   Navigate,
-  RouterProvider
+  RouterProvider,
 } from "react-router-dom";
 
-import ProcessInfoPage from './pages/ProcessInfoPage';
+import ProcessInfoPage from "./pages/graduation/ProcessInfoPage";
 import ErrorPage from "./pages/ErrorPage";
 import { getProcess, getStundentById } from "./services/processServicer";
 import StudentsPage from "./pages/StudentsPage";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./layout/Layout";
-import DashboardPage from "./pages/DashboardPage";
-import CreateProcessPage from './pages/createProcessPage';
+
+import CreateProcessPage from "./pages/CreateGraduation/CreateProcessPage";
 import ProfessorPage from "./pages/ProfessorPage";
-import CreateProfessorPage from "./pages/CreateProfessorPage";
+import CreateProfessorPage from "./pages/Professor/CreateProfessorPage";
+import { RequireAuth } from "./layout/RequireAuth";
+import { DashboardPage } from "./pages/dashboard/Dashboard";
+import StudentPage from "./pages/Student/StudentsPage";
+import CreateStudentPage from "./pages/Student/CreateStudentPage";
+import EditStudentPage from "./pages/Student/EditStudentPage";
 
 function loader() {
   return getProcess();
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getStudentProcess =({ params }: any) => {
-  const studentId = Number(params.id); 
+const getStudentProcess = ({ params }: any) => {
+  const studentId = Number(params.id);
   return getStundentById(studentId);
-}
+};
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Layout />,
     children: [
       {
         index: true,
         element: <Navigate to="/login" replace />,
-      },{
+      },
+      {
         index: true,
-        path: '/dashboard',
-        element: <DashboardPage/>
+        path: "/dashboard",
+        element: (
+          <RequireAuth>
+            <DashboardPage />
+          </RequireAuth>
+        ),
       },
       {
-        path: '/home',
+        path: "/process",
         loader: loader,
-        element: <StudentsPage />,
+        element: (
+          <RequireAuth>
+            <StudentsPage />
+          </RequireAuth>
+        ),
       },
       {
-        path: '/professors',
+        path: "/professors",
         loader: loader,
-        element: <ProfessorPage />,
+        element: (
+          <RequireAuth>
+            <ProfessorPage />
+          </RequireAuth>
+        ),
       },
       {
-        path: '/create-professor',
+        path: "/students",
         loader: loader,
-        element: <CreateProfessorPage />,
+        element: (
+          <RequireAuth>
+            <StudentPage />
+          </RequireAuth>
+        ),
       },
       {
-        path: '/studentProfile/:id',
+        path: "/edit-student/:id",
+        loader: loader,
+        element: (
+          <RequireAuth>
+            <EditStudentPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/create-professor",
+        loader: loader,
+        element: (
+          <RequireAuth>
+            <CreateProfessorPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/create-student",
+        loader: loader,
+        element: (
+          <RequireAuth>
+            <CreateStudentPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/studentProfile/:id",
         loader: getStudentProcess,
-        element: <ProcessInfoPage />,
+        element: (
+          <RequireAuth>
+            <ProcessInfoPage />
+          </RequireAuth>
+        ),
       },
       {
-        path: '/createProcess',
+        path: "/createProcess",
         loader: loader,
-        element: <CreateProcessPage/>,
+        element: (
+          <RequireAuth>
+            <CreateProcessPage />
+          </RequireAuth>
+        ),
       },
-    ]
+    ],
   },
   {
     path: "/login",
@@ -76,9 +133,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return (
-    <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;

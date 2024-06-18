@@ -1,52 +1,122 @@
-import { ChangeEvent, useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import ContainerPage from "../components/common/ContainerPage";
+import { useEffect, useState } from "react";
+import { getMentors } from "../services/mentorsService";
+import { Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+
+const columns: GridColDef[] = [
+  {
+    field: "code",
+    headerName: "Código",
+    headerAlign: "center",
+    align: "center",
+    flex: 1,
+  },
+  {
+    field: "degree",
+    headerName: "Título",
+    headerAlign: "center",
+    align: "center",
+    flex: 1,
+  },
+  {
+    field: "name",
+    headerName: "Nombre",
+    headerAlign: "center",
+    align: "center",
+    flex: 1,
+  },
+  {
+    field: "lastName",
+    headerName: "Apellido",
+    headerAlign: "center",
+    align: "center",
+    flex: 1,
+  },
+  {
+    field: "phone",
+    headerName: "Celular",
+    type: "number",
+    headerAlign: "center",
+    align: "center",
+    flex: 1,
+  },
+  {
+    field: "tutoring_count",
+    headerName: "Tutorias",
+    type: "number",
+    headerAlign: "center",
+    align: "center",
+    flex: 1,
+  },
+  {
+    field: "review_count",
+    headerName: "Revisiones",
+    type: "number",
+    headerAlign: "center",
+    align: "center",
+    flex: 1,
+  },
+];
+
 
 const ProfessorPage = () => {
-    const [search, setSearch] = useState("");
-    const navigate = useNavigate();
-    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearch(e.target.value);
-    };
+  const navigate = useNavigate();
+  const [professors, setProfessors] = useState([]);
 
-    const handleCreateTeacher = () => {
-        navigate('/create-professor');
-    }
+  const handleCreateTeacher = () => {
+    navigate("/create-professor");
+  };
 
-    return <>
-        <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between m-10 mb-8 overflow-hidden">
-            <label htmlFor="table-search" className="sr-only">
-                Search
-            </label>
-            <div className="relative">
-                <div className="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none">
-                    <FaSearch className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                </div>
-                <input
-                    type="text"
-                    id="table-search"
-                    className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Buscar por nombre de Docente"
-                    value={search}
-                    onChange={handleSearchChange}
-                />
-            </div>
-            <button
-                onClick={handleCreateTeacher}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
-            >
-                Crear Docente
-            </button>
+  const fetchProfessors = async () => {
+    const professors = await getMentors();
+    setProfessors(professors.data);
+    console.log(professors);
+  };
+
+  useEffect(() => {
+    fetchProfessors();
+  }, []);
+
+  return (
+    <ContainerPage
+      title={"Docentes"}
+      subtitle={"Lista de docentes"}
+      actions={
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleCreateTeacher}
+          startIcon={<AddIcon />}
+        >
+          Agregar docente
+        </Button>
+      }
+      children={
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            rows={professors}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            classes={{
+              root: "bg-white dark:bg-gray-800",
+              columnHeader: "bg-gray-200 dark:bg-gray-800 ",
+              cell: "bg-white dark:bg-gray-800",
+              row: "bg-white dark:bg-gray-800",
+              columnHeaderTitle: "!font-bold text-center",
+            }}
+            pageSizeOptions={[5, 10]}
+          />
         </div>
-
-        {/* <Table
-            data={filteredData}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            tableHeaders={tableHeaders}
-            onPageChange={handlePageChange}
-        /> */}
-    </>
-}
+      }
+    ></ContainerPage>
+  );
+};
 
 export default ProfessorPage;

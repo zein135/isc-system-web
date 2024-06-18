@@ -46,7 +46,7 @@ const StudentsPage = () => {
 
   return (
     <>
-      <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between m-10 mb-8 overflow-hidden py-2">
+      <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between m-5 mb-8 overflow-hidden">
         <label htmlFor="table-search" className="sr-only">
           Search
         </label>

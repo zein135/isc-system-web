@@ -3,6 +3,9 @@ import { FC, useEffect, useState } from "react";
 import * as Yup from "yup";
 import ConfirmModal from "../common/ConfirmModal";
 import { steps } from "../../data/steps";
+import pdfFile from '../../assets/Acta_Defensa_Interna_de_Seminario_de_Grado_V1.1.pdf'
+import { modifyPdf, PDFInsertData } from "../../utils/pdfEditor";
+import { downloadFile } from "../../utils/files";
 
 const validationSchema = Yup.object({
   president: Yup.string().required("* Debe agregar un presidente"),
@@ -37,6 +40,38 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
 
     fetchData();
   }, []);
+
+  const downloadEditedPDF = async () => {
+    try {
+      
+      const day = formik.values.date.split('-')[2];
+      const month = formik.values.date.split('-')[1];
+      const year = formik.values.date.split('-')[0];
+      
+      
+      const data: PDFInsertData[] = [
+        { x: 195, y: 204.1, size: 10, text: day },
+        { x: 222, y: 204.1, size: 10, text: month },
+        { x: 245, y: 204.1, size: 10, text: year },
+        { x: 222, y: 293, size: 10, text: formik.values.president },
+      ]
+      
+      const pdfArrayBuffer = await fetch(pdfFile).then((res) => res.arrayBuffer());
+      const modifiedPdf = await modifyPdf(pdfArrayBuffer, data);
+      const pdfBlob = new Blob([modifiedPdf], { type: 'application/pdf' });
+
+      downloadFile(pdfBlob, 'Acta_Defensa_Interna_de_Seminario_de_Grado_V1.1.pdf');
+
+      onNext();
+    } catch (error) {
+      console.error("Failed to download PDF:", error);
+    }
+  };
+
+  const handleModalAction = () => {
+    downloadEditedPDF();
+    setShowModal(false);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -123,7 +158,7 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
         </div>
       </form>
       {showModal && 
-            <ConfirmModal step={steps[3]} nextStep={steps[4]} setShowModal={setShowModal} onNext={onNext}/>
+            <ConfirmModal step={steps[3]} nextStep={steps[4]} setShowModal={setShowModal} onNext={handleModalAction} />
 
       }
     </>

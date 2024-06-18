@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs";
 export interface Seminar {
     date_seminar_enrollment: string | null;
     id: number;
@@ -16,6 +17,10 @@ export interface Seminar {
     tutor_id: number | undefined;
     tutor_letter: boolean | null;
     tutor_name: string;
+    stage_id: number;
+    date_tutor_assignament: Dayjs | null;
+    tutor_approval_date: Date | null;
+    reviewer_approval_date: Date | null;
 }
 
 
@@ -33,4 +38,8 @@ export interface GraduationProcess {
     reviewer_letter: boolean;
     reviewer_id?: number;
     reviewer_approval: boolean;
+    stage_id: number;
+    date_tutor_assignament: Date | null;
+    tutor_approval_date: Date | null;
+    reviewer_approval_date: Date | null;
 }

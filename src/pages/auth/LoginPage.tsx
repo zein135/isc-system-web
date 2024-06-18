@@ -1,14 +1,17 @@
 import { useState } from "react";
-import LogoUPB from "../assets/Logo-UPB.png";
+import LogoUPB from "../../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
-import { authenticateUser } from "../services/authService";
+import { authenticateUser } from "../../services/authService";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { ErrorMessage } from "../components/common/ErrorMessage";
-import SpinModal from "../components/common/SpinModal";
+import { ErrorMessage } from "../../components/common/ErrorMessage";
+import SpinModal from "../../components/common/SpinModal";
+import { useUserStore } from "../../store/store";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { setUser } = useUserStore();
+  
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const formik = useFormik({
@@ -24,13 +27,18 @@ const LoginPage = () => {
         .min(6, "Debe tener al menos 6 caracteres")
         .required("Requerido"),
     }),
-    onSubmit: async (values,  { setSubmitting }) => {
+    onSubmit: async (values, { setSubmitting }) => {
       setError("");
       setIsLoading(true);
       try {
-        const isAuthenticated = await authenticateUser(values.email, values.password);
-        if (isAuthenticated.data) {
-          navigate("/home");
+        const isAuthenticated = await authenticateUser(
+          values.email,
+          values.password
+        );
+        if (isAuthenticated) {
+          localStorage.setItem("token", isAuthenticated.token);
+          setUser(isAuthenticated);
+          navigate("/dashboard");
         } else {
           setError("Credenciales incorrectas");
         }
@@ -43,8 +51,9 @@ const LoginPage = () => {
     },
   });
 
-  return (
-    isLoading ? <SpinModal/> :
+  return isLoading ? (
+    <SpinModal />
+  ) : (
     <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0 ">
       <div className="md:w-1/3 max-w-sm mr-10">
         <img src={LogoUPB} alt="UPB image" />
@@ -61,7 +70,7 @@ const LoginPage = () => {
             value={formik.values.email}
           />
           {formik.touched.email && formik.errors.email ? (
-             <ErrorMessage message={formik.errors.email}/>
+            <ErrorMessage message={formik.errors.email} />
           ) : null}
           <input
             className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
@@ -73,7 +82,7 @@ const LoginPage = () => {
             value={formik.values.password}
           />
           {formik.touched.password && formik.errors.password ? (
-            <ErrorMessage message={formik.errors.password}/>
+            <ErrorMessage message={formik.errors.password} />
           ) : null}
           {error && <div className="text-red-500">{error}</div>}
           <div className="text-center md:text-center">
