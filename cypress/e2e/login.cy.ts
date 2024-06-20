@@ -6,7 +6,7 @@ describe('Login Admin Test', () => {
   const password = '123456';
   const url = 'http://localhost:5173/login'
 
-  it('Should register a new user successfully', () => {
+  it('Should log in successfully', () => {
     cy.visit(url);
 
     // Insert data
