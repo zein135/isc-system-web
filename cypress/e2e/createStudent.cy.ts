@@ -30,6 +30,7 @@ describe('Create new student', () => {
         cy.get('#lastname').should('be.visible').type(lastname);
         cy.get('#code').should('be.visible').type(code);
         cy.get('#degree').should('be.visible').click();
+        cy.get('[data-value="licenciado"]').should('be.visible').click();
 
         
         //cy.get('[data-testid="ChecklistOutlinedIcon"]').should('be.visible').click();
