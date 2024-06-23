@@ -1,20 +1,20 @@
 export const periods = [
     {
         id: 1,
-        value: "Primero 2023",
+        value: "Primero2023",
     },
     {
         id: 2,
-        value: "Segundo 2023",
+        value: "Segundo2023",
     },
     {
         id: 3,
-        value: "Primero 2024",
+        value: "Primero2024",
     },
     {
         id: 4,
-        value: "Segundo 2024",
+        value: "Segundo2024",
     },
 ];
 
-export const currentPeriod = "Primero 2024";
+export const currentPeriod = "Primero2024";

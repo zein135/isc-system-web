@@ -1,15 +1,27 @@
 import { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
 import { Modes } from "../../models/modeInterface";
 import { getModes } from "../../services/modesService";
 import { Modal } from "../common/Modal";
 import ConfirmModal from "../common/ConfirmModal";
 import { steps } from "../../data/steps";
-import { periods, currentPeriod } from '../../data/periods';
+import { periods, currentPeriod } from "../../data/periods";
 import { useProcessStore } from "../../store/store";
-import { updateProcess } from '../../services/processServicer';
+import { updateProcess } from "../../services/processServicer";
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Select,
+  MenuItem,
+  InputLabel,
+  Button,
+  Grid,
+} from "@mui/material";
+
 const validationSchema = Yup.object({
   mode: Yup.string().required("* La modalidad es obligatoria"),
   period: Yup.date().required("* El periodo es obligatorio"),
@@ -27,14 +39,13 @@ const getIdFromValue = (value: string) => {
 const getValueFromId = (id: number) => {
   const period = periods.find((period) => period.id === id);
   return period ? period.value : "";
-}
+};
 
-export const RegistrationStage: FC<RegistrationStageProps> = ({
-  onNext,
-}) => {
-  const studentProcess = useProcessStore(state => state.process);
-  const setProcess = useProcessStore(state => state.setProcess);
+export const RegistrationStage: FC<RegistrationStageProps> = ({ onNext }) => {
+  const studentProcess = useProcessStore((state) => state.process);
+  const setProcess = useProcessStore((state) => state.setProcess);
   const [modes, setModes] = useState<Modes[]>([]);
+  const [readOnly] = useState<boolean>(true);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [, setError] = useState<any | null>(null);
@@ -83,71 +94,75 @@ export const RegistrationStage: FC<RegistrationStageProps> = ({
     <>
       <div className="txt1">Etapa 1: Seminario de Grado</div>
       <form onSubmit={formik.handleSubmit} className="mt-5 mx-16">
-        <div className="flex flex-row space-x-4">
-          <div className="flex-1">
-            <label className="txt2">1. Seleccione la modalidad</label>
-            <div className="flex flex-col space-y-2 mt-2 mx-2">
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={7} lg={8}>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">1. Seleccione la Modalidad</FormLabel>
+            <RadioGroup
+              aria-label="mode"
+              name="mode"
+              row
+              value={formik.values.mode}
+              onChange={formik.handleChange}
+            >
               {modes.map((option) => (
-                <label key={option.id} className="flex items-center">
-                  <input
-                    type="radio"
-                    name="mode"
-                    value={option.id}
-                    disabled
-                    onChange={formik.handleChange}
-                    checked={formik.values.mode === option.id}
-                    className="w-4 h-4 text-secondary bg-gray-100 border-gray-300 focus:ring-secondary dark:focus:ring-secondary"
-                  />
-                  <span className="ml-2 text-md font-normal text-neutral-600">
-                    {option.name}
-                  </span>
-                </label>
+                <FormControlLabel
+                  key={option.id}
+                  value={option.id}
+                  control={<Radio disabled={readOnly} />}
+                  label={option.name}
+                />
               ))}
-            </div>
-            {formik.touched.mode && formik.errors.mode ? (
-              <div className="text-red-1 text-xs font-medium mt-1">
-                {formik.errors.mode}
-              </div>
-            ) : null}
-          </div>
-          <div className="flex-1">
-            <label className="txt2">2. Seleccione periodo de inscripción</label>
-            <select
+            </RadioGroup>
+          </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={12} md={5} lg={4}>
+          <FormControl fullWidth variant="outlined" margin="normal">
+            <InputLabel id="period-label">
+              2. Seleccione periodo de inscripción
+            </InputLabel>
+            <Select
+              labelId="period-label"
               id="period"
               name="period"
-              onChange={formik.handleChange}
               value={formik.values.period}
+              onChange={formik.handleChange}
+              label="2. Seleccione periodo de inscripción"
               disabled
-              className={`select-1 ${formik.touched.period && formik.errors.period
-                ? "border-red-1"
-                : "border-gray-300"
-                }`}
+              error={formik.touched.period && Boolean(formik.errors.period)}
             >
-              <option value="">Seleccione Periodo</option>
+              <MenuItem value="">
+                <em>Seleccione Periodo</em>
+              </MenuItem>
               {periods.map((option) => (
-                <option key={option.id} value={option.id}>
+                <MenuItem key={option.id} value={option.id}>
                   {option.value}
-                </option>
+                </MenuItem>
               ))}
-            </select>
-            {formik.touched.period && formik.errors.period ? (
+            </Select>
+            {formik.touched.period && formik.errors.period && (
               <div className="text-red-1 text-xs font-medium mt-1">
                 {formik.errors.period}
               </div>
-            ) : null}
-          </div>
-        </div>
-
+            )}
+          </FormControl>
+          </Grid>
+      </Grid>
         <div className="flex justify-end pt-5">
-          <button type="submit" className="btn">
+          <Button type="submit" variant="contained" color="primary">
             Siguiente
-          </button>
+          </Button>
         </div>
       </form>
-      {showModal &&
-        <ConfirmModal step={steps[0]} nextStep={steps[1]} setShowModal={setShowModal} onNext={handleModalAction} />
-
-      }
+      {showModal && (
+        <ConfirmModal
+          step={steps[0]}
+          nextStep={steps[1]}
+          isApproveButton={true}
+          setShowModal={setShowModal}
+          onNext={handleModalAction}
+        />
+      )}
       <Modal isVisible={isVisible} setIsVisible={setIsVisible} />
     </>
   );
