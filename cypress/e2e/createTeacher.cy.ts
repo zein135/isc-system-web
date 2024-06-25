@@ -1,22 +1,22 @@
-// cypress/support/index.d.ts
 /// <reference types="cypress" />
-import './commands';
 
 const email = 'paulwilkerlf@gmail.com';
 const password = '123456';
 
+
 Cypress.Commands.add('login', (email, password) => {
-    if (typeof email !== 'string' || typeof password !== 'string') {
-        throw new Error('Email and password must be strings');
-    }
+  if (typeof email !== 'string' || typeof password !== 'string') {
+      throw new Error('Email and password must be strings');
+  }
 
-    cy.visit('http://localhost:5173/login');
-    cy.get('input[name=email]').type(email);
-    cy.get('input[name=password]').type(password);
-    cy.contains('Login').click();
+  cy.visit('http://localhost:5173/login');
+  cy.get('input[name=email]').type(email);
+  cy.get('input[name=password]').type(password);
+  cy.contains('Login').click();
 });
+  
 
-describe('Create new teacher', () => {   
+describe('Create new graduation process', () => {   
     const code = Math.floor(Math.random() * 100000);
     const name = `Teacher${code}`;
     const lastname = `Teacher${code}`;
@@ -35,7 +35,7 @@ describe('Create new teacher', () => {
         // insert data
         cy.get('#name').should('be.visible').type(name + 'licensed');
         cy.get('#lastname').should('be.visible').type(lastname + 'licensed');
-        cy.get('#code').should('be.visible').type(code.toString() + '1');
+        cy.get('#code').should('be.visible').type(code + '1');
         cy.get('#degree').should('be.visible').click();
         cy.get('[data-value="licenciado"]').should('be.visible').click();
         cy.get('#email').should('be.visible').type('licensed' + testEmail);
@@ -51,7 +51,7 @@ describe('Create new teacher', () => {
         // insert data
         cy.get('#name').should('be.visible').type(name + 'master');
         cy.get('#lastname').should('be.visible').type(lastname + 'master');
-        cy.get('#code').should('be.visible').type(code.toString() + '2');
+        cy.get('#code').should('be.visible').type(code + '2');
         cy.get('#degree').should('be.visible').click();
         cy.get('[data-value="maestro"]').should('be.visible').click();
         cy.get('#email').should('be.visible').type('master' + testEmail);
@@ -67,7 +67,7 @@ describe('Create new teacher', () => {
         // insert data
         cy.get('#name').should('be.visible').type(name + 'PhD');
         cy.get('#lastname').should('be.visible').type(lastname + 'PhD');
-        cy.get('#code').should('be.visible').type(code.toString() + '3');
+        cy.get('#code').should('be.visible').type(code + '3');
         cy.get('#degree').should('be.visible').click();
         cy.get('[data-value="maestro"]').should('be.visible').click();
         cy.get('#email').should('be.visible').type('PhD' + testEmail);
