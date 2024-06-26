@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-
+ 
 const email = 'paulwilkerlf@gmail.com';
 const password = '123456';
 
@@ -17,63 +17,67 @@ Cypress.Commands.add('login', (email, password) => {
   
 
 describe('Create new graduation process', () => {   
-    const code = Math.floor(Math.random() * 100000);
-    const name = `Teacher${code}`;
-    const lastname = `Teacher${code}`;
-    const testEmail = `testEmail${code}@gmail.com`;
-    
-    
-
-    beforeEach(() => {
-      cy.login(email, password);
-    });
+  const code = Math.floor(Math.random() * 100000);
+  const name = `${code}`;
+  const lastname = `Teacher${code}`;
+  const testEmail = `testEmail${code}@gmail.com`;
+  const title = `Title${code}`;
+  const time = 500;
   
-    it('Should create a new teacher with the position of a licensed successfully', () => {
-        cy.get('[data-testid="MenuIcon"]').should('be.visible').click();
-        cy.get('[data-testid="ChecklistOutlinedIcon"]').should('be.visible').click();
-        cy.get('.btn').contains('Crear Proceso de Graduación').click();
-        // insert data
-        cy.get('.MuiAutocomplete-endAdornment button').click();
-        /*  cy.get('#lastname').should('be.visible').type(lastname + 'licensed');
-        cy.get('#code').should('be.visible').type(code + '1');
-        cy.get('#degree').should('be.visible').click();
-        cy.get('[data-value="licenciado"]').should('be.visible').click();
-        cy.get('#email').should('be.visible').type('licensed' + testEmail);
-        cy.get('#phone').should('be.visible').type(code + '1');
-        cy.get('.MuiButtonBase-root.MuiButton-root.MuiButton-containedPrimary').should('be.visible').click();
-        cy.get('.MuiAlert-message.css-1pxa9xg-MuiAlert-message').should('be.visible').and('contain', 'Profesor creado con éxito');
-    });
+  beforeEach(() => {
+    cy.login(email, password);
+  });
+  
+  it('Create new graduation process with the thesis project modality."', () => {
+    cy.get('[data-testid="MenuIcon"]').should('be.visible').click();
+    cy.get('[data-testid="ChecklistOutlinedIcon"]').should('be.visible').click();
+    cy.get('.btn').contains('Crear Proceso de Graduación').click();
+    // insert data
+    cy.get('.MuiAutocomplete-endAdornment button').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('div#\\:r9\\:').click();
+    // Select "Proyecto de Grado"
+    cy.contains('li.MuiMenuItem-root', 'Proyecto de Grado').should("be.visible").click();
+    cy.get('input#\\:rd\\:').clear().type('PG' + title);
+    cy.get('div#\\:rf\\:').should('be.visible').click(); 
+    cy.get('li.MuiMenuItem-root[data-value="Segundo2024"]').click();
+    // Save 
+    cy.get('button.MuiButton-containedPrimary').contains('GUARDAR').click();
+
+    cy.wait(time);
     
-    it('Should create a new teacher with the position of a maestrer successfully', () => {
-        cy.get('[data-testid="MenuIcon"]').should('be.visible').click();
-        cy.get('[data-testid="SupervisorAccountIcon"]').should('be.visible').click();
-        cy.get('.MuiButton-containedSecondary.css-kcsbbo-MuiButtonBase-root-MuiButton-root').should('be.visible').click();
-        // insert data
-        cy.get('#name').should('be.visible').type(name + 'master');
-        cy.get('#lastname').should('be.visible').type(lastname + 'master');
-        cy.get('#code').should('be.visible').type(code + '2');
-        cy.get('#degree').should('be.visible').click();
-        cy.get('[data-value="maestro"]').should('be.visible').click();
-        cy.get('#email').should('be.visible').type('master' + testEmail);
-        cy.get('#phone').should('be.visible').type(code + '2');
-        cy.get('.MuiButtonBase-root.MuiButton-root.MuiButton-containedPrimary').should('be.visible').click();
-        cy.get('.MuiAlert-message.css-1pxa9xg-MuiAlert-message').should('be.visible').and('contain', 'Profesor creado con éxito');
-    });
+    // insert date and tutor
+    cy.get('#mentor').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('[type="checkbox"]').check();
+    cy.get('button.btn[type="submit"]').click();
+    cy.get('button.btn').contains('Continuar').click();
+
+    cy.wait(time);
+
+    // inser reviewer
+    cy.get('select#reviewer').select('Paul');
+    cy.get('[type="checkbox"]').check();
+    cy.get('button.btn').contains('Siguiente').click();
+    cy.get('button.btn').contains('Continuar').click();
+
+    //internal defense
+    cy.get('#president').type('President' + name);
+    cy.get('#secretary').type('Secretary' + name);
+    //cy.get('#date').type('12032025')
+    //cy.get('#DateTimeInput').click().type(Cypress.moment().format('MMM DD, YYYY'))
+    /*cy.get('button.btn').contains('Siguiente').click();
+    cy.get('button.btn').contains('Continuar').click();
     
-    it('Should create a new teacher with the position of a PhD successfully', () => {
-        cy.get('[data-testid="MenuIcon"]').should('be.visible').click();
-        cy.get('[data-testid="SupervisorAccountIcon"]').should('be.visible').click();
-        cy.get('.MuiButton-containedSecondary.css-kcsbbo-MuiButtonBase-root-MuiButton-root').should('be.visible').click();
-        // insert data
-        cy.get('#name').should('be.visible').type(name + 'PhD');
-        cy.get('#lastname').should('be.visible').type(lastname + 'PhD');
-        cy.get('#code').should('be.visible').type(code + '3');
-        cy.get('#degree').should('be.visible').click();
-        cy.get('[data-value="maestro"]').should('be.visible').click();
-        cy.get('#email').should('be.visible').type('PhD' + testEmail);
-        cy.get('#phone').should('be.visible').type(code + '3');
-        cy.get('.MuiButtonBase-root.MuiButton-root.MuiButton-containedPrimary').should('be.visible').click();
-        cy.get('.MuiAlert-message.css-1pxa9xg-MuiAlert-message').should('be.visible').and('contain', 'Profesor creado con éxito');
-  */  });
+    cy.wait(time);
+    
+    //internal defense
+    cy.get('#president').type('President' + name);
+    cy.get('#secretary').type('Secretary' + name);
+    cy.get('#date').type('12032025')
+    //cy.get('#DateTimeInput').click().type(Cypress.moment().format('MMM DD, YYYY'))
+    cy.get('button.btn').contains('Siguiente').click();
+    cy.get('button.btn').contains('Continuar').click();*/
+  });
 });
   
