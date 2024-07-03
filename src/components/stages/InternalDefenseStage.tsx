@@ -12,6 +12,10 @@ import ReviewerSelect from "../selects/ReviewerSelect";
 import { Box, Grid, TextField, Button } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs, { Dayjs } from "dayjs";
 
 const DEFENSE_INTERNAL = "internal";
 
@@ -60,6 +64,10 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
       setShowModal(true);
     },
   });
+
+  const handleDateChange = (value: Dayjs | null) => {
+    formik.setFieldValue("date", value);
+  };
 
   const downloadEditedPDF = async (values: any) => {
     try {
@@ -164,21 +172,14 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                id="date"
-                name="date"
-                label="Seleccione una fecha"
-                type="date"
-                margin="normal"
-                fullWidth
-                value={formik.values.date}
-                onChange={formik.handleChange}
-                error={formik.touched.date && Boolean(formik.errors.date)}
-                helperText={formik.touched.date && formik.errors.date}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Fecha de Asignación de Tutor"
+                  value={formik.values.date_tutor_assignament}
+                  onChange={handleDateChange}
+                  format="DD/MM/YYYY"
+                />
+              </LocalizationProvider>
             </Grid>
           </Grid>
         </Box>
