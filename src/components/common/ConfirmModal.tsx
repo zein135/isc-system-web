@@ -3,7 +3,7 @@ interface confirmModal {
   nextStep: string;
   isApproveButton: boolean | "" | 0;
   setShowModal: (it: boolean) => void;
-  onNext: () => void;
+  onNext: (values: any) => Promise<void>;
 }
 const ConfirmModal = (props: confirmModal) => {
   return (

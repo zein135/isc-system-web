@@ -1,12 +1,12 @@
+import { FC, useState } from "react";
 import { useFormik } from "formik";
-import { FC, useEffect, useState } from "react";
 import * as Yup from "yup";
-import { getMentors } from "../../services/mentorsService";
-import { Mentor } from "../../models/mentorInterface";
+import { Box, Button, Checkbox, FormControlLabel, Grid } from "@mui/material";
 import ConfirmModal from "../common/ConfirmModal";
 import { steps } from "../../data/steps";
 import { useProcessStore } from "../../store/store";
 import { updateProcess } from "../../services/processServicer";
+import ReviewerSelect from "../selects/ReviewerSelect";
 
 const validationSchema = Yup.object({
   reviewer: Yup.string().required("* El revisor es obligatorio"),
@@ -21,30 +21,15 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
   onPrevious,
   onNext,
 }) => {
-  const process = useProcessStore(state => state.process);
-  const setProcess = useProcessStore(state => state.setProcess);
+  const process = useProcessStore((state) => state.process);
+  const setProcess = useProcessStore((state) => state.setProcess);
 
-  const [reviewers, setReviewers] = useState<Mentor[]>([]);
-  const [, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getMentors();
-        setReviewers(response.data);
-      } catch (error) {
-        setError("Error getting mentors");
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const saveStage = async () => {
     if (process) {
-      const { reviewer, reviewerDesignationLetterSubmitted } = formik.values;
-      process.reviewer_letter = reviewerDesignationLetterSubmitted;
+      const { reviewer, reviewerLetter } = formik.values;
+      process.reviewer_letter = reviewerLetter;
       process.reviewer_id = Number(reviewer);
       process.stage_id = 3;
       process.reviewer_approval = true;
@@ -62,8 +47,8 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
 
   const formik = useFormik({
     initialValues: {
-      reviewerDesignationLetterSubmitted: process?.reviewer_letter || false,
-      reviewer: process?.reviewer_id,
+      reviewerLetter: process?.reviewer_letter || false,
+      reviewer: process?.reviewer_id || "",
     },
     validationSchema,
     onSubmit: () => {
@@ -74,65 +59,47 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
   return (
     <>
       <div className="txt1">Etapa 3: Seleccionar Revisor</div>
-      <form onSubmit={formik.handleSubmit} className="mx-16">
-        <div className="my-5">
-          <label
-            htmlFor="reviewer"
-            className="txt2"
-          >
-            Seleccione el revisor del estudiante
-          </label>
-          <select
-            id="reviewer"
-            name="reviewer"
-            onChange={formik.handleChange}
-            value={formik.values.reviewer}
-            className={`bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-2 block w-full p-2.5 mt-2 ${formik.touched.reviewer && formik.errors.reviewer
-                ? "border-red-1"
-                : "border-gray-300"
-              }`}
-          >
-            <option value="">Seleccione un Revisor</option>
-            {reviewers.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.name}
-              </option>
-            ))}
-          </select>
-          {formik.touched.reviewer && formik.errors.reviewer ? (
-            <div className="text-red-1 text-xs mt-1">
-              {formik.errors.reviewer}
-            </div>
-          ) : null}
-        </div>
-        <div className="mt-5">
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              name="reviewerDesignationLetterSubmitted"
-              checked={formik.values.reviewerDesignationLetterSubmitted}
+      <form onSubmit={formik.handleSubmit} className="mt-5 mx-16">
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <ReviewerSelect
+              value={formik.values.reviewer}
               onChange={formik.handleChange}
-              className="checkbox"
+              error={formik.touched.reviewer && Boolean(formik.errors.reviewer)}
+              helperText={formik.touched.reviewer && formik.errors.reviewer}
             />
-            <span className="ml-2 text-gray-700">
-              Carta de Designación de Revisor Presentada
-            </span>
-          </label>
-        </div>
-
-        <div className="flex justify-between mt-4">
-          <button type="button" onClick={onPrevious} className="btn2">
+          </Grid>
+        </Grid>
+        <Box mt={2}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="reviewerLetter"
+                color="primary"
+                checked={formik.values.reviewerLetter}
+                onChange={formik.handleChange}
+              />
+            }
+            label="Carta de Designación de Revisor Presentada"
+          />
+        </Box>
+        <Box display="flex" justifyContent="space-between" mt={4}>
+          <Button variant="contained" color="secondary" onClick={onPrevious}>
             Anterior
-          </button>
-          <button type="submit" className="btn">
+          </Button>
+          <Button type="submit" variant="contained" color="primary">
             Siguiente
-          </button>
-        </div>
+          </Button>
+        </Box>
       </form>
-      {showModal &&
-        <ConfirmModal step={steps[2]} nextStep={steps[3]} setShowModal={setShowModal} onNext={handleModalAction} />
-
-      }
+      {showModal && (
+        <ConfirmModal
+          step={steps[2]}
+          nextStep={steps[3]}
+          setShowModal={setShowModal}
+          onNext={handleModalAction}
+        />
+      )}
     </>
   );
 };
