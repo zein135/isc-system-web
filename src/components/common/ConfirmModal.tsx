@@ -1,9 +1,9 @@
 interface confirmModal {
   step: string;
   nextStep: string;
-  isApproveButton: boolean | "" | 0;
+  isApproveButton: boolean;
   setShowModal: (it: boolean) => void;
-  onNext: (values: any) => Promise<void>;
+  onNext: () => void;
 }
 const ConfirmModal = (props: confirmModal) => {
   return (

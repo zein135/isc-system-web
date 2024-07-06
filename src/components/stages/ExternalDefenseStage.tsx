@@ -1,8 +1,18 @@
-import { useFormik } from "formik";
+import { setIn, useFormik } from "formik";
 import { FC, useEffect, useState } from "react";
 import * as Yup from "yup";
 import ConfirmModal from "../common/ConfirmModal";
 import { steps } from "../../data/steps";
+import { Box, Grid } from "@mui/material";
+import ReviewerSelect from "../selects/ReviewerSelect";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { useDefenseInternalDetail } from "../../hooks/useDefenseInternalDetail";
+import dayjs, { Dayjs } from "dayjs";
+import { useProcessStore } from "../../store/store";
+
+const DEFENSE_EXTERNAL = "external";
 
 const validationSchema = Yup.object({
   president: Yup.string().required("* Debe agregar un presidente"),
@@ -19,15 +29,31 @@ export const ExternalDefenseStage: FC<ExternalDefenseStageProps> = ({
   onPrevious,
   onNext,
 }) => {
-  //const [secretaries, setSecretaries] = useState<Mentor[]>([]);
-  //const [presidents, setPresidents] = useState<Mentor[]>([]);
+
   const [, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const process = useProcessStore((state) => state.process);
+  const setProcess = useProcessStore((state) => state.setProcess);
+  const defenseDetail = useDefenseInternalDetail(process?.id || 0);
+  const [initialValues, setInitialValues] = useState<any>({
+    president: "",
+    firstJuror: "",
+    secondJuror: "",
+    date: dayjs(),
+  });
 
   useEffect(() => {
+
+    if (defenseDetail) {
+      setInitialValues({
+        president: defenseDetail.president?.toString() || "",
+        secretary: defenseDetail.secretary?.toString() || "",
+        date: defenseDetail.date ? dayjs(defenseDetail.date) : dayjs(),
+      });
+    }
     const fetchData = async () => {
       try {
-       // const response = await getMentors();
+        // const response = await getMentors();
         //setSecretaries(response.data);
         //setPresidents(response.data);
       } catch (error) {
@@ -39,11 +65,8 @@ export const ExternalDefenseStage: FC<ExternalDefenseStageProps> = ({
   }, []);
 
   const formik = useFormik({
-    initialValues: {
-      president: "",
-      secretary: "",
-      date: "",
-    },
+    initialValues,
+    enableReinitialize: true,
     validationSchema,
     onSubmit: (values) => {
       console.log(values);
@@ -52,68 +75,62 @@ export const ExternalDefenseStage: FC<ExternalDefenseStageProps> = ({
     },
   });
 
+  const handleDateChange = (value: Dayjs | null) => {
+    formik.setFieldValue("date", value);
+  };
+
   return (
     <>
       <div className="txt1">Etapa Final: Defensa Externa</div>
 
       <form onSubmit={formik.handleSubmit} className="mx-16 ">
-        <div className="flex flex-col">
-          <div className="flex-1 mt-5 ">
-            <label htmlFor="president" className="txt2">
-              1. Seleccione un presidente
-            </label>
-            <input
-              id="president"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="president"
-              type="text"
-              placeholder="Escriba el nombre del presidente"
-              onChange={formik.handleChange}
-              value={formik.values.president}
-            />
-             
-            {formik.touched.president && formik.errors.president ? (
-            <div className="text-red-1 text-xs mt-1">
-              {formik.errors.president}
-            </div>
-          ) : <div className="h-5"/>}
-            <label htmlFor="secretary" className="txt2">
-              2. Seleccione un secretario
-            </label>
-            <input
-              id="secretary"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="secretary"
-              type="text"
-              placeholder="Escriba el nombre del secretario"
-              onChange={formik.handleChange}
-              value={formik.values.secretary}
-            />
-              
-            {formik.touched.secretary && formik.errors.secretary ? (
-            <div className="text-red-1 text-xs mt-1">
-              {formik.errors.secretary}
-            </div>
-          ) : <div className="h-5"/>}
-          </div>
-          <div className="flex-1">
-            <label htmlFor="date" className="txt2">
-              3. Seleccione una fecha
-            </label>
-            <input
-              type="date"
-              onChange={formik.handleChange}
-              id="date"
-              name="date"
-              className="select-1 border-gray-300"/>
-            {formik.touched.date && formik.errors.date ? (
-            <div className="text-red-1 text-xs mt-1">
-              {formik.errors.date}
-            </div>
-          ) : <div className="h-5"/>}
-          </div>
-        </div>
-
+        <Box>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <ReviewerSelect
+                value={formik.values.president}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.president && Boolean(formik.errors.president)
+                }
+                label={"Seleccione un presidente"}
+                name="president"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <ReviewerSelect
+                value={formik.values.president}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.president && Boolean(formik.errors.president)
+                }
+                label={"Seleccione un presidente"}
+                name="president"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <ReviewerSelect
+                value={formik.values.president}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.president && Boolean(formik.errors.president)
+                }
+                label={"Seleccione un presidente"}
+                name="president"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} marginTop={7}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Fecha de Asignación de Tutor"
+                  value={formik.values.date}
+                  onChange={handleDateChange}
+                  format="DD/MM/YYYY"
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+        </Box>
         <div className="flex justify-between pt-5">
           <button type="button" onClick={onPrevious} className="btn2">
             Anterior
