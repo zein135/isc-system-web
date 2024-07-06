@@ -1,20 +1,22 @@
 import { useFormik } from "formik";
-import { FC, useEffect, useState } from "react";
-import { Mentor } from "../../models/mentorInterface";
+import { FC, useState } from "react";
 import * as Yup from "yup";
-import { getMentors } from "../../services/mentorsService";
+import dayjs, { Dayjs } from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Grid, Box, FormControlLabel, Checkbox, Button } from "@mui/material";
+
+import ProfessorAutocomplete from "../selects/ProfessorAutoComplete";
 import ConfirmModal from "../common/ConfirmModal";
 import { steps } from "../../data/steps";
 import { useProcessStore } from "../../store/store";
 import { updateProcess } from "../../services/processServicer";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs, { Dayjs } from "dayjs";
-import { Autocomplete, Grid, TextField } from "@mui/material";
+import { Mentor } from "../../models/mentorInterface";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 const validationSchema = Yup.object({
-  mentor: Yup.string(),
+  mentor: Yup.string().required("Debe seleccionar un tutor"),
   tutorDesignationLetterSubmitted: Yup.boolean(),
   date_tutor_assignament: Yup.mixed()
     .required("Debe seleccionar una fecha")
@@ -32,34 +34,26 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
 }) => {
   const process = useProcessStore((state) => state.process);
   const setProcess = useProcessStore((state) => state.setProcess);
-
-  const [mentors, setMentors] = useState<Mentor[]>([]);
-  const [, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
-  const [viewMode, setViewMode] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getMentors();
-        setMentors(response.data);
-        if (process?.tutor_id) {
-          const mentor = response.data.find(
-            (mentor: Mentor) => mentor.id === process.tutor_id
-          );
-          setSelectedMentor(mentor || null);
-        }
-        if (process && process?.stage_id > 1) {
-          setViewMode(true);
-        }
-      } catch (error) {
-        setError("Error getting mentors");
+  const formik = useFormik({
+    initialValues: {
+      tutorDesignationLetterSubmitted: process?.tutor_letter || false,
+      date_tutor_assignament: process?.date_tutor_assignament
+        ? dayjs(process.date_tutor_assignament)
+        : dayjs(),
+      mentor: process?.tutor_id || "",
+    },
+    validationSchema,
+    onSubmit: () => {
+      if (canApproveStage()) {
+        setShowModal(true);
+      } else {
+        saveStage();
       }
-    };
-
-    fetchData();
-  }, []);
+    },
+  });
 
   const saveStage = async () => {
     if (process) {
@@ -89,70 +83,57 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
     setShowModal(false);
   };
 
-  const formik = useFormik({
-    initialValues: {
-      tutorDesignationLetterSubmitted: process?.tutor_letter || false,
-      date_tutor_assignament: process?.date_tutor_assignament
-        ? dayjs(process.date_tutor_assignament)
-        : dayjs(),
-      mentor: process?.tutor_id || "",
-    },
-    validationSchema,
-    onSubmit: (_values) => {
-      if (canApproveStage()) {
-        setShowModal(true);
-      } else {
-        saveStage();
-      }
-    },
-  });
-
   const handleDateChange = (value: Dayjs | null) => {
     formik.setFieldValue("date_tutor_assignament", value);
   };
 
   const canApproveStage = () => {
-    return (
-      formik.values.mentor && formik.values.tutorDesignationLetterSubmitted
+    return Boolean(
+      formik.values.mentor &&
+        formik.values.tutorDesignationLetterSubmitted &&
+        formik.values.date_tutor_assignament
     );
   };
 
-  const handleMentorChange = (event: any, value: any) => {
+  const handleMentorChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: Mentor | null
+  ) => {
     formik.setFieldValue("mentor", value?.id || "");
   };
-  
+
   const isApproveButton = canApproveStage();
+
+  const editForm = () => {
+    setEditMode(false);
+  };
 
   return (
     <>
-      <div className="txt1">Etapa 2: Seleccionar Tutor</div>
+      <div className="txt1">
+        Etapa 2: Seleccionar Tutor <ModeEditIcon onClick={editForm} />
+      </div>
       <form onSubmit={formik.handleSubmit} className="mx-16">
         <Grid container spacing={3}>
           <Grid item xs={6} marginTop={5}>
-            <Autocomplete
-              disabled={viewMode}
-              id="mentor"
-              options={mentors}
-              getOptionLabel={(option) => `${option.name} ${option.lastName}`}
-              value={selectedMentor}
+            <ProfessorAutocomplete
+              disabled={editMode}
+              value={String(formik.values.mentor)}
               onChange={handleMentorChange}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Seleccionar Tutor"
-                  name="mentor"
-                  value={formik.values.mentor}
-                  error={formik.touched.mentor && Boolean(formik.errors.mentor)}
-                  helperText={formik.touched.mentor && formik.errors.mentor}
-                />
-              )}
+              id="mentor"
+              label={"Seleccionar Tutor"}
             />
+            {formik.touched.mentor && formik.errors.mentor ? (
+              <div className="text-red-1 text-xs mt-1">
+                {formik.errors.mentor}
+              </div>
+            ) : null}
           </Grid>
           <Grid item xs={6} marginTop={5}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
-                disabled={viewMode}
-                label="Fecha de Asignación de Tutor"
+                disabled={editMode}
+                label="Fecha de Asignación"
                 value={formik.values.date_tutor_assignament}
                 onChange={handleDateChange}
                 format="DD/MM/YYYY"
@@ -160,36 +141,40 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
             </LocalizationProvider>
           </Grid>
         </Grid>
-        <div className="mt-5">
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              name="tutorDesignationLetterSubmitted"
-              checked={formik.values.tutorDesignationLetterSubmitted}
-              onChange={formik.handleChange}
-              className="checkbox"
-              disabled={viewMode}
-            />
-            <span className="ml-2 text-gray-700">
-              Carta de Asignación de Tutor Presentada
-            </span>
-          </label>
+        <Box mt={5}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="tutorDesignationLetterSubmitted"
+                color="primary"
+                checked={formik.values.tutorDesignationLetterSubmitted}
+                onChange={formik.handleChange}
+                disabled={editMode}
+              />
+            }
+            label="Carta de Asignación de Tutor Presentada"
+          />
           {formik.touched.tutorDesignationLetterSubmitted &&
           formik.errors.tutorDesignationLetterSubmitted ? (
             <div className="text-red-1 text-xs mt-1">
               {formik.errors.tutorDesignationLetterSubmitted}
             </div>
           ) : null}
-        </div>
+        </Box>
 
-        <div className="flex justify-between mt-4">
-          <button type="button" onClick={onPrevious} className="btn2">
+        <Box display="flex" justifyContent="space-between" mt={4}>
+          <Button
+            type="button"
+            onClick={onPrevious}
+            variant="contained"
+            color="secondary"
+          >
             Anterior
-          </button>
-          <button type="submit" className="btn">
-            {isApproveButton ? "Finalizar Etapa" : "Guardar"}
-          </button>
-        </div>
+          </Button>
+          <Button type="submit" variant="contained" color="primary">
+            {isApproveButton ? "Aprobar Etapa" : "Guardar"}
+          </Button>
+        </Box>
       </form>
       {showModal && (
         <ConfirmModal
