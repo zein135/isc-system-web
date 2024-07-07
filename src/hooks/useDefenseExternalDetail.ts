@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { getDefenseDetail } from "../services/defenseDetail";
 import { DefenseDetail } from "../services/models/DefenseDetail";
 
-const DEFENSE_INTERNAL = 'internal';
+const DEFENSE_INTERNAL = 'external';
 
-export const useDefenseInternalDetail = (processId: number | null) => {
+export const useDefenseExternalDetail = (processId: number | null) => {
   const [defenseDetail, setDefenseDetail] = useState<DefenseDetail | null>(null);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { Box, Grid, Button } from "@mui/material";
 import { useFormik } from "formik";
@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 import ConfirmModal from "../common/ConfirmModal";
 import { steps } from "../../data/steps";
@@ -21,6 +22,13 @@ import { Mentor } from "../../models/mentorInterface";
 
 const DEFENSE_INTERNAL = "internal";
 
+interface InternalValues {
+  president: string;
+  firstJuror: string;
+  secondJuror: string;
+  date: Dayjs;
+}
+
 interface InternalDefenseStageProps {
   onPrevious: () => void;
   onNext: () => void;
@@ -33,19 +41,31 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
   const [showModal, setShowModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
 
-  const [initialValues, setInitialValues] = useState<any>({
-    president: "",
-    firstJuror: "",
-    secondJuror: "",
-    date: dayjs(), // Usar dayjs() para inicializar con la fecha actual
-  });
   const process = useProcessStore((state) => state.process);
   const setProcess = useProcessStore((state) => state.setProcess);
   const defenseDetail = useDefenseInternalDetail(process?.id || 0);
 
+  const formik = useFormik({
+    initialValues: {
+      president: defenseDetail?.president?.toString() || "",
+      firstJuror: defenseDetail?.first_juror?.toString() || "",
+      secondJuror: defenseDetail?.second_juror?.toString() || "",
+      date: defenseDetail?.date ? dayjs(defenseDetail.date) : dayjs(),
+    },
+    validationSchema: Yup.object({
+      president: Yup.string().required("* Debe agregar un presidente"),
+      firstJuror: Yup.string().required("* Debe agregar un primer jurado"),
+      secondJuror: Yup.string().required("* Debe agregar un segundo jurado"),
+      date: Yup.mixed().required("* Debe seleccionar una fecha"),
+    }),
+    onSubmit: () => {
+      setShowModal(true);
+    },
+  });
+
   useEffect(() => {
     if (defenseDetail) {
-      setInitialValues({
+      formik.setValues({
         president: defenseDetail.president?.toString() || "",
         firstJuror: defenseDetail.first_juror?.toString() || "",
         secondJuror: defenseDetail.second_juror?.toString() || "",
@@ -53,25 +73,12 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
       });
     }
   }, [defenseDetail]);
-
-  const formik = useFormik({
-    initialValues,
-    enableReinitialize: true,
-    validationSchema: Yup.object({
-      president: Yup.string().required("* Debe agregar un presidente"),
-      firstJuror: Yup.string().required("* Debe agregar un primer jurado"),
-      secondJuror: Yup.string().required("* Debe agregar un segundo jurado"),
-      date: Yup.mixed().required("* Debe seleccionar una fecha"),
-    }),
-    onSubmit: (values) => {
-      setShowModal(true);
-    },
-  });
-
+  
   const handleDateChange = (value: Dayjs | null) => {
     formik.setFieldValue("date", value);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const downloadEditedPDF = async (values: any) => {
     try {
       const [year, month, day] = values.date.format("YYYY-MM-DD").split("-");
@@ -94,13 +101,12 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
         "Acta_Defensa_Interna_de_Seminario_de_Grado_V1.1.pdf"
       );
 
-      onNext();
     } catch (error) {
       console.error("Failed to download PDF:", error);
     }
   };
 
-  const saveStage = async (values: any) => {
+  const saveStage = async (values: InternalValues) => {
     if (process) {
       const defenseDetail = {
         graduation_process_id: process.id,
@@ -127,7 +133,7 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
     }
   };
 
-  const handleMentorChange = (
+  const handlePresidentChange = (
     _event: React.ChangeEvent<unknown>,
     value: Mentor | null
   ) => {
@@ -150,17 +156,24 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
 
   const canApproveStage = () => {
     return Boolean(
-      formik.values.mentor &&
-        formik.values.tutorDesignationLetterSubmitted &&
-        formik.values.date_tutor_assignament
+        formik.values.president &&
+        formik.values.firstJuror &&
+        formik.values.secondJuror &&
+        formik.values.date
     );
   };
 
   const isApproveButton = canApproveStage();
-  
+
+  const editForm = () => {
+    setEditMode(false);
+  };
+
   return (
     <>
-      <div className="txt1">Etapa 4: Defensa Interna</div>
+      <div className="txt1">
+        Etapa 4: Defensa Interna <ModeEditIcon onClick={editForm} />
+      </div>
       <form onSubmit={formik.handleSubmit} className="mx-16">
         <Box>
           <Grid container spacing={2}>
@@ -168,7 +181,7 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
               <ProfessorAutocomplete
                 disabled={editMode}
                 value={String(formik.values.president)}
-                onChange={handleMentorChange}
+                onChange={handlePresidentChange}
                 id="president"
                 label={"Seleccionar Presidente"}
               />
@@ -232,7 +245,7 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
             Anterior
           </Button>
           <Button type="submit" variant="contained" color="primary">
-          {isApproveButton ? "Aprobar Etapa" : "Guardar"}
+            {isApproveButton ? "Aprobar Etapa" : "Guardar"}
           </Button>
         </Box>
       </form>
