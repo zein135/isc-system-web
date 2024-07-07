@@ -38,8 +38,6 @@ const ProgressTracker: FC<ProgressTrackerProps> = ({ currentStepIndex, status })
         return <InternalDefenseStage onPrevious={goToPreviousStage} onNext={goToNextStage} />;
       case 4:
         return <ExternalDefenseStage onPrevious={goToPreviousStage} onNext={goToNextStage} />;
-      default:
-        return <SpinModal />;
     }
   };
 

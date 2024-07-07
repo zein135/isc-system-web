@@ -1,79 +1,118 @@
-import { setIn, useFormik } from "formik";
-import { FC, useEffect, useState } from "react";
+import { useFormik } from "formik";
+import { FC, useState, useEffect } from "react";
 import * as Yup from "yup";
 import ConfirmModal from "../common/ConfirmModal";
 import { steps } from "../../data/steps";
-import { Box, Grid } from "@mui/material";
-import ReviewerSelect from "../selects/ReviewerSelect";
+import { Box, Button, Grid } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { useDefenseInternalDetail } from "../../hooks/useDefenseInternalDetail";
 import dayjs, { Dayjs } from "dayjs";
 import { useProcessStore } from "../../store/store";
+import ProfessorAutocomplete from "../selects/ProfessorAutoComplete";
+import { Mentor } from "../../models/mentorInterface";
+import { postDefenseDetail } from "../../services/defenseDetail";
+import { updateProcess } from "../../services/processServicer";
+import { useDefenseExternalDetail } from "../../hooks/useDefenseExternalDetail";
 
 const DEFENSE_EXTERNAL = "external";
 
+interface ExternalValues {
+  president: string;
+  firstJuror: string;
+  secondJuror: string;
+  date: Dayjs;
+}
+
 const validationSchema = Yup.object({
   president: Yup.string().required("* Debe agregar un presidente"),
-  secretary: Yup.string().required("* Debe agregar un secretario"),
+  firstJuror: Yup.string().required("* Debe agregar un primer jurado"),
+  secondJuror: Yup.string().required("* Debe agregar un segundo jurado"),
   date: Yup.string().required("* Debe seleccionar una fecha"),
 });
 
 interface ExternalDefenseStageProps {
   onPrevious: () => void;
-  onNext: () => void;
 }
 
 export const ExternalDefenseStage: FC<ExternalDefenseStageProps> = ({
   onPrevious,
-  onNext,
 }) => {
-
-  const [, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const process = useProcessStore((state) => state.process);
+  const [editMode, setEditMode] = useState<boolean>(false);
+
   const setProcess = useProcessStore((state) => state.setProcess);
-  const defenseDetail = useDefenseInternalDetail(process?.id || 0);
-  const [initialValues, setInitialValues] = useState<any>({
-    president: "",
-    firstJuror: "",
-    secondJuror: "",
-    date: dayjs(),
+  const defenseDetail = useDefenseExternalDetail(process?.id || 0);
+
+  const formik = useFormik({
+    initialValues: {
+      president: defenseDetail?.president?.toString() || "",
+      firstJuror: defenseDetail?.first_juror?.toString() || "",
+      secondJuror: defenseDetail?.second_juror?.toString() || "",
+      date: defenseDetail?.date ? dayjs(defenseDetail.date) : dayjs(),
+    },
+    validationSchema,
+    onSubmit: () => {
+      setShowModal(true);
+    },
   });
 
   useEffect(() => {
-
     if (defenseDetail) {
-      setInitialValues({
+      formik.setValues({
         president: defenseDetail.president?.toString() || "",
-        secretary: defenseDetail.secretary?.toString() || "",
+        firstJuror: defenseDetail.first_juror?.toString() || "",
+        secondJuror: defenseDetail.second_juror?.toString() || "",
         date: defenseDetail.date ? dayjs(defenseDetail.date) : dayjs(),
       });
     }
-    const fetchData = async () => {
-      try {
-        // const response = await getMentors();
-        //setSecretaries(response.data);
-        //setPresidents(response.data);
-      } catch (error) {
-        setError("error");
-      }
-    };
+  }, [defenseDetail]);
 
-    fetchData();
-  }, []);
+  const saveStage = async (values: ExternalValues) => {
+    if (process) {
+      const defenseDetail = {
+        graduation_process_id: process.id,
+        president: Number(values.president),
+        first_juror: Number(values.firstJuror),
+        second_juror: Number(values.secondJuror),
+      };
+      await postDefenseDetail(process.id, {
+        ...defenseDetail,
+        type: DEFENSE_EXTERNAL,
+      });
+      setProcess(process);
+      await updateProcess(process);
+    }
+  };
 
-  const formik = useFormik({
-    initialValues,
-    enableReinitialize: true,
-    validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      setShowModal(true);
-      //onNext();
-    },
-  });
+  const handleModalAction = async () => {
+    if (formik.values) {
+      await saveStage(formik.values);
+      setShowModal(false);
+    }
+  };
+
+  const handlePresidentChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: Mentor | null
+  ) => {
+    formik.setFieldValue("president", value?.id || "");
+  };
+
+  const handleFirstJurorChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: Mentor | null
+  ) => {
+    formik.setFieldValue("firstJuror", value?.id || "");
+  };
+
+  const handleSecondJurorChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: Mentor | null
+  ) => {
+    formik.setFieldValue("secondJuror", value?.id || "");
+  };
 
   const handleDateChange = (value: Dayjs | null) => {
     formik.setFieldValue("date", value);
@@ -86,43 +125,55 @@ export const ExternalDefenseStage: FC<ExternalDefenseStageProps> = ({
       <form onSubmit={formik.handleSubmit} className="mx-16 ">
         <Box>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <ReviewerSelect
-                value={formik.values.president}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.president && Boolean(formik.errors.president)
-                }
-                label={"Seleccione un presidente"}
-                name="president"
+            <Grid item xs={6} marginTop={5}>
+              <ProfessorAutocomplete
+                disabled={editMode}
+                value={String(formik.values.president)}
+                onChange={handlePresidentChange}
+                id="president"
+                label={"Seleccionar Presidente"}
               />
+              {formik.touched.president && formik.errors.president ? (
+                <div className="text-red-1 text-xs mt-1">
+                  {String(formik.errors.president)}
+                </div>
+              ) : null}
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <ReviewerSelect
-                value={formik.values.president}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.president && Boolean(formik.errors.president)
-                }
-                label={"Seleccione un presidente"}
-                name="president"
+
+            <Grid item xs={6} marginTop={5}>
+              <ProfessorAutocomplete
+                disabled={editMode}
+                value={String(formik.values.firstJuror)}
+                onChange={handleFirstJurorChange}
+                id="firstJuror"
+                label={"Seleccionar Primer Jurado"}
               />
+              {formik.touched.firstJuror && formik.errors.firstJuror ? (
+                <div className="text-red-1 text-xs mt-1">
+                  {String(formik.errors.firstJuror)}
+                </div>
+              ) : null}
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <ReviewerSelect
-                value={formik.values.president}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.president && Boolean(formik.errors.president)
-                }
-                label={"Seleccione un presidente"}
-                name="president"
+
+            <Grid item xs={6} marginTop={5}>
+              <ProfessorAutocomplete
+                disabled={editMode}
+                value={String(formik.values.secondJuror)}
+                onChange={handleSecondJurorChange}
+                id="secondJuror"
+                label={"Seleccionar Segundo Jurado"}
               />
+              {formik.touched.secondJuror && formik.errors.secondJuror ? (
+                <div className="text-red-1 text-xs mt-1">
+                  {String(formik.errors.secondJuror)}
+                </div>
+              ) : null}
             </Grid>
-            <Grid item xs={12} sm={6} marginTop={7}>
+
+            <Grid item xs={12} sm={6} marginTop={5}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  label="Fecha de Asignación de Tutor"
+                  label="Fecha de Defensa"
                   value={formik.values.date}
                   onChange={handleDateChange}
                   format="DD/MM/YYYY"
@@ -131,21 +182,27 @@ export const ExternalDefenseStage: FC<ExternalDefenseStageProps> = ({
             </Grid>
           </Grid>
         </Box>
-        <div className="flex justify-between pt-5">
-          <button type="button" onClick={onPrevious} className="btn2">
+        <Box display="flex" justifyContent="space-between" pt={5}>
+          <Button
+            type="button"
+            onClick={onPrevious}
+            variant="contained"
+            color="secondary"
+          >
             Anterior
-          </button>
-          <button type="submit" className="btn">
-            Siguiente
-          </button>
-        </div>
+          </Button>
+          <Button type="submit" variant="contained" color="primary">
+            Finalizar
+          </Button>
+        </Box>
       </form>
       {showModal && (
         <ConfirmModal
           step={steps[4]}
-          nextStep="Resumen"
+          nextStep={steps[4]}
           setShowModal={setShowModal}
-          onNext={onNext}
+          isApproveButton={true}
+          onNext={handleModalAction}
         />
       )}
     </>
