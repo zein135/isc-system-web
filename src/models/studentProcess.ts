@@ -19,6 +19,7 @@ export interface Seminar {
     tutor_name: string;
     stage_id: number;
     date_tutor_assignament: Dayjs | null;
+    date_reviewer_assignament: Dayjs | null;
     tutor_approval_date: Date | null;
     reviewer_approval_date: Date | null;
 }

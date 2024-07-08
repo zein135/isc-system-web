@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 export interface CreateDefenseDetail {
   graduation_process_id: number;
   type: "internal" | "external";
@@ -19,4 +21,5 @@ export interface DefenseDetail {
   reviewer?: number;
   tutor?: number;
   grade?: number;
+  date? : Dayjs;
 }
