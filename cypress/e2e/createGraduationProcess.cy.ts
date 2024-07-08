@@ -47,37 +47,180 @@ describe('Create new graduation process', () => {
     cy.wait(time);
     
     // insert date and tutor
-    cy.get('#mentor').click();
+    cy.get('[data-testid="ModeEditIcon"]').click();
+    cy.get('[data-testid="ArrowDropDownIcon"]').click();
     cy.get('li.MuiAutocomplete-option').first().click();
     cy.get('[type="checkbox"]').check();
-    cy.get('button.btn[type="submit"]').click();
-    cy.get('button.btn').contains('Continuar').click();
+    // accept
+    cy.get('.MuiButton-containedPrimary').contains('Aprobar Etapa').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
+
 
     cy.wait(time);
 
     // inser reviewer
-    cy.get('select#reviewer').select('Paul');
+    cy.get('[data-testid="ArrowDropDownIcon"]').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
     cy.get('[type="checkbox"]').check();
-    cy.get('button.btn').contains('Siguiente').click();
-    cy.get('button.btn').contains('Continuar').click();
+    // accept
+    cy.get('.MuiButton-containedPrimary').contains('Aprobar Etapa').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
 
     //internal defense
-    cy.get('#president').type('President' + name);
-    cy.get('#secretary').type('Secretary' + name);
-    //cy.get('#date').type('12032025')
-    //cy.get('#DateTimeInput').click().type(Cypress.moment().format('MMM DD, YYYY'))
-    /*cy.get('button.btn').contains('Siguiente').click();
-    cy.get('button.btn').contains('Continuar').click();
+    cy.get('#president').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#firstJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#secondJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    
+    // accept
+    cy.get('.MuiButton-containedPrimary').contains('Aprobar Etapa').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
     
     cy.wait(time);
     
+    //external defense
+    cy.get('#president').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#firstJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#secondJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    
+    // accept
+    cy.get('button.MuiButton-containedPrimary').contains('Finalizar').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
+  });
+
+  it('Create new graduation process with the directed work modality."', () => {
+    cy.get('[data-testid="MenuIcon"]').should('be.visible').click();
+    cy.get('[data-testid="ChecklistOutlinedIcon"]').should('be.visible').click();
+    cy.get('.btn').contains('Crear Proceso de Graduación').click();
+    // insert data
+    cy.get('.MuiAutocomplete-endAdornment button').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('div#\\:r9\\:').click();
+    // Select "Trabajo Dirigido"
+    cy.get('li.MuiMenuItem-root[data-value="2"]').click();
+    cy.get('input#\\:rd\\:').clear().type('TD' + title);
+    cy.get('div#\\:rf\\:').should('be.visible').click(); 
+    cy.get('li.MuiMenuItem-root[data-value="Segundo2024"]').click();
+    // Save 
+    cy.get('button.MuiButton-containedPrimary').contains('GUARDAR').click();
+
+    cy.wait(time);
+    
+    // insert date and tutor
+    cy.get('[data-testid="ModeEditIcon"]').click();
+    cy.get('[data-testid="ArrowDropDownIcon"]').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('[type="checkbox"]').check();
+    // accept
+    cy.get('.MuiButton-containedPrimary').contains('Aprobar Etapa').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
+
+
+    cy.wait(time);
+
+    // inser reviewer
+    cy.get('[data-testid="ArrowDropDownIcon"]').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('[type="checkbox"]').check();
+    // accept
+    cy.get('.MuiButton-containedPrimary').contains('Aprobar Etapa').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
+
     //internal defense
-    cy.get('#president').type('President' + name);
-    cy.get('#secretary').type('Secretary' + name);
-    cy.get('#date').type('12032025')
-    //cy.get('#DateTimeInput').click().type(Cypress.moment().format('MMM DD, YYYY'))
-    cy.get('button.btn').contains('Siguiente').click();
-    cy.get('button.btn').contains('Continuar').click();*/
+    cy.get('#president').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#firstJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#secondJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    
+    // accept
+    cy.get('.MuiButton-containedPrimary').contains('Aprobar Etapa').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
+    
+    cy.wait(time);
+    
+    //external defense
+    cy.get('#president').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#firstJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#secondJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    
+    // accept
+    cy.get('button.MuiButton-containedPrimary').contains('Finalizar').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
+  });
+  
+  it('Create new graduation process with the directed work modality."', () => {
+    cy.get('[data-testid="MenuIcon"]').should('be.visible').click();
+    cy.get('[data-testid="ChecklistOutlinedIcon"]').should('be.visible').click();
+    cy.get('.btn').contains('Crear Proceso de Graduación').click();
+    // insert data
+    cy.get('.MuiAutocomplete-endAdornment button').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('div#\\:r9\\:').click();
+    // Select "Tesis"
+    cy.get('li.MuiMenuItem-root[data-value="3"]').click();
+    cy.get('input#\\:rd\\:').clear().type('T' + title);
+    cy.get('div#\\:rf\\:').should('be.visible').click(); 
+    cy.get('li.MuiMenuItem-root[data-value="Segundo2024"]').click();
+    // Save 
+    cy.get('button.MuiButton-containedPrimary').contains('GUARDAR').click();
+
+    cy.wait(time);
+    
+    // insert date and tutor
+    cy.get('[data-testid="ModeEditIcon"]').click();
+    cy.get('[data-testid="ArrowDropDownIcon"]').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('[type="checkbox"]').check();
+    // accept
+    cy.get('.MuiButton-containedPrimary').contains('Aprobar Etapa').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
+
+
+    cy.wait(time);
+
+    // inser reviewer
+    cy.get('[data-testid="ArrowDropDownIcon"]').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('[type="checkbox"]').check();
+    // accept
+    cy.get('.MuiButton-containedPrimary').contains('Aprobar Etapa').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
+
+    //internal defense
+    cy.get('#president').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#firstJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#secondJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    
+    // accept
+    cy.get('.MuiButton-containedPrimary').contains('Aprobar Etapa').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
+    
+    cy.wait(time);
+    
+    //external defense
+    cy.get('#president').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#firstJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    cy.get('#secondJuror').click();
+    cy.get('li.MuiAutocomplete-option').first().click();
+    
+    // accept
+    cy.get('button.MuiButton-containedPrimary').contains('Finalizar').click();
+    cy.contains('button.btn', 'Continuar').should('be.visible').click();
   });
 });
   
