@@ -5,7 +5,7 @@ import { Autocomplete, TextField } from "@mui/material";
 
 interface ProfessorAutocompleteProps {
   value: string;
-  onChange: (event: any, value: Mentor | null) => void;
+  onChange: (event: React.ChangeEvent<unknown>, value: Mentor | null) => void;
   disabled?: boolean;
   id: string;
   label: string;
@@ -34,7 +34,7 @@ const ProfessorAutocomplete: FC<ProfessorAutocompleteProps> = ({ value, onChange
       id={id}
       options={mentors}
       getOptionLabel={(option) => `${option.name} ${option.lastName}`}
-      value={mentors.find((mentor) => mentor.id === parseInt(value)) || null}
+      value={mentors.find((mentor) => mentor.id === Number(value)) || null}
       onChange={onChange}
       renderInput={(params) => (
         <TextField

@@ -2,46 +2,43 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import ContainerPage from "../../components/common/ContainerPage";
 import { useEffect, useState } from "react";
-import { deleteStudent, getStudents } from "../../services/studentService";
-import {
-  Button,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  DialogContentText,
-} from "@mui/material";
+import { getMentors } from "../../services/mentorsService";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const StudentPage = () => {
+const ProfessorPage = () => {
   const navigate = useNavigate();
-  const [students, setStudents] = useState([]);
+  const [professors, setProfessors] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
-
   const columns: GridColDef[] = [
     {
       field: "code",
       headerName: "Código",
-      type: "number",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+    },
+    {
+      field: "degree",
+      headerName: "Título",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
       field: "name",
-      headerName: "Nombre Completo",
+      headerName: "Nombre",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Correo",
+      field: "lastName",
+      headerName: "Apellido",
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -49,6 +46,22 @@ const StudentPage = () => {
     {
       field: "phone",
       headerName: "Celular",
+      type: "number",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+    },
+    {
+      field: "tutoring_count",
+      headerName: "Tutorias",
+      type: "number",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+    },
+    {
+      field: "review_count",
+      headerName: "Revisiones",
       type: "number",
       headerAlign: "center",
       align: "center",
@@ -89,17 +102,17 @@ const StudentPage = () => {
   ];
 
   const handleCreateTeacher = () => {
-    navigate("/create-student");
+    navigate("/create-professor");
   };
 
-  const fetchStudents = async () => {
-    const students = await getStudents();
-    setStudents(students.data);
-    console.log(students);
+  const fetchProfessors = async () => {
+    const professors = await getMentors();
+    setProfessors(professors.data);
+    console.log(professors);
   };
 
   useEffect(() => {
-    fetchStudents();
+    fetchProfessors();
   }, []);
 
   const handleView = (id: number) => {
@@ -124,9 +137,7 @@ const StudentPage = () => {
   const handleDelete = async () => {
     if (selectedId !== null) {
       try {
-        await deleteStudent(selectedId);
-        fetchStudents();
-        console.log(`Eliminar estudiante con id: ${selectedId}`);
+        console.log(`Eliminar docente con id: ${selectedId}`);
       } catch (error) {
         console.log(error);
       } finally {
@@ -137,8 +148,8 @@ const StudentPage = () => {
 
   return (
     <ContainerPage
-      title={"Estudiantes"}
-      subtitle={"Lista de estudiantes"}
+      title={"Docentes"}
+      subtitle={"Lista de docentes"}
       actions={
         <Button
           variant="contained"
@@ -146,13 +157,13 @@ const StudentPage = () => {
           onClick={handleCreateTeacher}
           startIcon={<AddIcon />}
         >
-          Agregar Estudiante
+          Agregar docente
         </Button>
       }
       children={
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
-            rows={students}
+            rows={professors}
             columns={columns}
             initialState={{
               pagination: {
@@ -179,7 +190,7 @@ const StudentPage = () => {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                ¿Estás seguro de que deseas eliminar este estudiante? Esta
+                ¿Estás seguro de que deseas eliminar este docente? Esta
                 acción no se puede deshacer.
               </DialogContentText>
             </DialogContent>
@@ -198,4 +209,4 @@ const StudentPage = () => {
   );
 };
 
-export default StudentPage;
+export default ProfessorPage;

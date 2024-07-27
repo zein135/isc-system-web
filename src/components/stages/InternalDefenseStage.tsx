@@ -1,6 +1,18 @@
 import { FC, useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { Box, Grid, Button } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Button,
+  Stepper,
+  Typography,
+  Step,
+  StepLabel,
+  TextField,
+} from "@mui/material";
+
+import { styled } from "@mui/system";
+
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -19,6 +31,7 @@ import { updateProcess } from "../../services/processServicer";
 import { useDefenseInternalDetail } from "../../hooks/useDefenseInternalDetail";
 import ProfessorAutocomplete from "../selects/ProfessorAutoComplete";
 import { Mentor } from "../../models/mentorInterface";
+import EmailSender from "../common/EmailArea";
 
 const DEFENSE_INTERNAL = "internal";
 
@@ -73,7 +86,7 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
       });
     }
   }, [defenseDetail]);
-  
+
   const handleDateChange = (value: Dayjs | null) => {
     formik.setFieldValue("date", value);
   };
@@ -100,7 +113,6 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
         pdfBlob,
         "Acta_Defensa_Interna_de_Seminario_de_Grado_V1.1.pdf"
       );
-
     } catch (error) {
       console.error("Failed to download PDF:", error);
     }
@@ -156,7 +168,7 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
 
   const canApproveStage = () => {
     return Boolean(
-        formik.values.president &&
+      formik.values.president &&
         formik.values.firstJuror &&
         formik.values.secondJuror &&
         formik.values.date
@@ -174,7 +186,8 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
       <div className="txt1">
         Etapa 4: Defensa Interna <ModeEditIcon onClick={editForm} />
       </div>
-      <form onSubmit={formik.handleSubmit} className="mx-16">
+      {true && <EmailSender seminar={process}/>}
+      {/* <form onSubmit={formik.handleSubmit} className="mx-16">
         <Box>
           <Grid container spacing={2}>
             <Grid item xs={6} marginTop={5}>
@@ -248,7 +261,7 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
             {isApproveButton ? "Aprobar Etapa" : "Guardar"}
           </Button>
         </Box>
-      </form>
+      </form> */}
       {showModal && (
         <ConfirmModal
           step={steps[3]}

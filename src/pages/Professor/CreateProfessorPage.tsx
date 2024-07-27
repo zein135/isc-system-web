@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ProfessorInterface } from "../../services/models/Professor";
@@ -9,63 +10,85 @@ import {
   Grid,
   MenuItem,
   TextField,
-  Typography,
-  Snackbar,
-  Alert
+  Typography
 } from "@mui/material";
-import { useState } from "react";
-
+import ErrorDialog from "../../components/common/ErrorDialog";
+import SuccessDialog from "../../components/common/SucessDialog";
+import LoadingOverlay from "../../components/common/Loading";
 const validationSchema = Yup.object({
   name: Yup.string().required("El nombre completo es obligatorio"),
+  lastname: Yup.string().required("El apellido es obligatorio"),
+  mothername: Yup.string().required("El apellido materno es obligatorio"),
   email: Yup.string()
     .email("Ingrese un correo electrónico válido")
     .required("El correo electrónico es obligatorio"),
-  phoneNumber: Yup.string()
-    .matches(/^[0-9]+$/, "Solo números son permitidos")
-    .optional(),
+  phone: Yup.string()
+    .matches(/^\+\d{1,3}\s\d+$/, 'El número de teléfono debe tener una extensión válida y un número de teléfono')
+    .required('El número de teléfono es requerido'),
   degree: Yup.string().required("El título académico es obligatorio"),
-  code: Yup.number().optional(),
+  code: Yup.number().required("El código de docente es obligatorio"),
 });
 
 const CreateProfessorPage = () => {
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState('');
-  const [severity, setSeverity] = useState('success');
-  
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [successDialog, setSuccessDialog] = useState(false);
+  const [errorDialog, setErrorDialog] = useState(false);
+
+  const sucessDialogClose = () => {
+    setSuccessDialog(false);
+    formik.resetForm();
+  };
+
+  const errorDialogClose = () => {
+    setErrorDialog(false);
+  };
+
   const formik = useFormik<ProfessorInterface>({
     initialValues: {
       name: "",
       lastname: "",
+      mothername: "",
       email: "",
       phone: "",
       degree: "",
+      code: "",
     },
     validationSchema,
     onSubmit: async (values) => {
-      console.log(values);
+      setLoading(true); 
       try {
         await createProfessor(values);
-        setMessage('Profesor creado con éxito');
-        setSeverity('success');
-        setOpen(true);
+        setMessage("Profesor creado con éxito");
+        setSuccessDialog(true);
       } catch (error) {
-        setMessage('Error al crear el docente');
-        setSeverity('error');
-        setOpen(true);
+        setMessage("Error al crear el docente");
+        setErrorDialog(true);
+      } finally {
+        setLoading(false);
       }
     },
   });
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpen(false);
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    const formattedValue = value
+      .replace(/[^+\d\s]/g, '')
+      .replace(/(\+\d{1,3})\s?(\d{0,})/, '$1 $2');
+    formik.setFieldValue('phone', formattedValue);
   };
 
-  
+  const handleCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (/^[0-9]*$/.test(value)) {
+      formik.setFieldValue("code", value);
+    }
+  };
+
   return (
     <FormContainer>
+      {loading && <LoadingOverlay message="Creando Docente..." />}
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2} sx={{ padding: 2 }}>
           <Grid item xs={12}>
@@ -117,19 +140,42 @@ const CreateProfessorPage = () => {
                     />
                   </Grid>
                 </Grid>
-
-                <TextField
-                  id="code"
-                  name="code"
-                  label="Codigo de Docente"
-                  variant="outlined"
-                  fullWidth
-                  value={formik.values.code}
-                  onChange={formik.handleChange}
-                  error={formik.touched.code && Boolean(formik.errors.code)}
-                  helperText={formik.touched.code && formik.errors.code}
-                  margin="normal"
-                />
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="mothername"
+                      name="mothername"
+                      label="Apellido Materno"
+                      variant="outlined"
+                      fullWidth
+                      value={formik.values.mothername}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.mothername &&
+                        Boolean(formik.errors.mothername)
+                      }
+                      helperText={
+                        formik.touched.mothername && formik.errors.mothername
+                      }
+                      margin="normal"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="code"
+                      name="code"
+                      label="Codigo de Docente"
+                      variant="outlined"
+                      fullWidth
+                      value={formik.values.code}
+                      onChange={handleCodeChange}
+                      error={formik.touched.code && Boolean(formik.errors.code)}
+                      helperText={formik.touched.code && formik.errors.code}
+                      margin="normal"
+                      inputProps={{ maxLength: 10 }}
+                    />
+                  </Grid>
+                </Grid>
                 <TextField
                   id="degree"
                   name="degree"
@@ -144,9 +190,9 @@ const CreateProfessorPage = () => {
                   margin="normal"
                 >
                   <MenuItem value="">Seleccione un título</MenuItem>
-                  <MenuItem value="licenciado">Licenciado</MenuItem>
-                  <MenuItem value="maestro">Maestro</MenuItem>
-                  <MenuItem value="doctor">Doctor</MenuItem>
+                  <MenuItem value="Ing.">Ing.</MenuItem>
+                  <MenuItem value="Msc">Msc.</MenuItem>
+                  <MenuItem value="PhD">PhD.</MenuItem>
                 </TextField>
               </Grid>
             </Grid>
@@ -170,6 +216,7 @@ const CreateProfessorPage = () => {
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                   margin="normal"
+                  inputProps={{ maxLength: 50 }}
                 />
                 <TextField
                   id="phone"
@@ -178,12 +225,11 @@ const CreateProfessorPage = () => {
                   variant="outlined"
                   fullWidth
                   value={formik.values.phone}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.phoneNumber && Boolean(formik.errors.phone)
-                  }
+                  onChange={handlePhoneChange}
+                  error={formik.touched.phone && Boolean(formik.errors.phone)}
                   helperText={formik.touched.phone && formik.errors.phone}
                   margin="normal"
+                  inputProps={{ maxLength: 20 }}
                 />
               </Grid>
             </Grid>
@@ -199,11 +245,18 @@ const CreateProfessorPage = () => {
           </Grid>
         </Grid>
       </form>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} >
-        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-          {message}
-        </Alert>
-      </Snackbar>
+      <SuccessDialog
+        open={successDialog}
+        onClose={sucessDialogClose}
+        title={"Docente Creado!"}
+        subtitle={"El docente ha sido creado con éxito."}
+      />
+      <ErrorDialog
+        open={errorDialog}
+        onClose={errorDialogClose}
+        title={"¡Vaya!"}
+        subtitle={message}
+      />
     </FormContainer>
   );
 };

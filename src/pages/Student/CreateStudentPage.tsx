@@ -1,77 +1,105 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { ProfessorInterface } from "../../services/models/Professor";
-import { createProfessor } from "../../services/mentorsService";
 import { FormContainer } from "../CreateGraduation/components/FormContainer";
 import {
   Button,
   Divider,
   Grid,
-  MenuItem,
   TextField,
   Typography,
   Snackbar,
-  Alert
+  Alert,
 } from "@mui/material";
 import { useState } from "react";
+import { createStudent } from "../../services/studentService";
+import SuccessDialog from "../../components/common/SucessDialog";
+import ErrorDialog from "../../components/common/ErrorDialog";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("El nombre completo es obligatorio"),
+  lastname: Yup.string().required("El apellido es obligatorio"),
+  mothername: Yup.string().required("El apellido materno es obligatorio"),
   email: Yup.string()
     .email("Ingrese un correo electrónico válido")
     .required("El correo electrónico es obligatorio"),
-  phoneNumber: Yup.string()
-    .matches(/^[0-9]+$/, "Solo números son permitidos")
+  phone: Yup.string()
+    .matches(/^[0-9]{8}$/, "Ingrese un número de teléfono válido")
     .optional(),
-  degree: Yup.string().required("El título académico es obligatorio"),
   code: Yup.number().optional(),
 });
 
 const CreateStudentPage = () => {
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState('');
-  const [severity, setSeverity] = useState('success');
-  
-  const formik = useFormik<ProfessorInterface>({
+  const [successDialog, setSuccessDialog] = useState(false);
+  const [errorDialog, setErrorDialog] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState<"success" | "error">("success");
+
+  const sucessDialogClose = () => {
+    setSuccessDialog(false);
+  };
+
+  const errorDialogClose = () => {
+    setErrorDialog(false);
+  };
+
+  const formik = useFormik({
     initialValues: {
       name: "",
       lastname: "",
       email: "",
       phone: "",
-      degree: "",
+      code: "",
+      mothername: "",
     },
     validationSchema,
-    onSubmit: async (values) => {
-      console.log(values);
+    onSubmit: async (values, { resetForm }) => {
       try {
-        await createProfessor(values);
-        setMessage('Profesor creado con éxito');
-        setSeverity('success');
-        setOpen(true);
+        await createStudent(values);
+        setMessage("Estudiante creado con éxito");
+        setSeverity("success");
+        setSuccessDialog(true);
+        resetForm();
       } catch (error) {
-        setMessage('Error al crear el docente');
-        setSeverity('error');
-        setOpen(true);
+        setMessage(error.response.data.message);
+        setSeverity("error");
+        setErrorDialog(true);
       }
     },
   });
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+  const handleClose = (
+    _event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
       return;
     }
     setOpen(false);
   };
 
-  
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (/^[0-9]*$/.test(value)) {
+      formik.setFieldValue("phone", value);
+    }
+  };
+
+  const handleCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (/^[0-9]*$/.test(value)) {
+      formik.setFieldValue("code", value);
+    }
+  };
+
   return (
     <FormContainer>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2} sx={{ padding: 2 }}>
           <Grid item xs={12}>
-            <Typography variant="h4">Crear Nuevo Docente</Typography>
+            <Typography variant="h4">Crear Nuevo Estudiante</Typography>
             <Typography variant="body2" sx={{ fontSize: 14, color: "gray" }}>
-              Ingrese los datos del docente a continuación.
+              Ingrese los datos del estudiante a continuación.
             </Typography>
             <Divider flexItem sx={{ mt: 2, mb: 2 }} />
           </Grid>
@@ -79,7 +107,7 @@ const CreateStudentPage = () => {
           <Grid item xs={12}>
             <Grid container spacing={2} sx={{ padding: 2 }}>
               <Grid item xs={3}>
-                <Typography variant="h6">Información del Docente</Typography>
+                <Typography variant="h6">Información del Estudiante</Typography>
               </Grid>
               <Grid item xs={9}>
                 <Grid container spacing={2}>
@@ -117,37 +145,42 @@ const CreateStudentPage = () => {
                     />
                   </Grid>
                 </Grid>
-
-                <TextField
-                  id="code"
-                  name="code"
-                  label="Codigo de Docente"
-                  variant="outlined"
-                  fullWidth
-                  value={formik.values.code}
-                  onChange={formik.handleChange}
-                  error={formik.touched.code && Boolean(formik.errors.code)}
-                  helperText={formik.touched.code && formik.errors.code}
-                  margin="normal"
-                />
-                <TextField
-                  id="degree"
-                  name="degree"
-                  label="Título Académico"
-                  variant="outlined"
-                  fullWidth
-                  select
-                  value={formik.values.degree}
-                  onChange={formik.handleChange}
-                  error={formik.touched.degree && Boolean(formik.errors.degree)}
-                  helperText={formik.touched.degree && formik.errors.degree}
-                  margin="normal"
-                >
-                  <MenuItem value="">Seleccione un título</MenuItem>
-                  <MenuItem value="licenciado">Licenciado</MenuItem>
-                  <MenuItem value="maestro">Maestro</MenuItem>
-                  <MenuItem value="doctor">Doctor</MenuItem>
-                </TextField>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="mothername"
+                      name="mothername"
+                      label="Apellido Materno"
+                      variant="outlined"
+                      fullWidth
+                      value={formik.values.mothername}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.mothername &&
+                        Boolean(formik.errors.mothername)
+                      }
+                      helperText={
+                        formik.touched.mothername && formik.errors.mothername
+                      }
+                      margin="normal"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="code"
+                      name="code"
+                      label="Codigo de Estudiante"
+                      variant="outlined"
+                      fullWidth
+                      value={formik.values.code}
+                      onChange={handleCodeChange}
+                      error={formik.touched.code && Boolean(formik.errors.code)}
+                      helperText={formik.touched.code && formik.errors.code}
+                      margin="normal"
+                      inputProps={{ maxLength: 10 }}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
             <Divider flexItem sx={{ my: 2 }} />
@@ -170,6 +203,7 @@ const CreateStudentPage = () => {
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                   margin="normal"
+                  inputProps={{ maxLength: 50 }}
                 />
                 <TextField
                   id="phone"
@@ -178,12 +212,11 @@ const CreateStudentPage = () => {
                   variant="outlined"
                   fullWidth
                   value={formik.values.phone}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.phoneNumber && Boolean(formik.errors.phone)
-                  }
+                  onChange={handlePhoneChange}
+                  error={formik.touched.phone && Boolean(formik.errors.phone)}
                   helperText={formik.touched.phone && formik.errors.phone}
                   margin="normal"
+                  inputProps={{ maxLength: 8 }}
                 />
               </Grid>
             </Grid>
@@ -199,11 +232,28 @@ const CreateStudentPage = () => {
           </Grid>
         </Grid>
       </form>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} >
-        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
           {message}
         </Alert>
       </Snackbar>
+      <SuccessDialog
+        open={successDialog}
+        onClose={sucessDialogClose}
+        title={"¡Estudiante Creado!"}
+        subtitle={"El estudiante ha sido creado con éxito."}
+      />
+      <ErrorDialog
+        open={errorDialog}
+        onClose={errorDialogClose}
+        title={"¡Vaya!"}
+        subtitle={message}
+      />
     </FormContainer>
   );
 };
