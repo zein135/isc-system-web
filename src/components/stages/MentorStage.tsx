@@ -14,10 +14,19 @@ import { useProcessStore } from "../../store/store";
 import { updateProcess } from "../../services/processServicer";
 import { Mentor } from "../../models/mentorInterface";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import DownloadButton from "../common/DownloadButton";
+import { letters } from "../../constants/letters";
+
+const program = "Ingeniería de Sistemas Computacionales";
+const programAbbreviation = "ISC";
+const headOfDepartment = "Alexis Marechal Marin PhD";
+const { TUTOR_APPROBAL, TUTOR_ASSIGNMENT } = letters;
 
 const validationSchema = Yup.object({
   mentor: Yup.string().required("Debe seleccionar un tutor"),
+  mentorName: Yup.string().required("Debe seleccionar un tutor"),
   tutorDesignationLetterSubmitted: Yup.boolean(),
+  tutorApprovalLetterSubmitted: Yup.boolean(),
   date_tutor_assignament: Yup.mixed()
     .required("Debe seleccionar una fecha")
     .nullable(),
@@ -40,10 +49,12 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
   const formik = useFormik({
     initialValues: {
       tutorDesignationLetterSubmitted: process?.tutor_letter || false,
+      tutorApprovalLetterSubmitted: process?.tutor_approval || false,
       date_tutor_assignament: process?.date_tutor_assignament
         ? dayjs(process.date_tutor_assignament)
         : dayjs(),
       mentor: process?.tutor_id || "",
+      mentorName: process?.tutor_name || "",
     },
     validationSchema,
     onSubmit: () => {
@@ -59,11 +70,13 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
     if (process) {
       const {
         mentor,
+        mentorName,
         tutorDesignationLetterSubmitted,
         date_tutor_assignament,
       } = formik.values;
       process.tutor_letter = tutorDesignationLetterSubmitted;
       process.tutor_id = Number(mentor);
+      process.tutor_name = mentorName;
       process.date_tutor_assignament = date_tutor_assignament
         ? dayjs(date_tutor_assignament)
         : null;
@@ -100,6 +113,7 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
     value: Mentor | null
   ) => {
     formik.setFieldValue("mentor", value?.id || "");
+    formik.setFieldValue("mentorName", value?.name || "");
   };
 
   const isApproveButton = canApproveStage();
@@ -113,6 +127,7 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
       <div className="txt1">
         Etapa 2: Seleccionar Tutor <ModeEditIcon onClick={editForm} />
       </div>
+
       <form onSubmit={formik.handleSubmit} className="mx-16">
         <Grid container spacing={3}>
           <Grid item xs={6} marginTop={5}>
@@ -141,7 +156,7 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
             </LocalizationProvider>
           </Grid>
         </Grid>
-        <Box mt={5}>
+        <Box mt={3}>
           <FormControlLabel
             control={
               <Checkbox
@@ -160,6 +175,56 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
               {formik.errors.tutorDesignationLetterSubmitted}
             </div>
           ) : null}
+          <DownloadButton
+            url={TUTOR_ASSIGNMENT.path}
+            data={{
+              student: process?.student_name || "",
+              tutor: formik.values.mentorName,
+              jefe_carrera: headOfDepartment,
+              carrera: program,
+              dia: dayjs().format("DD"),
+              mes: dayjs().format("MMMM"),
+              ano: dayjs().format("YYYY"),
+            }}
+            filename={`${TUTOR_ASSIGNMENT.filename}_${formik.values.mentorName}.${TUTOR_ASSIGNMENT.extention}`}
+          />
+        </Box>
+        <Box mt={3}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="tutorApprovalLetterSubmitted"
+                color="primary"
+                checked={formik.values.tutorApprovalLetterSubmitted}
+                onChange={formik.handleChange}
+                disabled={editMode}
+              />
+            }
+            label="Carta de Aprobación de Tutor Presentada"
+          />
+          {formik.touched.tutorApprovalLetterSubmitted &&
+          formik.errors.tutorApprovalLetterSubmitted ? (
+            <div className="text-red-1 text-xs mt-1">
+              {formik.errors.tutorApprovalLetterSubmitted}
+            </div>
+          ) : null}
+          <DownloadButton
+            url={TUTOR_APPROBAL.path}
+            data={{
+              student: process?.student_name || "",
+              tutor: process?.tutor_name || "",
+              jefe_carrera: headOfDepartment,
+              carrera: program,
+              dia: dayjs().format("DD"),
+              mes: dayjs().format("MMMM"),
+              ano: dayjs().format("YYYY"),
+              title_project: process?.project_name || "",
+              date: dayjs(formik.values.date_tutor_assignament).format(
+                "DD/MM/YYYY"
+              ),
+            }}
+            filename={`${TUTOR_APPROBAL.filename}_${formik.values.mentorName}.${TUTOR_APPROBAL.extention}`}
+          />
         </Box>
 
         <Box display="flex" justifyContent="space-between" mt={4}>

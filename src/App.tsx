@@ -12,13 +12,14 @@ import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./layout/Layout";
 
 import CreateProcessPage from "./pages/CreateGraduation/CreateProcessPage";
-import ProfessorPage from "./pages/ProfessorPage";
+import ProfessorPage from "./pages/Professor/ProfessorPage";
 import CreateProfessorPage from "./pages/Professor/CreateProfessorPage";
 import { RequireAuth } from "./layout/RequireAuth";
 import { DashboardPage } from "./pages/dashboard/Dashboard";
 import StudentPage from "./pages/Student/StudentsPage";
 import CreateStudentPage from "./pages/Student/CreateStudentPage";
 import EditStudentPage from "./pages/Student/EditStudentPage";
+import Profile from "./pages/profile/Profile";
 
 function loader() {
   return getProcess();
@@ -77,7 +78,6 @@ const router = createBrowserRouter([
       },
       {
         path: "/edit-student/:id",
-        loader: loader,
         element: (
           <RequireAuth>
             <EditStudentPage />
@@ -117,6 +117,22 @@ const router = createBrowserRouter([
         element: (
           <RequireAuth>
             <CreateProcessPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <RequireAuth>
+            <Profile />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/profile/:id",
+        element: (
+          <RequireAuth>
+            <Profile />
           </RequireAuth>
         ),
       },

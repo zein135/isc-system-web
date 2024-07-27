@@ -19,6 +19,9 @@ import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import ProfessorAutocomplete from "../selects/ProfessorAutoComplete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import DownloadButton from "../common/DownloadButton";
+import { letters } from "../../constants/letters";
+const { TUTOR_APPROBAL, TUTOR_ASSIGNMENT } = letters;
 
 const validationSchema = Yup.object({
   reviewer: Yup.string().required("* El revisor es obligatorio"),
@@ -30,6 +33,9 @@ interface ReviewerStageProps {
   onPrevious: () => void;
   onNext: () => void;
 }
+
+const program = "Ingeniería de Sistemas Computacionales";
+const headOfDepartment = "Alexis Marechal Marin PhD";
 
 export const ReviewerStage: FC<ReviewerStageProps> = ({
   onPrevious,
@@ -99,9 +105,12 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
   
   return (
     <>
-      <div className="txt1 pb-3">Etapa 3: Seleccionar Revisor <ModeEditIcon onClick={editForm}/></div>
+      <div className="txt1 pb-3">
+        Etapa 3: Seleccionar Revisor <ModeEditIcon onClick={editForm}/>
+      </div>
+      
       <form onSubmit={formik.handleSubmit} className="mt-5 mx-16">
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item xs={6}>
             <ProfessorAutocomplete
               disabled={editMode}
@@ -128,7 +137,7 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
             </LocalizationProvider>
           </Grid>
         </Grid>
-        <Box mt={2}>
+        <Box mt={3}>
           <FormControlLabel
             control={
               <Checkbox
@@ -141,9 +150,72 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
             }
             label="Carta de Designación de Revisor Presentada"
           />
+          {formik.touched.reviewerLetter &&
+          formik.errors.reviewerLetter ? (
+            <div className="text-red-1 text-xs mt-1">
+              {formik.errors.reviewerLetter}
+            </div>
+          ) : null}
+          <DownloadButton
+            url={TUTOR_ASSIGNMENT.path}
+            data={{
+              student: process?.student_name || "",
+              tutor: formik.values.reviewer,
+              jefe_carrera: headOfDepartment,
+              carrera: program,
+              dia: dayjs().format("DD"),
+              mes: dayjs().format("MMMM"),
+              ano: dayjs().format("YYYY"),
+            }}
+            filename={`${TUTOR_ASSIGNMENT.filename}_${formik.values.reviewer}.${TUTOR_ASSIGNMENT.extention}`}
+          />
         </Box>
+
+        <Box mt={3}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="tutorApprovalLetterSubmitted"
+                color="primary"
+                checked={formik.values.reviewerLetter}
+                onChange={formik.handleChange}
+                disabled={editMode}
+              />
+            }
+            label="Carta de Aprobación de Tutor Presentada"
+          />
+          {formik.touched.reviewerLetter &&
+          formik.errors.reviewerLetter ? (
+            <div className="text-red-1 text-xs mt-1">
+              {formik.errors.reviewerLetter}
+            </div>
+          ) : null}
+          <DownloadButton
+            url={TUTOR_APPROBAL.path}
+            data={{
+              student: process?.student_name || "",
+              tutor: process?.tutor_name || "",
+              jefe_carrera: headOfDepartment,
+              carrera: program,
+              dia: dayjs().format("DD"),
+              mes: dayjs().format("MMMM"),
+              ano: dayjs().format("YYYY"),
+              title_project: process?.project_name || "",
+              date: dayjs(formik.values.date_reviewer_assignament).format(
+                "DD/MM/YYYY"
+              ),
+            }}
+            filename={`${TUTOR_APPROBAL.filename}_${formik.values.reviewer}.${TUTOR_APPROBAL.extention}`}
+          />
+        </Box>
+
         <Box display="flex" justifyContent="space-between" mt={4}>
-          <Button variant="contained" color="secondary" onClick={onPrevious}>
+          <Button 
+            type="button"
+            variant="contained"
+            color="secondary"
+            onClick={onPrevious}
+          >
             Anterior
           </Button>
           <Button type="submit" variant="contained" color="primary">

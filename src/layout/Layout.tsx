@@ -50,11 +50,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const Layout = () => {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
-  const { clearUser } = useUserStore();
+  const { clearUser, user } = useUserStore();
+  console.log(user);
   const settings = [
-    { title: "Profile", onClick: () => console.log("Profile Clicked") },
-    { title: "Account", onClick: () => console.log("Account Clicked") },
-    { title: "Dashboard", onClick: () => console.log("Dashboard Clicked") },
+    { title: "Perfil", onClick: () => {
+      navigate("/profile");
+    } },
     {
       title: "Logout",
       onClick: () => {
@@ -64,8 +65,6 @@ const Layout = () => {
       },
     },
   ];
-
-  const { user } = useUserStore();
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -101,6 +100,15 @@ const Layout = () => {
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
+          <Box mr={2}>
+            <Typography variant="subtitle1" noWrap color="primary" textAlign={"right"} className="font-bold">
+              {user?.name}
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary" textAlign={"right"}>
+              {user?.role}
+            </Typography>
+          </Box>
+
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar alt={user?.name} src="/static/images/avatar/2.jpg" />

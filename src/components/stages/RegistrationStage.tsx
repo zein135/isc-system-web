@@ -9,6 +9,7 @@ import { steps } from "../../data/steps";
 import { periods, currentPeriod } from "../../data/periods";
 import { useProcessStore } from "../../store/store";
 import { updateProcess } from "../../services/processServicer";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import {
   FormControl,
   FormControlLabel,
@@ -45,7 +46,7 @@ export const RegistrationStage: FC<RegistrationStageProps> = ({ onNext }) => {
   const studentProcess = useProcessStore((state) => state.process);
   const setProcess = useProcessStore((state) => state.setProcess);
   const [modes, setModes] = useState<Modes[]>([]);
-  const [readOnly] = useState<boolean>(true);
+  const [readOnly, setReadOnly] = useState<boolean>(true);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [, setError] = useState<any | null>(null);
@@ -90,64 +91,73 @@ export const RegistrationStage: FC<RegistrationStageProps> = ({ onNext }) => {
     },
   });
 
+  const editForm = () => {
+    setReadOnly(false);
+  };
+
   return (
     <>
-      <div className="txt1">Etapa 1: Seminario de Grado</div>
+      <div className="txt1">
+        Etapa 1: Seminario de Grado <ModeEditIcon onClick={editForm} />
+      </div>
+
       <form onSubmit={formik.handleSubmit} className="mt-5 mx-16">
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={7} lg={8}>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">1. Seleccione la Modalidad</FormLabel>
-            <RadioGroup
-              aria-label="mode"
-              name="mode"
-              row
-              value={formik.values.mode}
-              onChange={formik.handleChange}
-            >
-              {modes.map((option) => (
-                <FormControlLabel
-                  key={option.id}
-                  value={option.id}
-                  control={<Radio disabled={readOnly} />}
-                  label={option.name}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl>
+            <FormControl component="fieldset">
+              <FormLabel component="legend">
+                1. Seleccione la Modalidad
+              </FormLabel>
+              <RadioGroup
+                aria-label="mode"
+                name="mode"
+                row
+                value={formik.values.mode}
+                onChange={formik.handleChange}
+              >
+                {modes.map((option) => (
+                  <FormControlLabel
+                    key={option.id}
+                    value={option.id}
+                    control={<Radio disabled={readOnly} />}
+                    label={option.name}
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
           </Grid>
           <Grid item xs={12} sm={12} md={5} lg={4}>
-          <FormControl fullWidth variant="outlined" margin="normal">
-            <InputLabel id="period-label">
-              2. Seleccione periodo de inscripción
-            </InputLabel>
-            <Select
-              labelId="period-label"
-              id="period"
-              name="period"
-              value={formik.values.period}
-              onChange={formik.handleChange}
-              label="2. Seleccione periodo de inscripción"
-              disabled
-              error={formik.touched.period && Boolean(formik.errors.period)}
-            >
-              <MenuItem value="">
-                <em>Seleccione Periodo</em>
-              </MenuItem>
-              {periods.map((option) => (
-                <MenuItem key={option.id} value={option.id}>
-                  {option.value}
+            <FormControl fullWidth variant="outlined" margin="normal">
+              <InputLabel id="period-label">
+                2. Seleccione periodo de inscripción
+              </InputLabel>
+              <Select
+                labelId="period-label"
+                id="period"
+                name="period"
+                value={formik.values.period}
+                onChange={formik.handleChange}
+                label="2. Seleccione periodo de inscripción"
+                disabled={readOnly}
+                error={formik.touched.period && Boolean(formik.errors.period)}
+              >
+                <MenuItem value="">
+                  <em>Seleccione Periodo</em>
                 </MenuItem>
-              ))}
-            </Select>
-            {formik.touched.period && formik.errors.period && (
-              <div className="text-red-1 text-xs font-medium mt-1">
-                {formik.errors.period}
-              </div>
-            )}
-          </FormControl>
+                {periods.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.value}
+                  </MenuItem>
+                ))}
+              </Select>
+              {formik.touched.period && formik.errors.period && (
+                <div className="text-red-1 text-xs font-medium mt-1">
+                  {formik.errors.period}
+                </div>
+              )}
+            </FormControl>
           </Grid>
-      </Grid>
+        </Grid>
         <div className="flex justify-end pt-5">
           <Button type="submit" variant="contained" color="primary">
             Siguiente

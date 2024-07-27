@@ -8,4 +8,20 @@ export const getStudents = async () => {
 export const deleteStudent = async (id: number) => {
   const response = await apiClient.delete(`/student/${id}`);
   return response.data;
-}
+};
+
+// TODO: Create the student interface
+export const createStudent = async (student) => {
+  const response = await apiClient.post("/student", student);
+  return response.data;
+};
+
+export const getUserById = async (id: number) => {
+  const response = await apiClient.get(`/student/${id}`);
+  return response.data.data;
+};
+
+export const updateStudent = async (student) => {
+  const response = await apiClient.put(`/student/${student.id}`, student);
+  return response.data;
+};

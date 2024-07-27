@@ -5,7 +5,6 @@ import { RegistrationStage } from "./stages/RegistrationStage";
 import { ReviewerStage } from "./stages/ReviewerStage";
 import { ExternalDefenseStage } from "./stages/ExternalDefenseStage";
 import { Seminar } from "../models/studentProcess";
-import SpinModal from "./common/SpinModal";
 import { steps } from "../data/steps";
 import { Stepper, Step, StepLabel, Box, Typography } from "@mui/material";
 
@@ -41,6 +40,10 @@ const ProgressTracker: FC<ProgressTrackerProps> = ({ currentStepIndex, status })
     }
   };
 
+  const handleStep = (step: number) => () => {
+    setCurrentStage(step);
+  };
+
   return (
     <Box className="bg-white m-5 p-5 shadow-md rounded-lg h-full">
       <Box className="flex items-center justify-between my-2 mx-5">
@@ -53,7 +56,7 @@ const ProgressTracker: FC<ProgressTrackerProps> = ({ currentStepIndex, status })
       </Box>
       <Stepper activeStep={currentStage} alternativeLabel>
         {steps.map((label, index) => (
-          <Step key={index} completed={index < currentStage}>
+          <Step key={index} completed={index < currentStage} onClick={handleStep(index)}>
             <StepLabel>{label}</StepLabel>
           </Step>
         ))}
