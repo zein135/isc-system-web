@@ -7,13 +7,13 @@ interface LetterPath {
 
 export const letters: Record<string, LetterPath> = {
   TUTOR_APPROBAL: {
-    path: "/src/pdfs/aprobacion_tutor.docx",
+    path: "/pdfs/aprobacion_tutor.docx",
     description: "Carta de aprobación de tutor",
     filename: 'carta_aprobacion_tutor',
     extention: 'docx',
   },
   TUTOR_ASSIGNMENT: {
-    path: "/src/pdfs/carta_tutor.docx",
+    path: "/pdfs/carta_tutor.docx",
     description: "Carta de designación de tutor",
     filename: 'carta_asignacion_tutor',
     extention: 'docx',
