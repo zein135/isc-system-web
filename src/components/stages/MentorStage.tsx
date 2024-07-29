@@ -16,11 +16,10 @@ import { Mentor } from "../../models/mentorInterface";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DownloadButton from "../common/DownloadButton";
 import { letters } from "../../constants/letters";
+import { useCarrerStore } from "../../store/carrerStore";
 
-const program = "Ingeniería de Sistemas Computacionales";
-const programAbbreviation = "ISC";
-const headOfDepartment = "Alexis Marechal Marin PhD";
 const { TUTOR_APPROBAL, TUTOR_ASSIGNMENT } = letters;
+const CURRENT_STAGE = 1;
 
 const validationSchema = Yup.object({
   mentor: Yup.string().required("Debe seleccionar un tutor"),
@@ -42,9 +41,13 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
   onNext,
 }) => {
   const process = useProcessStore((state) => state.process);
+  const carrer = useCarrerStore((state) => state.carrer);
   const setProcess = useProcessStore((state) => state.setProcess);
+
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [editMode, setEditMode] = useState<boolean>(true);
+  const [editMode, setEditMode] = useState<boolean>(
+    CURRENT_STAGE < (process?.stage_id || 0)
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -74,20 +77,32 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
         tutorDesignationLetterSubmitted,
         date_tutor_assignament,
       } = formik.values;
-      process.tutor_letter = tutorDesignationLetterSubmitted;
-      process.tutor_id = Number(mentor);
-      process.tutor_name = mentorName;
-      process.date_tutor_assignament = date_tutor_assignament
-        ? dayjs(date_tutor_assignament)
-        : null;
-      if (isApproveButton) {
-        process.stage_id = 2;
-        process.tutor_approval = true;
-        process.tutor_approval_date = new Date();
-        onNext();
+
+      const updatedProcess = {
+        ...process,
+        tutor_letter: tutorDesignationLetterSubmitted,
+        tutor_id: Number(mentor),
+        tutor_name: mentorName,
+        date_tutor_assignament: date_tutor_assignament
+          ? date_tutor_assignament.toDate()
+          : null,
+        ...(isApproveButton && {
+          stage_id: 2,
+          tutor_approval: true,
+          tutor_approval_date: new Date(),
+        }),
+      };
+
+      setProcess(updatedProcess);
+
+      try {
+        await updateProcess(updatedProcess);
+        if (isApproveButton) {
+          onNext();
+        }
+      } catch (error) {
+        console.error("Error updating process:", error);
       }
-      setProcess(process);
-      await updateProcess(process);
     }
   };
 
@@ -180,8 +195,8 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
             data={{
               student: process?.student_name || "",
               tutor: formik.values.mentorName,
-              jefe_carrera: headOfDepartment,
-              carrera: program,
+              jefe_carrera: carrer?.headOfDepartment || "",
+              carrera: carrer?.fullName || "",
               dia: dayjs().format("DD"),
               mes: dayjs().format("MMMM"),
               ano: dayjs().format("YYYY"),
@@ -213,8 +228,8 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
             data={{
               student: process?.student_name || "",
               tutor: process?.tutor_name || "",
-              jefe_carrera: headOfDepartment,
-              carrera: program,
+              jefe_carrera: carrer?.headOfDepartment || "",
+              carrera: carrer?.fullName || "",
               dia: dayjs().format("DD"),
               mes: dayjs().format("MMMM"),
               ano: dayjs().format("YYYY"),

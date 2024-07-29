@@ -4,6 +4,7 @@ interface Carrer {
     id: number;
     fullName: string;
     shortName: string;
+    headOfDepartment: string;
 }
 
 interface ICarrer {
@@ -16,6 +17,7 @@ export const useCarrerStore = create<ICarrer>((set) => ({
         id: 1,
         fullName: "Ingeniería de Sistemas Computacionales",
         shortName: "ISC",
+        headOfDepartment: "Alexis Marechal Marin PhD",
     },
     setCarrer: (newCarrer: Carrer) => set({ carrer: newCarrer }),
 }));
