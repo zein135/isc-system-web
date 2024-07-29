@@ -30,7 +30,6 @@ const validationSchema = Yup.object({
 });
 
 const CreateProfessorPage = () => {
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [successDialog, setSuccessDialog] = useState(false);

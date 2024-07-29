@@ -2,6 +2,7 @@ import { Box, Card, CardContent, Typography, IconButton } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
+// @ts-ignore
 const TutoringCard = ({ count, percentage, label }) => {
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', padding: 2, borderRadius: 2, backgroundColor: '#fff' }}>

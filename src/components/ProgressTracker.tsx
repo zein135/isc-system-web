@@ -36,7 +36,7 @@ const ProgressTracker: FC<ProgressTrackerProps> = ({ currentStepIndex, status })
       case 3:
         return <InternalDefenseStage onPrevious={goToPreviousStage} onNext={goToNextStage} />;
       case 4:
-        return <ExternalDefenseStage onPrevious={goToPreviousStage} onNext={goToNextStage} />;
+        return <ExternalDefenseStage onPrevious={goToPreviousStage}/>;
     }
   };
 

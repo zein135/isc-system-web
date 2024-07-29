@@ -1,3 +1,4 @@
+import { StudentForm } from "../models/studentInterface";
 import apiClient from "./apiInstance";
 
 export const getStudents = async () => {
@@ -11,7 +12,7 @@ export const deleteStudent = async (id: number) => {
 };
 
 // TODO: Create the student interface
-export const createStudent = async (student) => {
+export const createStudent = async (student: StudentForm) => {
   const response = await apiClient.post("/student", student);
   return response.data;
 };
@@ -21,7 +22,7 @@ export const getUserById = async (id: number) => {
   return response.data.data;
 };
 
-export const updateStudent = async (student) => {
+export const updateStudent = async (student: StudentForm) => {
   const response = await apiClient.put(`/student/${student.id}`, student);
   return response.data;
 };

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Grid, Typography, Chip } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 

@@ -55,12 +55,14 @@ const CreateStudentPage = () => {
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
+        // @ts-ignore
         await createStudent(values);
         setMessage("Estudiante creado con éxito");
         setSeverity("success");
         setSuccessDialog(true);
         resetForm();
       } catch (error) {
+        // @ts-ignore
         setMessage(error.response.data.message);
         setSeverity("error");
         setErrorDialog(true);

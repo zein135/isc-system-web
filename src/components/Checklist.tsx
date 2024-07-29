@@ -8,6 +8,7 @@ import {
   // FaUserGraduate,
 } from "react-icons/fa";
 import { useProcessStore } from "../store/store";
+import { Seminar } from "../models/studentProcess";
 
 const Checklist = () => {
   const process = useProcessStore((state) => state.process);
@@ -20,7 +21,7 @@ const Checklist = () => {
     student_name: studentName,
     project_name: titleProject,
     modality_name: mode,
-  } = process;
+  } = process as Seminar;
   const telegramLink = `https://t.me/+59176517816`;
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 m-4">
