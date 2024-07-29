@@ -44,3 +44,11 @@ export interface GraduationProcess {
     tutor_approval_date: Date | null;
     reviewer_approval_date: Date | null;
 }
+
+export interface Student {
+    id: number;
+    name: string;
+    lastname: string;
+    mothername: string;
+    fullname: string;
+}

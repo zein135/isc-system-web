@@ -29,7 +29,7 @@ const ProcessInfoPage = () => {
         />
       </Grid>
       <Grid item xs={12} sm={12} md={5} lg={4}>
-        <Checklist process={data} />
+        <Checklist />
       </Grid>
     </Grid>
   );

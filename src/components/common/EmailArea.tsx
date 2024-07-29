@@ -15,6 +15,7 @@ const Root = styled(Box)(({ theme }) => ({
 
 const EmailSender = ({ seminar }) => {
   const carrer = useCarrerStore((state) => state.carrer);
+  const [emailSent, setEmailSent] = useState(false);
   const defaultEmailContent = `
     <p><strong><u>ALUMNO 1</u></strong></p>
     <p><strong>Nombre:</strong> ${seminar.student_name}</p>
@@ -25,7 +26,9 @@ const EmailSender = ({ seminar }) => {
   `;
 
   const [emailContent, setEmailContent] = useState(defaultEmailContent);
-  const [subject, setSubject] = useState(`Revision de Carpeta - ${carrer?.shortName}`);
+  const [subject, setSubject] = useState(
+    `Revision de Carpeta - ${carrer?.shortName}`
+  );
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState(null);
 
@@ -47,10 +50,10 @@ const EmailSender = ({ seminar }) => {
         subject,
         textHtml: emailContent,
       });
-
-      if (!response.sucess) {
+      if (!response.success) {
         throw new Error("Error al enviar el correo");
       }
+      setEmailSent(true);
     } catch (err) {
       console.error(err);
       setError(err.message || "Error al enviar el correo");
@@ -90,15 +93,22 @@ const EmailSender = ({ seminar }) => {
           {error}
         </Typography>
       )}
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{ mt: 2 }}
-        onClick={handleSendEmail}
-        disabled={isSending}
-      >
-        {isSending ? "Enviando..." : "Enviar Correo"}
-      </Button>
+      {emailSent && (
+        <Typography color="success" variant="body2" sx={{ mt: 2 }}>
+          Correo enviado exitosamente
+        </Typography>
+      )}
+      {!emailSent && (
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ mt: 2 }}
+          onClick={handleSendEmail}
+          disabled={isSending}
+        >
+          {isSending ? "Enviando..." : "Enviar Correo"}
+        </Button>
+      )}
     </Root>
   );
 };

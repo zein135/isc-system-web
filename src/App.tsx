@@ -2,12 +2,14 @@ import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
+  Params,
+  LoaderFunction,
+  LoaderFunctionArgs,
 } from "react-router-dom";
 
 import ProcessInfoPage from "./pages/graduation/ProcessInfoPage";
 import ErrorPage from "./pages/ErrorPage";
-import { getProcess, getStundentById } from "./services/processServicer";
-import StudentsPage from "./pages/StudentsPage";
+import { getProcess, getStudentById } from "./services/processServicer";
 import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./layout/Layout";
 
@@ -20,15 +22,21 @@ import StudentPage from "./pages/Student/StudentsPage";
 import CreateStudentPage from "./pages/Student/CreateStudentPage";
 import EditStudentPage from "./pages/Student/EditStudentPage";
 import Profile from "./pages/profile/Profile";
+import GraduationProcessPage from "./pages/graduation/GraduationProcessPage";
 
 function loader() {
   return getProcess();
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getStudentProcess = ({ params }: any) => {
+interface StudentParams extends Params {
+  id: string;
+}
+
+const getStudentProcess: LoaderFunction = async ({
+  params,
+}: LoaderFunctionArgs<StudentParams>) => {
   const studentId = Number(params.id);
-  return getStundentById(studentId);
+  return getStudentById(studentId);
 };
 
 const router = createBrowserRouter([
@@ -54,7 +62,7 @@ const router = createBrowserRouter([
         loader: loader,
         element: (
           <RequireAuth>
-            <StudentsPage />
+            <GraduationProcessPage />
           </RequireAuth>
         ),
       },

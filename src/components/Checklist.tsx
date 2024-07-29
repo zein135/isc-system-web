@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { format } from "date-fns";
 import {
   FaEnvelope,
@@ -8,14 +7,12 @@ import {
   // FaUserShield,
   // FaUserGraduate,
 } from "react-icons/fa";
-import { Seminar } from "../models/studentProcess";
+import { useProcessStore } from "../store/store";
 
-interface CheckListStageProps {
-  process: Seminar;
-}
+const Checklist = () => {
+  const process = useProcessStore((state) => state.process);
 
-const Checklist: FC<CheckListStageProps> = ({ process }) => {
-  const formattedDate = process.tutor_approval_date
+  const formattedDate = process?.tutor_approval_date
     ? format(new Date(process.tutor_approval_date), "dd/MM/yyyy")
     : "";
 
@@ -57,7 +54,7 @@ const Checklist: FC<CheckListStageProps> = ({ process }) => {
           <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
             Seminario de Grado
           </h3>
-          {process.period ? (
+          {process?.period ? (
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
               Inscripción {process.period}
             </time>
@@ -70,9 +67,9 @@ const Checklist: FC<CheckListStageProps> = ({ process }) => {
             <FaUserTie className="text-blue-800" />
           </span>
           <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-            Tutor: {process.tutor_name || " "}
+            Tutor: {process?.tutor_name || " "}
           </h3>
-          {process.tutor_approval ? (
+          {process?.tutor_approval ? (
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
               Aprobación del Tutor el {formattedDate}
             </time>
@@ -85,9 +82,9 @@ const Checklist: FC<CheckListStageProps> = ({ process }) => {
             <FaUserSecret className="text-blue-800" />
           </span>
           <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-            Revisor: {process.reviewer_name || " "}
+            Revisor: {process?.reviewer_name || " "}
           </h3>
-          {process.reviewer_approval ? (
+          {process?.reviewer_approval ? (
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
               Aprobación del Revisor on {formattedDate}
             </time>

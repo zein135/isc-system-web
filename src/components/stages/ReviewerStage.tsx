@@ -1,13 +1,7 @@
 import { FC, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-} from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, Grid } from "@mui/material";
 import ConfirmModal from "../common/ConfirmModal";
 import { steps } from "../../data/steps";
 import { useProcessStore } from "../../store/store";
@@ -21,6 +15,7 @@ import ProfessorAutocomplete from "../selects/ProfessorAutoComplete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DownloadButton from "../common/DownloadButton";
 import { letters } from "../../constants/letters";
+import { useCarrerStore } from "../../store/carrerStore";
 const { TUTOR_APPROBAL, TUTOR_ASSIGNMENT } = letters;
 
 const validationSchema = Yup.object({
@@ -36,16 +31,20 @@ interface ReviewerStageProps {
 
 const program = "Ingeniería de Sistemas Computacionales";
 const headOfDepartment = "Alexis Marechal Marin PhD";
+const CURRENT_STAGE = 2;
 
 export const ReviewerStage: FC<ReviewerStageProps> = ({
   onPrevious,
   onNext,
 }) => {
   const process = useProcessStore((state) => state.process);
+  const carrer = useCarrerStore((state) => state.carrer);
   const setProcess = useProcessStore((state) => state.setProcess);
 
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(
+    CURRENT_STAGE < (process?.stage_id || 0)
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -70,8 +69,14 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
       process.reviewer_approval = true;
       process.reviewer_approval_date = new Date();
       setProcess(process);
-      await updateProcess(process);
-      onNext();
+      try {
+        await updateProcess(process);
+        if ( isApproveButton) {
+          onNext();
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -80,8 +85,10 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
     setShowModal(false);
   };
 
-  const handleMentorChange = ( _event: React.ChangeEvent<unknown>,
-    value: Mentor | null) => {
+  const handleMentorChange = (
+    _event: React.ChangeEvent<unknown>,
+    value: Mentor | null
+  ) => {
     formik.setFieldValue("reviewer", value?.id || "");
   };
 
@@ -98,17 +105,17 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
   };
 
   const isApproveButton = canApproveStage();
-  
+
   const editForm = () => {
     setEditMode(false);
   };
-  
+
   return (
     <>
       <div className="txt1 pb-3">
-        Etapa 3: Seleccionar Revisor <ModeEditIcon onClick={editForm}/>
+        Etapa 3: Seleccionar Revisor <ModeEditIcon onClick={editForm} />
       </div>
-      
+
       <form onSubmit={formik.handleSubmit} className="mt-5 mx-16">
         <Grid container spacing={3}>
           <Grid item xs={6}>
@@ -150,8 +157,7 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
             }
             label="Carta de Designación de Revisor Presentada"
           />
-          {formik.touched.reviewerLetter &&
-          formik.errors.reviewerLetter ? (
+          {formik.touched.reviewerLetter && formik.errors.reviewerLetter ? (
             <div className="text-red-1 text-xs mt-1">
               {formik.errors.reviewerLetter}
             </div>
@@ -182,10 +188,9 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
                 disabled={editMode}
               />
             }
-            label="Carta de Aprobación de Tutor Presentada"
+            label="Carta de Aprobación de Revisor Presentada"
           />
-          {formik.touched.reviewerLetter &&
-          formik.errors.reviewerLetter ? (
+          {formik.touched.reviewerLetter && formik.errors.reviewerLetter ? (
             <div className="text-red-1 text-xs mt-1">
               {formik.errors.reviewerLetter}
             </div>
@@ -210,7 +215,7 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
         </Box>
 
         <Box display="flex" justifyContent="space-between" mt={4}>
-          <Button 
+          <Button
             type="button"
             variant="contained"
             color="secondary"

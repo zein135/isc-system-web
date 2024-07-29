@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Table from "../components/Table";
+import Table from "./components/Table";
 import { FaSearch } from "react-icons/fa";
-import { Student } from "../models/studentInterface";
+import { Student } from "../../models/studentInterface";
 
 const tableHeaders = [
   { key: "studentName", label: "Estudiante" },
@@ -13,7 +13,7 @@ const tableHeaders = [
   { key: "actions", label: "Acciones" },
 ];
 
-const StudentsPage = () => {
+const GraduationProcessPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const [filteredData, setFilteredData] = useState<Student[] | []>([]);
@@ -76,4 +76,4 @@ const StudentsPage = () => {
   );
 };
 
-export default StudentsPage;
+export default GraduationProcessPage;

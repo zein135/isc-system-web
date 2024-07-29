@@ -30,7 +30,7 @@ const updateProcess = async (seminar: Seminar) => {
   }
 };
 
-const getStundentById = async (studentId: number) => {
+const getStudentById = async (studentId: number) => {
   try {
     const response = await apiClient.get(`graduation/${studentId}`);
     return response.data;
@@ -58,4 +58,4 @@ const createGraduationProcess = async (seminar: InitGraduationProcess) => {
   }
 };
 
-export { getProcess, getStundentById, updateProcess, createGraduationProcess };
+export { getProcess, getStudentById, updateProcess, createGraduationProcess };

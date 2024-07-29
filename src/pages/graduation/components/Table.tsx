@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FaEye } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { Student } from "../models/studentInterface";
+import { Student } from "../../../models/studentInterface";
 
 interface tableHeader {
   key: string;
