@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Avatar, Typography, Paper, Box, Tab, Tabs } from "@mui/material";
+import { Grid, Paper, Box, Tab, Tabs } from "@mui/material";
 import UserProfileCard from "./component/UserProfileCard";
-import { useUserStore } from "../../store/store";
 import { useParams } from "react-router-dom";
 import { getUserById } from "../../services/studentService";
 import TutoringCard from "./component/ProcessCard";
@@ -38,8 +37,8 @@ function a11yProps(index: number) {
 }
 
 const Profile: React.FC = () => {
-  const { user } = useUserStore();
   const { id } = useParams();
+  // @ts-ignore
   const [userProfile, setUserProfile] = useState<User | null>(null);
 
   const fetchUserProfile = async (id: string) => {
@@ -54,7 +53,7 @@ const Profile: React.FC = () => {
 
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 

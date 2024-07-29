@@ -1,5 +1,5 @@
-import React from "react";
 import { Card, CardContent, Typography } from "@mui/material";
+// @ts-ignore
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -7,6 +7,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 const localizer = momentLocalizer(moment);
 
 // Componente CalendarCard
+// @ts-ignore
 const CalendarCard = ({ events }) => {
   return (
     <Card raised sx={{ margin: 2, padding: 2 }}>

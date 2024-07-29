@@ -40,7 +40,7 @@ export const ExternalDefenseStage: FC<ExternalDefenseStageProps> = ({
 }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const process = useProcessStore((state) => state.process);
-  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editMode] = useState<boolean>(false);
 
   const setProcess = useProcessStore((state) => state.setProcess);
   const defenseDetail = useDefenseExternalDetail(process?.id || 0);

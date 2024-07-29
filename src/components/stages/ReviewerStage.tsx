@@ -168,7 +168,7 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
               student: process?.student_name || "",
               tutor: formik.values.reviewer,
               jefe_carrera: headOfDepartment,
-              carrera: program,
+              carrera: carrer?.fullName || "",
               dia: dayjs().format("DD"),
               mes: dayjs().format("MMMM"),
               ano: dayjs().format("YYYY"),

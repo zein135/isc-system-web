@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";

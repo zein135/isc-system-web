@@ -9,3 +9,14 @@ export interface Student {
   period: string;
   id: number;
 }
+
+
+export interface StudentForm {
+  id: number;
+  name: string;
+  lastname: string;
+  mothername: string;
+  email: string;
+  phone: string;
+  code: number;
+}

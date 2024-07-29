@@ -11,8 +11,7 @@ import {
   Alert,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { createStudent, getUserById, updateStudent } from "../../services/studentService";
-import { getStundentById } from "../../services/processServicer";
+import { getUserById, updateStudent } from "../../services/studentService";
 import { useParams } from "react-router-dom";
 
 const validationSchema = Yup.object({
@@ -32,6 +31,7 @@ const EditStudentPage = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState<"success" | "error">("success");
+  // @ts-ignore
   const [student, setStudent] = useState<any>();
   const { id } = useParams();
   
@@ -63,6 +63,7 @@ const EditStudentPage = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
+        // @ts-ignore
         await updateStudent(values);
         setMessage("Estudiante actualizado con éxito");
         setSeverity("success");

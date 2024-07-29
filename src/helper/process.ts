@@ -29,7 +29,7 @@ export function convertSeminarToGraduationProcess(
     reviewer_id: seminar.reviewer_id || undefined,
     reviewer_approval: seminar.reviewer_approval || false,
     stage_id: seminar.stage_id,
-    date_tutor_assignament: seminar.date_tutor_assignament,
+    date_tutor_assignament: seminar.date_tutor_assignament ? seminar.date_tutor_assignament.toDate() : null,
     tutor_approval_date: seminar.tutor_approval_date,
     reviewer_approval_date: seminar.reviewer_approval_date,
   };

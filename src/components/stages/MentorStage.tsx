@@ -17,6 +17,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DownloadButton from "../common/DownloadButton";
 import { letters } from "../../constants/letters";
 import { useCarrerStore } from "../../store/carrerStore";
+import { Seminar } from "../../models/studentProcess";
 
 const { TUTOR_APPROBAL, TUTOR_ASSIGNMENT } = letters;
 const CURRENT_STAGE = 1;
@@ -78,13 +79,13 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
         date_tutor_assignament,
       } = formik.values;
 
-      const updatedProcess = {
+      const updatedProcess: Seminar = {
         ...process,
         tutor_letter: tutorDesignationLetterSubmitted,
         tutor_id: Number(mentor),
         tutor_name: mentorName,
         date_tutor_assignament: date_tutor_assignament
-          ? date_tutor_assignament.toDate()
+          ? dayjs(date_tutor_assignament)
           : null,
         ...(isApproveButton && {
           stage_id: 2,

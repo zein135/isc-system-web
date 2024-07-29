@@ -3,15 +3,9 @@ import dayjs, { Dayjs } from "dayjs";
 import {
   Box,
   Grid,
-  Button,
-  Stepper,
-  Typography,
-  Step,
-  StepLabel,
-  TextField,
+  Button
 } from "@mui/material";
 
-import { styled } from "@mui/system";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -32,7 +26,6 @@ import { useDefenseInternalDetail } from "../../hooks/useDefenseInternalDetail";
 import ProfessorAutocomplete from "../selects/ProfessorAutoComplete";
 import { Mentor } from "../../models/mentorInterface";
 import EmailSender from "../common/EmailArea";
-import { sub } from "date-fns";
 
 const DEFENSE_INTERNAL = "internal";
 
