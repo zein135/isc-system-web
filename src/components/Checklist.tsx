@@ -14,8 +14,8 @@ const Checklist = () => {
   const process = useProcessStore((state) => state.process);
 
   const formattedDate = process?.tutor_approval_date
-    ? format(new Date(process.tutor_approval_date), "dd/MM/yyyy")
-    : "";
+  ? format(process.tutor_approval_date.toDate(), "dd/MM/yyyy")
+  : "";
 
   const {
     student_name: studentName,
@@ -68,7 +68,7 @@ const Checklist = () => {
             <FaUserTie className="text-blue-800" />
           </span>
           <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-            Tutor: {process?.tutor_name || " "}
+            Tutor: {process?.tutor_degree}. {process?.tutor_fullname || " "}
           </h3>
           {process?.tutor_approval ? (
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
@@ -83,7 +83,8 @@ const Checklist = () => {
             <FaUserSecret className="text-blue-800" />
           </span>
           <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-            Revisor: {process?.reviewer_name || " "}
+            Revisor: {process?.reviewer_degree}.{" "}
+            {process?.reviewer_fullname || " "}
           </h3>
           {process?.reviewer_approval ? (
             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">

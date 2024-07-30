@@ -17,11 +17,16 @@ export interface Seminar {
     tutor_id: number | undefined;
     tutor_letter: boolean | null;
     tutor_name: string;
+    tutor_degree: string;
+    student_fullname: string;
+    tutor_fullname: string;
+    reviewer_fullname: string;
+    reviewer_degree: string;    
     stage_id: number;
     date_tutor_assignament: Dayjs | null;
     date_reviewer_assignament: Dayjs | null;
-    tutor_approval_date: Date | null;
-    reviewer_approval_date: Date | null;
+    tutor_approval_date: Dayjs | null;
+    reviewer_approval_date: Dayjs | null;
 }
 
 
@@ -40,9 +45,9 @@ export interface GraduationProcess {
     reviewer_id?: number;
     reviewer_approval: boolean;
     stage_id: number;
-    date_tutor_assignament: Date | null;
-    tutor_approval_date: Date | null;
-    reviewer_approval_date: Date | null;
+    date_tutor_assignament: Dayjs | null;
+    tutor_approval_date: Dayjs | null;
+    reviewer_approval_date: Dayjs | null;
 }
 
 export interface Student {

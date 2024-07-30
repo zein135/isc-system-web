@@ -16,11 +16,12 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DownloadButton from "../common/DownloadButton";
 import { letters } from "../../constants/letters";
 import { useCarrerStore } from "../../store/carrerStore";
-const { TUTOR_APPROBAL, TUTOR_ASSIGNMENT } = letters;
+const { TUTOR_APPROBAL, REVIEWER_ASSIGNMENT } = letters;
 
 const validationSchema = Yup.object({
   reviewer: Yup.string().required("* El revisor es obligatorio"),
   reviewerDesignationLetterSubmitted: Yup.boolean(),
+  reviewerApprovalLetterSubmitted: Yup.boolean(),
   date_reviewer_assignament: Yup.mixed().required("Debe seleccionar una fecha"),
 });
 
@@ -48,11 +49,12 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
 
   const formik = useFormik({
     initialValues: {
-      reviewerLetter: process?.reviewer_letter || false,
+      reviewerDesignationLetterSubmitted: process?.reviewer_letter || false,
       date_reviewer_assignament: process?.date_reviewer_assignament
         ? dayjs(process.date_reviewer_assignament)
         : dayjs(),
       reviewer: process?.reviewer_id || "",
+      reviewerApprovalLetterSubmitted: process?.reviewer_approval || false,
     },
     validationSchema,
     onSubmit: () => {
@@ -62,16 +64,16 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
 
   const saveStage = async () => {
     if (process) {
-      const { reviewer, reviewerLetter } = formik.values;
-      process.reviewer_letter = reviewerLetter;
+      const { reviewer, reviewerDesignationLetterSubmitted} = formik.values;
+      process.reviewer_letter = reviewerDesignationLetterSubmitted;
       process.reviewer_id = Number(reviewer);
       process.stage_id = 3;
       process.reviewer_approval = true;
-      process.reviewer_approval_date = new Date();
+      process.reviewer_approval_date = dayjs();
       setProcess(process);
       try {
         await updateProcess(process);
-        if ( isApproveButton) {
+        if (isApproveButton) {
           onNext();
         }
       } catch (error) {
@@ -90,6 +92,9 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
     value: Mentor | null
   ) => {
     formik.setFieldValue("reviewer", value?.id || "");
+    if (process) {
+      process.reviewer_fullname = value?.fullname || "";
+    }
   };
 
   const handleDateChange = (value: Dayjs | null) => {
@@ -99,7 +104,7 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
   const canApproveStage = () => {
     return Boolean(
       formik.values.reviewer &&
-        formik.values.reviewerLetter &&
+        formik.values.reviewerDesignationLetterSubmitted &&
         formik.values.date_reviewer_assignament
     );
   };
@@ -148,32 +153,38 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
           <FormControlLabel
             control={
               <Checkbox
-                name="reviewerLetter"
+                name="reviewerDesignationLetterSubmitted"
                 color="primary"
-                checked={formik.values.reviewerLetter}
+                checked={formik.values.reviewerDesignationLetterSubmitted}
                 onChange={formik.handleChange}
                 disabled={editMode}
               />
             }
             label="Carta de Designación de Revisor Presentada"
           />
-          {formik.touched.reviewerLetter && formik.errors.reviewerLetter ? (
+          {formik.touched.reviewerDesignationLetterSubmitted && formik.errors.reviewerDesignationLetterSubmitted ? (
             <div className="text-red-1 text-xs mt-1">
-              {formik.errors.reviewerLetter}
+              {formik.errors.reviewerDesignationLetterSubmitted}
             </div>
           ) : null}
           <DownloadButton
-            url={TUTOR_ASSIGNMENT.path}
+            url={REVIEWER_ASSIGNMENT.path}
             data={{
-              student: process?.student_name || "",
-              tutor: formik.values.reviewer,
+              student: process?.student_fullname || "",
+              number: 1,
+              reviewer: process?.reviewer_fullname || "",
+              degree: process?.reviewer_degree || "",
               jefe_carrera: headOfDepartment,
               carrera: carrer?.fullName || "",
-              dia: dayjs().format("DD"),
-              mes: dayjs().format("MMMM"),
-              ano: dayjs().format("YYYY"),
+              project_title: process?.project_name || "",
+              carrer_abre: carrer?.shortName || "",
+              day: dayjs().format("DD"),
+              month: dayjs().format("MMMM"),
+              year: dayjs().format("YYYY"),
             }}
-            filename={`${TUTOR_ASSIGNMENT.filename}_${formik.values.reviewer}.${TUTOR_ASSIGNMENT.extention}`}
+            filename={`${REVIEWER_ASSIGNMENT.filename}_${
+              process?.reviewer_fullname || ""
+            }.${REVIEWER_ASSIGNMENT.extention}`}
           />
         </Box>
 
@@ -181,18 +192,18 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
           <FormControlLabel
             control={
               <Checkbox
-                name="tutorApprovalLetterSubmitted"
+                name="reviewerApprovalLetterSubmitted"
                 color="primary"
-                checked={formik.values.reviewerLetter}
+                checked={formik.values.reviewerApprovalLetterSubmitted}
                 onChange={formik.handleChange}
                 disabled={editMode}
               />
             }
             label="Carta de Aprobación de Revisor Presentada"
           />
-          {formik.touched.reviewerLetter && formik.errors.reviewerLetter ? (
+          {formik.touched.reviewerApprovalLetterSubmitted && formik.errors.reviewerApprovalLetterSubmitted ? (
             <div className="text-red-1 text-xs mt-1">
-              {formik.errors.reviewerLetter}
+              {formik.errors.reviewerApprovalLetterSubmitted}
             </div>
           ) : null}
           <DownloadButton
