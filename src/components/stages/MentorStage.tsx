@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import { FC, useState } from "react";
 import * as Yup from "yup";
 import dayjs, { Dayjs } from "dayjs";
+import 'dayjs/locale/es';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -21,6 +22,7 @@ import { Seminar } from "../../models/studentProcess";
 
 const { TUTOR_APPROBAL, TUTOR_ASSIGNMENT } = letters;
 const CURRENT_STAGE = 1;
+dayjs.locale('es');
 
 const validationSchema = Yup.object({
   mentor: Yup.string().required("Debe seleccionar un tutor"),
@@ -90,7 +92,7 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
         ...(isApproveButton && {
           stage_id: 2,
           tutor_approval: true,
-          tutor_approval_date: new Date(),
+          tutor_approval_date: dayjs()
         }),
       };
 
@@ -130,6 +132,9 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
   ) => {
     formik.setFieldValue("mentor", value?.id || "");
     formik.setFieldValue("mentorName", value?.name || "");
+    if (process) {
+      process.tutor_fullname = value?.fullname || "";
+    }
   };
 
   const isApproveButton = canApproveStage();
@@ -194,8 +199,8 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
           <DownloadButton
             url={TUTOR_ASSIGNMENT.path}
             data={{
-              student: process?.student_name || "",
-              tutor: formik.values.mentorName,
+              student: process?.student_fullname || "",
+              tutor: process?.tutor_fullname || "",
               jefe_carrera: carrer?.headOfDepartment || "",
               carrera: carrer?.fullName || "",
               dia: dayjs().format("DD"),
@@ -227,9 +232,10 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
           <DownloadButton
             url={TUTOR_APPROBAL.path}
             data={{
-              student: process?.student_name || "",
-              tutor: process?.tutor_name || "",
+              student: process?.student_fullname || "",
+              tutor: process?.tutor_fullname || "",
               jefe_carrera: carrer?.headOfDepartment || "",
+              degree: process?.tutor_degree || "",
               carrera: carrer?.fullName || "",
               dia: dayjs().format("DD"),
               mes: dayjs().format("MMMM"),

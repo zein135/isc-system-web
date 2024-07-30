@@ -26,8 +26,7 @@ const StudentPage = () => {
   const columns: GridColDef[] = [
     {
       field: "code",
-      headerName: "Código",
-      type: "number",
+      headerName: "Código", 
       headerAlign: "center",
       align: "center",
       flex: 1,

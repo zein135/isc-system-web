@@ -33,7 +33,7 @@ const ProfessorAutocomplete: FC<ProfessorAutocompleteProps> = ({ value, onChange
       disabled={disabled}
       id={id}
       options={mentors}
-      getOptionLabel={(option) => `${option.name} ${option.lastName}`}
+      getOptionLabel={(option) => option.fullname}
       value={mentors.find((mentor) => mentor.id === Number(value)) || null}
       onChange={onChange}
       renderInput={(params) => (
