@@ -5,6 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import { styled } from "@mui/system";
 import { useCarrerStore } from "../../store/carrerStore";
 import { sendEmail } from "../../services/emailService";
+import { useProcessStore } from "../../store/store";
 
 const Root = styled(Box)(({ theme }) => ({
   width: "100%",
@@ -13,42 +14,54 @@ const Root = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(5),
 }));
 
-// @ts-ignore
-const EmailSender = ({ seminar }) => {
+const quillModules = {
+  toolbar: [
+    [{ header: "1" }, { header: "2" }, { font: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["bold", "italic", "underline"],
+    [{ color: [] }, { background: [] }],
+    [{ align: [] }],
+    ["link", "image", "video"],
+    ["clean"],
+  ],
+};
+
+const EmailSender = () => {
+  const process = useProcessStore((state) => state.process);
   const carrer = useCarrerStore((state) => state.carrer);
   const [emailSent, setEmailSent] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState<string>("");
+  const [subject, setSubject] = useState(
+    `Revision de Carpeta - ${carrer?.shortName} - ${process?.student_fullname}`
+  );
   const defaultEmailContent = `
     <p><strong><u>ALUMNO 1</u></strong></p>
-    <p><strong>Nombre:</strong> ${seminar.student_name}</p>
-    <p><strong>Código:</strong> 56224</p>
-    <p><strong>Celular:</strong> 78761916</p>
-    <p><strong>Email:</strong> <a href="mailto:vargasmauricio65@gmail.com">vargasmauricio65@gmail.com</a></p>
-    <p><strong>Modalidad:</strong> ${seminar.modality_name}</p>
+    <p><strong>Nombre:</strong> ${process?.student_fullname}</p>
+    <p><strong>Código:</strong> ${process?.student_code}</p>
+    <p><strong>Celular:</strong> ${process?.student_phone}</p>
+    <p><strong>Email:</strong> <a href="mailto:${process?.student_email}">${process?.student_email}</a></p>
+    <p><strong>Modalidad:</strong> ${process?.modality_name}</p>
   `;
-
   const [emailContent, setEmailContent] = useState(defaultEmailContent);
-  const [subject, setSubject] = useState(
-    `Revision de Carpeta - ${carrer?.shortName}`
-  );
-  const [isSending, setIsSending] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     setEmailContent(defaultEmailContent);
-  }, [seminar]);
+    setSubject(
+      `Revision de Carpeta - ${carrer?.shortName} - ${process?.student_fullname}`
+    );
+  }, [process, carrer?.shortName]);
 
-  // @ts-ignore
-  const handleEmailContentChange = (content) => {
+  const handleEmailContentChange = (content: string) => {
     setEmailContent(content);
   };
 
   const handleSendEmail = async () => {
     setIsSending(true);
-    setError(null);
-
+    setError("");
     try {
       const response = await sendEmail({
-        email: seminar.email,
+        email: process?.student_email || "",
         subject,
         textHtml: emailContent,
       });
@@ -57,9 +70,7 @@ const EmailSender = ({ seminar }) => {
       }
       setEmailSent(true);
     } catch (err) {
-      console.error(err);
-      // @ts-ignore
-      setError(err.message || "Error al enviar el correo");
+      setError(err instanceof Error ? err.message : "Error al enviar el correo");
     } finally {
       setIsSending(false);
     }
@@ -79,17 +90,7 @@ const EmailSender = ({ seminar }) => {
         value={emailContent}
         onChange={handleEmailContentChange}
         theme="snow"
-        modules={{
-          toolbar: [
-            [{ header: "1" }, { header: "2" }, { font: [] }],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["bold", "italic", "underline"],
-            [{ color: [] }, { background: [] }],
-            [{ align: [] }],
-            ["link", "image", "video"],
-            ["clean"],
-          ],
-        }}
+        modules={quillModules}
       />
       {error && (
         <Typography color="error" variant="body2" sx={{ mt: 2 }}>

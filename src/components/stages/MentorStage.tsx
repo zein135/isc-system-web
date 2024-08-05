@@ -1,38 +1,22 @@
-import { useFormik } from "formik";
-import { FC, useState } from "react";
-import * as Yup from "yup";
-import dayjs, { Dayjs } from "dayjs";
-import 'dayjs/locale/es';
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Grid, Box, FormControlLabel, Checkbox, Button } from "@mui/material";
+import { FC, useCallback, useState } from "react";
+import dayjs from "dayjs";
+import "dayjs/locale/es";
+import { Box, Button, Typography, Grid } from "@mui/material";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
-import ProfessorAutocomplete from "../selects/ProfessorAutoComplete";
+import MentorSelection from "./MentorSelection";
+import DateSelection from "./DateSelection";
+import DocumentCheckbox from "./DocumentCheckbox";
+import LoadingBackdrop from "../common/LoadingBackdrop";
 import ConfirmModal from "../common/ConfirmModal";
 import { steps } from "../../data/steps";
 import { useProcessStore } from "../../store/store";
 import { updateProcess } from "../../services/processServicer";
-import { Mentor } from "../../models/mentorInterface";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import DownloadButton from "../common/DownloadButton";
-import { letters } from "../../constants/letters";
 import { useCarrerStore } from "../../store/carrerStore";
-import { Seminar } from "../../models/studentProcess";
+import useMentorFormik from "../../hooks/useMentorFormik";
+import { STAGE } from "../../constants/stages";
 
-const { TUTOR_APPROBAL, TUTOR_ASSIGNMENT } = letters;
-const CURRENT_STAGE = 1;
-dayjs.locale('es');
-
-const validationSchema = Yup.object({
-  mentor: Yup.string().required("Debe seleccionar un tutor"),
-  mentorName: Yup.string().required("Debe seleccionar un tutor"),
-  tutorDesignationLetterSubmitted: Yup.boolean(),
-  tutorApprovalLetterSubmitted: Yup.boolean(),
-  date_tutor_assignament: Yup.mixed()
-    .required("Debe seleccionar una fecha")
-    .nullable(),
-});
+const CURRENT_STAGE = STAGE.MENTOR;
 
 interface InternalDefenseStageProps {
   onPrevious: () => void;
@@ -47,97 +31,73 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
   const carrer = useCarrerStore((state) => state.carrer);
   const setProcess = useProcessStore((state) => state.setProcess);
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(
     CURRENT_STAGE < (process?.stage_id || 0)
   );
 
-  const formik = useFormik({
-    initialValues: {
-      tutorDesignationLetterSubmitted: process?.tutor_letter || false,
-      tutorApprovalLetterSubmitted: process?.tutor_approval || false,
-      date_tutor_assignament: process?.date_tutor_assignament
-        ? dayjs(process.date_tutor_assignament)
-        : dayjs(),
-      mentor: process?.tutor_id || "",
-      mentorName: process?.tutor_name || "",
-    },
-    validationSchema,
-    onSubmit: () => {
-      if (canApproveStage()) {
-        setShowModal(true);
-      } else {
-        saveStage();
-      }
-    },
+  const { formik, canApproveStage } = useMentorFormik(process, () => {
+    if (canApproveStage) {
+      setShowModal(true);
+    } else {
+      saveStage();
+    }
   });
 
-  const saveStage = async () => {
-    if (process) {
-      const {
-        mentor,
-        mentorName,
-        tutorDesignationLetterSubmitted,
-        date_tutor_assignament,
-      } = formik.values;
+  const saveStage = useCallback(async () => {
+    if (!process) return;
 
-      const updatedProcess: Seminar = {
-        ...process,
-        tutor_letter: tutorDesignationLetterSubmitted,
-        tutor_id: Number(mentor),
-        tutor_name: mentorName,
-        date_tutor_assignament: date_tutor_assignament
-          ? dayjs(date_tutor_assignament)
-          : null,
-        ...(isApproveButton && {
-          stage_id: 2,
-          tutor_approval: true,
-          tutor_approval_date: dayjs()
-        }),
-      };
+    setLoading(true);
 
+    const {
+      mentor,
+      mentorName,
+      tutorDesignationLetterSubmitted,
+      date_tutor_assignament,
+    } = formik.values;
+
+    const updatedProcess = {
+      ...process,
+      tutor_letter: tutorDesignationLetterSubmitted,
+      tutor_id: Number(mentor),
+      tutor_name: mentorName,
+      date_tutor_assignament: date_tutor_assignament
+        ? dayjs(date_tutor_assignament)
+        : null,
+      ...(canApproveStage && {
+        stage_id: 2,
+        tutor_approval: true,
+        tutor_approval_date: dayjs(),
+      }),
+    };
+    try {
+      await updateProcess(updatedProcess);
       setProcess(updatedProcess);
-
-      try {
-        await updateProcess(updatedProcess);
-        if (isApproveButton) {
-          onNext();
-        }
-      } catch (error) {
-        console.error("Error updating process:", error);
+      if (canApproveStage) {
+        onNext();
       }
+    } catch (error) {
+      console.error("Error updating process:", error);
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [process, formik.values, setProcess, onNext, canApproveStage]);
 
-  const handleModalAction = () => {
+  const handleModalAction = useCallback(() => {
     saveStage();
     setShowModal(false);
-  };
+  }, [saveStage]);
 
-  const handleDateChange = (value: Dayjs | null) => {
-    formik.setFieldValue("date_tutor_assignament", value);
+  const renderFieldError = (fieldName: string) => {
+    const touched = formik.touched[fieldName as keyof typeof formik.touched];
+    const error = formik.errors[fieldName as keyof typeof formik.errors];
+    return touched && error ? (
+      <Typography color="error" variant="caption">
+        {String(error)}
+      </Typography>
+    ) : null;
   };
-
-  const canApproveStage = () => {
-    return Boolean(
-      formik.values.mentor &&
-        formik.values.tutorDesignationLetterSubmitted &&
-        formik.values.date_tutor_assignament
-    );
-  };
-
-  const handleMentorChange = (
-    _event: React.ChangeEvent<unknown>,
-    value: Mentor | null
-  ) => {
-    formik.setFieldValue("mentor", value?.id || "");
-    formik.setFieldValue("mentorName", value?.name || "");
-    if (process) {
-      process.tutor_fullname = value?.fullname || "";
-    }
-  };
-
-  const isApproveButton = canApproveStage();
 
   const editForm = () => {
     setEditMode(false);
@@ -145,110 +105,31 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
 
   return (
     <>
-      <div className="txt1">
-        Etapa 2: Seleccionar Tutor <ModeEditIcon onClick={editForm} />
-      </div>
+      <Typography variant="h6" gutterBottom>
+        Etapa 2: Seleccionar Tutor{" "}
+        <ModeEditIcon onClick={editForm} style={{ cursor: "pointer" }} />
+      </Typography>
 
       <form onSubmit={formik.handleSubmit} className="mx-16">
         <Grid container spacing={3}>
-          <Grid item xs={6} marginTop={5}>
-            <ProfessorAutocomplete
-              disabled={editMode}
-              value={String(formik.values.mentor)}
-              onChange={handleMentorChange}
-              id="mentor"
-              label={"Seleccionar Tutor"}
-            />
-            {formik.touched.mentor && formik.errors.mentor ? (
-              <div className="text-red-1 text-xs mt-1">
-                {formik.errors.mentor}
-              </div>
-            ) : null}
-          </Grid>
-          <Grid item xs={6} marginTop={5}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                disabled={editMode}
-                label="Fecha de Asignación"
-                value={formik.values.date_tutor_assignament}
-                onChange={handleDateChange}
-                format="DD/MM/YYYY"
-              />
-            </LocalizationProvider>
-          </Grid>
+          <MentorSelection
+            disabled={editMode}
+            formik={formik}
+            process={process}
+            renderFieldError={renderFieldError}
+          />
+          <DateSelection
+            disabled={editMode}
+            formik={formik}
+            renderFieldError={renderFieldError}
+          />
         </Grid>
-        <Box mt={3}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="tutorDesignationLetterSubmitted"
-                color="primary"
-                checked={formik.values.tutorDesignationLetterSubmitted}
-                onChange={formik.handleChange}
-                disabled={editMode}
-              />
-            }
-            label="Carta de Asignación de Tutor Presentada"
-          />
-          {formik.touched.tutorDesignationLetterSubmitted &&
-          formik.errors.tutorDesignationLetterSubmitted ? (
-            <div className="text-red-1 text-xs mt-1">
-              {formik.errors.tutorDesignationLetterSubmitted}
-            </div>
-          ) : null}
-          <DownloadButton
-            url={TUTOR_ASSIGNMENT.path}
-            data={{
-              student: process?.student_fullname || "",
-              tutor: process?.tutor_fullname || "",
-              jefe_carrera: carrer?.headOfDepartment || "",
-              carrera: carrer?.fullName || "",
-              dia: dayjs().format("DD"),
-              mes: dayjs().format("MMMM"),
-              ano: dayjs().format("YYYY"),
-            }}
-            filename={`${TUTOR_ASSIGNMENT.filename}_${formik.values.mentorName}.${TUTOR_ASSIGNMENT.extention}`}
-          />
-        </Box>
-        <Box mt={3}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="tutorApprovalLetterSubmitted"
-                color="primary"
-                checked={formik.values.tutorApprovalLetterSubmitted}
-                onChange={formik.handleChange}
-                disabled={editMode}
-              />
-            }
-            label="Carta de Aprobación de Tutor Presentada"
-          />
-          {formik.touched.tutorApprovalLetterSubmitted &&
-          formik.errors.tutorApprovalLetterSubmitted ? (
-            <div className="text-red-1 text-xs mt-1">
-              {formik.errors.tutorApprovalLetterSubmitted}
-            </div>
-          ) : null}
-          <DownloadButton
-            url={TUTOR_APPROBAL.path}
-            data={{
-              student: process?.student_fullname || "",
-              tutor: process?.tutor_fullname || "",
-              jefe_carrera: carrer?.headOfDepartment || "",
-              degree: process?.tutor_degree || "",
-              carrera: carrer?.fullName || "",
-              dia: dayjs().format("DD"),
-              mes: dayjs().format("MMMM"),
-              ano: dayjs().format("YYYY"),
-              title_project: process?.project_name || "",
-              date: dayjs(formik.values.date_tutor_assignament).format(
-                "DD/MM/YYYY"
-              ),
-            }}
-            filename={`${TUTOR_APPROBAL.filename}_${formik.values.mentorName}.${TUTOR_APPROBAL.extention}`}
-          />
-        </Box>
-
+        <DocumentCheckbox
+          disabled={editMode}
+          formik={formik}
+          carrer={carrer}
+          process={process}
+        />
         <Box display="flex" justifyContent="space-between" mt={4}>
           <Button
             type="button"
@@ -259,7 +140,7 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
             Anterior
           </Button>
           <Button type="submit" variant="contained" color="primary">
-            {isApproveButton ? "Aprobar Etapa" : "Guardar"}
+            {canApproveStage ? "Aprobar Etapa" : "Guardar"}
           </Button>
         </Box>
       </form>
@@ -267,11 +148,12 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
         <ConfirmModal
           step={steps[1]}
           nextStep={steps[2]}
-          isApproveButton={isApproveButton}
+          isApproveButton={canApproveStage}
           setShowModal={setShowModal}
           onNext={handleModalAction}
         />
       )}
+      <LoadingBackdrop loading={loading} canApproveStage={canApproveStage} />
     </>
   );
 };
