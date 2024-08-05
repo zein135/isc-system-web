@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface Carrer {
+export interface Carrer {
     id: number;
     fullName: string;
     shortName: string;

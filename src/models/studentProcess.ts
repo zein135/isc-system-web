@@ -12,6 +12,9 @@ export interface Seminar {
     reviewer_name: string;
     seminar_enrollment: string | null;
     student_id: number;
+    student_code: string;
+    student_email: string;
+    student_phone: string;
     student_name: string;
     tutor_approval: boolean | null;
     tutor_id: number | undefined;
