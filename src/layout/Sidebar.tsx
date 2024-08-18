@@ -14,7 +14,7 @@ import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import UPB_LOGO from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
-
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 const drawerWidth = 240;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -90,6 +90,9 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
 
   const goToProcess = () => {
     navigate("/process");
+  }
+  const goToInterns = () => {
+    navigate("/interns")
   }
 
   return (
@@ -199,6 +202,31 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
               <SchoolOutlinedIcon color="primary"/>
             </ListItemIcon>
             <ListItemText primary={"Estudiantes"} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key={"interns"} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToInterns}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <EmojiPeopleIcon color="primary"/>
+            </ListItemIcon>
+            <ListItemText
+              color="primary"
+              primary={"Interns"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
           </ListItemButton>
         </ListItem>
       </List>
