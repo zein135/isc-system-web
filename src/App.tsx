@@ -23,6 +23,7 @@ import CreateStudentPage from "./pages/Student/CreateStudentPage";
 import EditStudentPage from "./pages/Student/EditStudentPage";
 import Profile from "./pages/profile/Profile";
 import GraduationProcessPage from "./pages/graduation/GraduationProcessPage";
+import AdminsitratorPage from "./pages/Administrator/AdministratorPage";
 
 import publicRoutes from "./routes/PublicRoutes";
 import protectedRoutes from "./routes/ProtectedRoutes";
@@ -144,6 +145,14 @@ const router = createBrowserRouter([
         element: (
           <RequireAuth>
             <Profile />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "administration",
+        element: (
+          <RequireAuth>
+            <AdminsitratorPage />
           </RequireAuth>
         ),
       },
