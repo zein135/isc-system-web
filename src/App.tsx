@@ -23,6 +23,7 @@ import CreateStudentPage from "./pages/Student/CreateStudentPage";
 import EditStudentPage from "./pages/Student/EditStudentPage";
 import Profile from "./pages/profile/Profile";
 import GraduationProcessPage from "./pages/graduation/GraduationProcessPage";
+import EventsPage from "./pages/Events/EventsPage";
 import InternsListPage from "./pages/interns/InternsListPage";
 
 function loader() {
@@ -144,6 +145,10 @@ const router = createBrowserRouter([
             <Profile />
           </RequireAuth>
         ),
+      },
+      {
+        path: "/events",
+        element: <EventsPage />,
       },
       {
         path: "/interns",

@@ -14,6 +14,8 @@ import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import UPB_LOGO from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 const drawerWidth = 240;
 
@@ -91,6 +93,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const goToProcess = () => {
     navigate("/process");
   }
+
+  const goToEvents = () => {
+    navigate("/events");
+  }
   const goToInterns = () => {
     navigate("/interns")
   }
@@ -129,7 +135,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                 justifyContent: "center",
               }}
             >
-              <HomeIcon color="primary"/>
+              <HomeIcon color="primary" />
             </ListItemIcon>
             <ListItemText
               color="primary"
@@ -154,7 +160,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                 justifyContent: "center",
               }}
             >
-              <ChecklistOutlinedIcon color="primary"/>
+              <ChecklistOutlinedIcon color="primary" />
             </ListItemIcon>
             <ListItemText
               primary={"Procesos"}
@@ -178,7 +184,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                 justifyContent: "center",
               }}
             >
-              <SupervisorAccountIcon color="primary"/>
+              <SupervisorAccountIcon color="primary" />
             </ListItemIcon>
             <ListItemText primary={"Docentes"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
@@ -199,9 +205,30 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                 justifyContent: "center",
               }}
             >
-              <SchoolOutlinedIcon color="primary"/>
+              <SchoolOutlinedIcon color="primary" />
             </ListItemIcon>
             <ListItemText primary={"Estudiantes"} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key={"events"} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToEvents}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <LocalActivityIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText primary={"Eventos"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
         <ListItem key={"interns"} disablePadding sx={{ display: "block" }}>
