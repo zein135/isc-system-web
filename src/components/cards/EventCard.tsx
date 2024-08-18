@@ -15,6 +15,8 @@ import { FC, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -84,6 +86,16 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                 <Tooltip title="Registrarse">
                     <IconButton aria-label="registrarse">
                         <AddIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Editar">
+                    <IconButton aria-label="editar">
+                        <EditIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Borrar">
+                    <IconButton aria-label="borrar">
+                        <DeleteForeverIcon />
                     </IconButton>
                 </Tooltip>
                 <ExpandMore
