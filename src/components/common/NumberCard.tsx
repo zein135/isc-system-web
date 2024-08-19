@@ -17,7 +17,7 @@ function NumberCard({
   title,
   subtitle,
   count,
-  percentage
+  percentage,
 }: NumberCardProps) {
   const roundedPercentage = Math.round(percentage);
   return (
@@ -33,7 +33,12 @@ function NumberCard({
               {count}
             </Typography>
             <Typography
-              sx={{ fontSize: 14, color: textColor, mb: 1.5, fontWeight: "bold" }}
+              sx={{
+                fontSize: 14,
+                color: textColor,
+                mb: 1.5,
+                fontWeight: "bold",
+              }}
               color="text.secondary"
             >
               {title}
@@ -45,7 +50,16 @@ function NumberCard({
               {subtitle}
             </Typography>
           </Grid>
-          <Grid item xs={6} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
+          <Grid
+            item
+            xs={6}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: 100,
+            }}
+          >
             <div style={{ width: "70%", height: 100 }}>
               <CircularProgressbar
                 value={roundedPercentage}
@@ -54,7 +68,7 @@ function NumberCard({
                 backgroundPadding={6}
                 styles={buildStyles({
                   backgroundColor: "#FFFFFF",
-                  textColor:  "#000",
+                  textColor: "#000",
                   pathColor: backgroundColor,
                   trailColor: "#FFFFFF",
                 })}

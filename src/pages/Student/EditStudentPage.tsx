@@ -34,7 +34,7 @@ const EditStudentPage = () => {
   // @ts-ignore
   const [student, setStudent] = useState<any>();
   const { id } = useParams();
-  
+
   const fetchStudent = async () => {
     try {
       const response = await getUserById(Number(id));
@@ -43,13 +43,11 @@ const EditStudentPage = () => {
     } catch (error) {
       console.error("Error al obtener el estudiante:", error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchStudent();
-  }
-  , [id]);
-
+  }, [id]);
 
   const formik = useFormik({
     initialValues: {
@@ -78,7 +76,7 @@ const EditStudentPage = () => {
 
   const handleClose = (
     _event: React.SyntheticEvent | Event,
-    reason?: string
+    reason?: string,
   ) => {
     if (reason === "clickaway") {
       return;
@@ -155,7 +153,7 @@ const EditStudentPage = () => {
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                  <TextField
+                    <TextField
                       id="mothername"
                       name="mothername"
                       label="Apellido Materno"

@@ -78,7 +78,7 @@ const DocumentCheckbox: FC<DocumentCheckboxProps> = ({
             ano: dayjs().format("YYYY"),
             title_project: process?.project_name || "",
             date: dayjs(formik.values.date_tutor_assignament).format(
-              "DD/MM/YYYY"
+              "DD/MM/YYYY",
             ),
           }}
           filename={`${TUTOR_APPROBAL.filename}_${formik.values.mentorName}.${TUTOR_APPROBAL.extention}`}
