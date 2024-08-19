@@ -68,6 +68,10 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
     const goToEditEvent = () => {
         navigate(`/editEvent/${id_event}`);
       };
+    
+      const goToEventDetails = () => {
+        navigate(`/interns/${id_event}`);
+    };
 
     const subheaderProp = (
         <>
@@ -98,6 +102,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
     };
+    
 
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -114,6 +119,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                 }
                 title={nombre}
                 subheader={subheaderProp}
+                onClick={goToEventDetails}
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">

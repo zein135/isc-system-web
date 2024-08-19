@@ -10,12 +10,11 @@ import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import { Divider, ListItemButton } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import ChecklistOutlinedIcon from "@mui/icons-material/ChecklistOutlined";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
+import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import UPB_LOGO from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
-import LocalActivityIcon from "@mui/icons-material/LocalActivity";
-import AssignmentInd from "@mui/icons-material/AssignmentInd";
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 const drawerWidth = 240;
@@ -47,7 +46,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
-  }
+  },
 });
 
 const Drawer = styled(MuiDrawer, {
@@ -89,19 +88,18 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
 
   const goToStudents = () => {
     navigate("/students");
-  };
+  }
 
   const goToProcess = () => {
     navigate("/process");
-  };
+  }
 
   const goToEvents = () => {
     navigate("/events");
-  };
-
-  const goToEnrolled = () => {
-    navigate("/enrolled");
-  };
+  }
+  const goToInterns = () => {
+    navigate("/interns")
+  }
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -164,7 +162,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             >
               <ChecklistOutlinedIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary={"Procesos"} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText
+              primary={"Procesos"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
           </ListItemButton>
         </ListItem>
         <ListItem key={"professors"} disablePadding sx={{ display: "block" }}>
@@ -206,10 +207,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             >
               <SchoolOutlinedIcon color="primary" />
             </ListItemIcon>
-            <ListItemText
-              primary={"Estudiantes"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
+            <ListItemText primary={"Estudiantes"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
         <ListItem key={"events"} disablePadding sx={{ display: "block" }}>
@@ -232,31 +230,31 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             </ListItemIcon>
             <ListItemText primary={"Eventos"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
-          <ListItem key={"enrolled"} disablePadding sx={{ display: "block" }}>
-  <ListItemButton
-      sx={{
-      minHeight: 48,
-      justifyContent: open ? "initial" : "center",
-      px: 2.5,
-    }}
-    onClick={goToEnrolled}
-  >
-    <ListItemIcon
-      sx={{
-        minWidth: 0,
-        mr: open ? 3 : "auto",
-        justifyContent: "center",
-      }}
-    >
-      <AssignmentInd color="primary" />
-    </ListItemIcon>
-              <ListItemText
-                primary={"Ver Inscritos"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-  </ListItemButton>
-</ListItem>
-
+        </ListItem>
+        <ListItem key={"interns"} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToInterns}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <EmojiPeopleIcon color="primary"/>
+            </ListItemIcon>
+            <ListItemText
+              color="primary"
+              primary={"Ver Inscritos"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
         </ListItem>
       </List>
     </Drawer>
@@ -264,4 +262,3 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
 };
 
 export default Sidebar;
-
