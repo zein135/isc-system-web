@@ -3,7 +3,7 @@ import { Grid, Button } from '@mui/material';
 import EventCard from '../../components/cards/EventCard';
 import { events } from '../../data/events';
 
-const EventsPage = () => {
+const EventsPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleAddEventClick = () => {
@@ -29,3 +29,4 @@ const EventsPage = () => {
 };
 
 export default EventsPage;
+
