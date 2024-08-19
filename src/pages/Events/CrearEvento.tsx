@@ -4,7 +4,6 @@ import { EventDetails } from '../../models/eventInterface.ts';
 
 const CreateEventPage: React.FC = () => {
   const handleFormSubmit = (newEvent: EventDetails) => {
-    // Aquí puedes manejar la lógica para agregar el nuevo evento
     console.log("Nuevo evento agregado:", newEvent);
   };
 

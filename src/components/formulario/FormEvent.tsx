@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { EventDetails } from '../../models/eventInterface.ts';
+import { EventDetails } from '../../models/eventInterface.ts'; // Asegúrate de que la ruta sea correcta
 
 interface EventFormProps {
   onSubmit: (eventDetails: EventDetails) => void;
-  onCancel?: () => void; 
+  onCancel: () => void;
 }
 
 const EventForm: React.FC<EventFormProps> = ({ onSubmit, onCancel }) => {
@@ -19,11 +19,8 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit, onCancel }) => {
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type } = event.target;
-    setEventDetails((prevData) => ({
-      ...prevData,
-      [name]: type === 'number' ? +value : value
-    }));
+    const { name, value } = event.target;
+    setEventDetails((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -42,15 +39,14 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '800px', margin: '0 auto', padding: '20px', backgroundColor: '#fff', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-      <h2 style={{ textAlign: 'center', fontSize: '24px', marginBottom: '20px' }}>CREAR EVENTO</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%', maxWidth: '600px', margin: '0 auto' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         <label>
-          Nombre del evento:
+          Título del evento:
           <input
             type="text"
             name="title"
-            placeholder="Ingrese el nombre del evento..."
+            placeholder="Título del evento"
             value={eventDetails.title}
             onChange={handleInputChange}
             style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
@@ -67,73 +63,79 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit, onCancel }) => {
           />
         </label>
         <label>
-          Horas Becarias:
-          <input
-            type="text"
-            name="scholarshipHours"
-            placeholder="Ingrese las horas becarias..."
-            value={eventDetails.scholarshipHours}
-            onChange={handleInputChange}
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
-          />
-        </label>
-        <label>
           Duración:
           <input
             type="text"
             name="duration"
-            placeholder="Ingrese la duración del evento..."
+            placeholder="Duración"
             value={eventDetails.duration}
             onChange={handleInputChange}
             style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
           />
         </label>
         <label>
-          Descripción del evento:
+          Horas de beca:
           <input
             type="text"
-            name="description"
-            placeholder="Ingrese la descripción del evento..."
-            value={eventDetails.description}
+            name="scholarshipHours"
+            placeholder="Horas de beca"
+            value={eventDetails.scholarshipHours}
             onChange={handleInputChange}
             style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
           />
         </label>
         <label>
-          N° de Becarios:
+          Ubicación:
+          <input
+            type="text"
+            name="location"
+            placeholder="Ubicación"
+            value={eventDetails.location}
+            onChange={handleInputChange}
+            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
+          />
+        </label>
+        <label>
+          Máximo de participantes:
           <input
             type="number"
             name="maxParticipants"
-            placeholder="Ingrese el número de becarios participantes..."
+            placeholder="Máximo de participantes"
             value={eventDetails.maxParticipants}
             onChange={handleInputChange}
             style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
           />
         </label>
         <label>
-          Responsable:
+          Máximo de suplentes:
+          <input
+            type="number"
+            name="maxSubstitutes"
+            placeholder="Máximo de suplentes"
+            value={eventDetails.maxSubstitutes}
+            onChange={handleInputChange}
+            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
+          />
+        </label>
+        <label>
+          Descripción:
           <input
             type="text"
-            name="location"
-            placeholder="Ingrese el nombre del responsable..."
-            value={eventDetails.location}
+            name="description"
+            placeholder="Descripción"
+            value={eventDetails.description}
             onChange={handleInputChange}
             style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
           />
         </label>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
-        {onCancel && (
-          <button type="button" onClick={onCancel} style={{ padding: '12px 24px', backgroundColor: '#ccc', color: '#333', border: 'none', borderRadius: '4px', fontSize: '16px' }}>
-            Cancelar
-          </button>
-        )}
-        <button
-          type="button"
-          onClick={onCancel}
-          style={{ padding: '12px 24px', backgroundColor: '#202121', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '16px', marginLeft: onCancel ? '8px' : '0' }}
-        >
-          CREAR
+
+      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+        <button type="button" onClick={onCancel} style={{ padding: '8px 16px', backgroundColor: '#ccc', border: 'none', borderRadius: '4px' }}>
+          Cancelar
+        </button>
+        <button type="submit" style={{ padding: '8px 16px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '4px' }}>
+          Agregar Evento
         </button>
       </div>
     </form>

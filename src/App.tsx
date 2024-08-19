@@ -13,19 +13,19 @@ import { getProcess, getStudentById } from './services/processServicer';
 import LoginPage from './pages/auth/LoginPage';
 import Layout from './layout/Layout';
 
-import CreateProcessPage from './pages/CreateGraduation/CreateProcessPage';
-import ProfessorPage from './pages/Professor/ProfessorPage';
-import CreateProfessorPage from './pages/Professor/CreateProfessorPage';
-import { RequireAuth } from './layout/RequireAuth';
-import { DashboardPage } from './pages/dashboard/Dashboard';
-import StudentPage from './pages/Student/StudentsPage';
-import CreateStudentPage from './pages/Student/CreateStudentPage';
-import EditStudentPage from './pages/Student/EditStudentPage';
-import Profile from './pages/profile/Profile';
-import GraduationProcessPage from './pages/graduation/GraduationProcessPage';
-import EventsPage from './pages/Events/EventsPage';
-import CrearEvento from './pages/Events/CrearEvento'; 
-import InternsListPage from './pages/interns/InternsListPage';
+import CreateProcessPage from "./pages/CreateGraduation/CreateProcessPage";
+import ProfessorPage from "./pages/Professor/ProfessorPage";
+import CreateProfessorPage from "./pages/Professor/CreateProfessorPage";
+import { RequireAuth } from "./layout/RequireAuth";
+import { DashboardPage } from "./pages/dashboard/Dashboard";
+import StudentPage from "./pages/Student/StudentsPage";
+import CreateStudentPage from "./pages/Student/CreateStudentPage";
+import EditStudentPage from "./pages/Student/EditStudentPage";
+import Profile from "./pages/profile/Profile";
+import GraduationProcessPage from "./pages/graduation/GraduationProcessPage";
+import EventsPage from "./pages/Events/EventsPage";
+import CrearEvento from "./pages/Events/CrearEvento"; 
+import InternsListPage from "./pages/interns/InternsListPage";
 
 function loader() {
   return getProcess();
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         element: <Navigate to="/login" replace />,
       },
       {
-        path: '/dashboard',
+        path: "/dashboard",
         element: (
           <RequireAuth>
             <DashboardPage />
@@ -151,7 +151,7 @@ const router = createBrowserRouter([
         element: <EventsPage />,
       },
       {
-        path: '/events/create',
+        path: "/events/create",
         element: (
           <RequireAuth>
             <CrearEvento />
@@ -159,13 +159,11 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/interns',
-        element: (
-          <RequireAuth>
-            <InternsListPage />
-          </RequireAuth>
-        ),
-      },
+        path: "/interns",
+        element :(
+          <InternsListPage />
+        )
+      }
     ],
   },
   {
