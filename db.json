@@ -119,6 +119,45 @@
       }
     }
   ],
+  "permissions": [
+    {
+      "subtitle": "Reportes",
+      "permissions": [
+        { "accion": "Ver el dashboard", "permiso": false }
+      ]
+    },
+    {
+      "subtitle": "Proceso de graduación",
+      "permissions": [
+        { "accion": "Ver reporte de los procesos de graduación", "permiso": false },
+        { "accion": "Crear proceso de graduación", "permiso": false },
+        { "accion": "Ver proceso de graduación por estudiante", "permiso": false },
+        { "accion": "Asignar proceso de graduación", "permiso": false }
+      ]
+    },
+    {
+      "subtitle": "Docentes",
+      "permissions": [
+        { "accion": "Ver lista de docentes", "permiso": false },
+        { "accion": "Agregar docente", "permiso": false },
+        { "accion": "Ver reporte de docente", "permiso": false },
+        { "accion": "Realizar una cita con docente", "permiso": false },
+        { "accion": "Eliminar docente", "permiso": false },
+        { "accion": "Editar información de docente", "permiso": false }
+      ]
+    },
+    {
+      "subtitle": "Estudiantes",
+      "permissions": [
+        { "accion": "Ver lista de estudiantes", "permiso": false },
+        { "accion": "Agregar estudiante", "permiso": false },
+        { "accion": "Eliminar estudiante", "permiso": false },
+        { "accion": "Editar información de estudiante", "permiso": false },
+        { "accion": "Ver reporte de estudiante", "permiso": false },
+        { "accion": "Realizar cita con estudiante", "permiso": false }
+      ]
+    }
+  ],
   "roles":[
     {
       "roleName":"Jefe de Carrera"
@@ -128,16 +167,6 @@
     },
     {
       "roleName":"Estudiante"
-    }
-  ],
-  "permissions":[
-    { 
-      "permissionName":"Ver Perfil Propio",
-      "permissionsDefaultState":true
-    },
-    { 
-      "permissionName":"Realizar Carta de Tutoria",
-      "permissionsDefaultState":false
     }
   ]
 }
