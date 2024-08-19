@@ -31,7 +31,6 @@ const PermissionTable = () => {
     setSections(newSections);
   };
   return (
-    <Grid item xs={8}>
       <Table className="border-table">
         <TableHead className="large-header">
           <TableRow>
@@ -68,7 +67,6 @@ const PermissionTable = () => {
           )}
         </TableBody>
       </Table>
-    </Grid>
   )
 }
 
