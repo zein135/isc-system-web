@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import AssignmentInd from "@mui/icons-material/AssignmentInd";
 
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 const drawerWidth = 240;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
