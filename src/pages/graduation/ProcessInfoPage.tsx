@@ -16,7 +16,7 @@ const ProcessInfoPage = () => {
   useEffect(() => {
     updateProcess(data);
   }, [data, updateProcess]);
-  
+
   const stageProcess = data.stage_id;
 
   return (

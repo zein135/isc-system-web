@@ -44,7 +44,7 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(
-    CURRENT_STAGE < (process?.stage_id || 0)
+    CURRENT_STAGE < (process?.stage_id || 0),
   );
 
   const formik = useFormik({
@@ -64,7 +64,7 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
 
   const saveStage = async () => {
     if (process) {
-      const { reviewer, reviewerDesignationLetterSubmitted} = formik.values;
+      const { reviewer, reviewerDesignationLetterSubmitted } = formik.values;
       process.reviewer_letter = reviewerDesignationLetterSubmitted;
       process.reviewer_id = Number(reviewer);
       process.stage_id = 3;
@@ -89,7 +89,7 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
 
   const handleMentorChange = (
     _event: React.ChangeEvent<unknown>,
-    value: Mentor | null
+    value: Mentor | null,
   ) => {
     formik.setFieldValue("reviewer", value?.id || "");
     if (process) {
@@ -105,7 +105,7 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
     return Boolean(
       formik.values.reviewer &&
         formik.values.reviewerDesignationLetterSubmitted &&
-        formik.values.date_reviewer_assignament
+        formik.values.date_reviewer_assignament,
     );
   };
 
@@ -162,7 +162,8 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
             }
             label="Carta de Designación de Revisor Presentada"
           />
-          {formik.touched.reviewerDesignationLetterSubmitted && formik.errors.reviewerDesignationLetterSubmitted ? (
+          {formik.touched.reviewerDesignationLetterSubmitted &&
+          formik.errors.reviewerDesignationLetterSubmitted ? (
             <div className="text-red-1 text-xs mt-1">
               {formik.errors.reviewerDesignationLetterSubmitted}
             </div>
@@ -201,7 +202,8 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
             }
             label="Carta de Aprobación de Revisor Presentada"
           />
-          {formik.touched.reviewerApprovalLetterSubmitted && formik.errors.reviewerApprovalLetterSubmitted ? (
+          {formik.touched.reviewerApprovalLetterSubmitted &&
+          formik.errors.reviewerApprovalLetterSubmitted ? (
             <div className="text-red-1 text-xs mt-1">
               {formik.errors.reviewerApprovalLetterSubmitted}
             </div>
@@ -218,7 +220,7 @@ export const ReviewerStage: FC<ReviewerStageProps> = ({
               ano: dayjs().format("YYYY"),
               title_project: process?.project_name || "",
               date: dayjs(formik.values.date_reviewer_assignament).format(
-                "DD/MM/YYYY"
+                "DD/MM/YYYY",
               ),
             }}
             filename={`${TUTOR_APPROBAL.filename}_${formik.values.reviewer}.${TUTOR_APPROBAL.extention}`}

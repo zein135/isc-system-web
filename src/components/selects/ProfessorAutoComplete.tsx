@@ -11,7 +11,13 @@ interface ProfessorAutocompleteProps {
   label: string;
 }
 
-const ProfessorAutocomplete: FC<ProfessorAutocompleteProps> = ({ value, onChange, disabled, id, label }) => {
+const ProfessorAutocomplete: FC<ProfessorAutocompleteProps> = ({
+  value,
+  onChange,
+  disabled,
+  id,
+  label,
+}) => {
   const [mentors, setMentors] = useState<Mentor[]>([]);
   const [error, setError] = useState<string | null>(null);
 

@@ -25,7 +25,7 @@ const getDefenseDetail = async (processId: number, type: string) => {
 
 const postDefenseDetail = async (
   processId: number,
-  data: CreateDefenseDetail
+  data: CreateDefenseDetail,
 ) => {
   try {
     const response = await apiClient.post(`graduation/${processId}/defense/`, {

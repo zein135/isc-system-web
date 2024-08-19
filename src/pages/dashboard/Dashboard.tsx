@@ -49,7 +49,7 @@ export const DashboardPage = () => {
         <Grid item xs={12}>
           <Grid container spacing={3}>
             <Grid item xs={4}>
-              <Grid container spacing={3} marginTop={'15px'}>
+              <Grid container spacing={3} marginTop={"15px"}>
                 <Grid item xs={12}>
                   <NumberCard
                     backgroundColor="#FAAA1E"

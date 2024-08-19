@@ -21,7 +21,7 @@ const updateProcess = async (seminar: Seminar) => {
     const graduation = convertSeminarToGraduationProcess(seminar);
     const response = await apiClient.put(
       `graduation/${seminar.id}`,
-      graduation
+      graduation,
     );
     return response.data;
   } catch (error) {
@@ -53,7 +53,7 @@ const createGraduationProcess = async (seminar: InitGraduationProcess) => {
   } catch (error) {
     console.error("Error creating graduation process:", error);
     throw new Error(
-      "Failed to create graduation process due to an error in the request"
+      "Failed to create graduation process due to an error in the request",
     );
   }
 };

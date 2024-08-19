@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from "dayjs";
 import {
   FaEnvelope,
   FaCalendarCheck,
@@ -10,17 +10,17 @@ import {
 import { useProcessStore } from "../store/store";
 import { Seminar } from "../models/studentProcess";
 
-import 'dayjs/locale/es';
+import "dayjs/locale/es";
 
 const Checklist = () => {
   const process = useProcessStore((state) => state.process);
-  let formattedDate = ""
-  if(process) {
+  let formattedDate = "";
+  if (process) {
     formattedDate = process.tutor_approval_date
-    ? dayjs(process.tutor_approval_date).format('DD/MM/YYYY')
-    : '';
+      ? dayjs(process.tutor_approval_date).format("DD/MM/YYYY")
+      : "";
   }
-  
+
   const {
     student_name: studentName,
     project_name: titleProject,

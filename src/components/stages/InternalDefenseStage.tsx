@@ -1,11 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import {
-  Box,
-  Grid,
-  Button
-} from "@mui/material";
-
+import { Box, Grid, Button } from "@mui/material";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -99,14 +94,14 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
       ];
 
       const pdfArrayBuffer = await fetch(pdfFile).then((res) =>
-        res.arrayBuffer()
+        res.arrayBuffer(),
       );
       const modifiedPdf = await modifyPdf(pdfArrayBuffer, data);
       const pdfBlob = new Blob([modifiedPdf], { type: "application/pdf" });
 
       downloadFile(
         pdfBlob,
-        "Acta_Defensa_Interna_de_Seminario_de_Grado_V1.1.pdf"
+        "Acta_Defensa_Interna_de_Seminario_de_Grado_V1.1.pdf",
       );
     } catch (error) {
       console.error("Failed to download PDF:", error);
@@ -142,21 +137,21 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
 
   const handlePresidentChange = (
     _event: React.ChangeEvent<unknown>,
-    value: Mentor | null
+    value: Mentor | null,
   ) => {
     formik.setFieldValue("president", value?.id || "");
   };
 
   const handleFirstJurorChange = (
     _event: React.ChangeEvent<unknown>,
-    value: Mentor | null
+    value: Mentor | null,
   ) => {
     formik.setFieldValue("firstJuror", value?.id || "");
   };
 
   const handleSecondJurorChange = (
     _event: React.ChangeEvent<unknown>,
-    value: Mentor | null
+    value: Mentor | null,
   ) => {
     formik.setFieldValue("secondJuror", value?.id || "");
   };
@@ -166,7 +161,7 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
       formik.values.president &&
         formik.values.firstJuror &&
         formik.values.secondJuror &&
-        formik.values.date
+        formik.values.date,
     );
   };
 
@@ -178,7 +173,7 @@ export const InternalDefenseStage: FC<InternalDefenseStageProps> = ({
 
   const nextSubStage = () => {
     setSubStage(subStage + 1);
-  }
+  };
   return (
     <>
       <div className="txt1">
