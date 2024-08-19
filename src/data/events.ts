@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 
 export const events = [
     {
+        id_event: 1,
         nombre: "Taller de Desarrollo Web",
         descripcion: "Un taller intensivo para aprender las últimas tecnologías en desarrollo web.",
         horasValidezBecaria: "4 horas",
@@ -12,6 +13,7 @@ export const events = [
         maxSuplentes: 5
     },
     {
+        id_event: 2,
         nombre: "Curso de Gestión de Proyectos",
         descripcion: "Curso para mejorar las habilidades en la gestión de proyectos utilizando metodologías ágiles.",
         horasValidezBecaria: "6 horas",
@@ -22,6 +24,7 @@ export const events = [
         maxSuplentes: 3
     },
     {
+        id_event: 3,
         nombre: "Seminario de Innovación Tecnológica",
         descripcion: "Un seminario para explorar las últimas tendencias en innovación tecnológica.",
         horasValidezBecaria: "3 horas",
@@ -32,6 +35,7 @@ export const events = [
         maxSuplentes: 10
     },
     {
+        id_event: 4,
         nombre: "Taller de Desarrollo Web",
         descripcion: "Un taller intensivo para aprender las últimas tecnologías en desarrollo web.",
         horasValidezBecaria: "4 horas",
@@ -42,6 +46,7 @@ export const events = [
         maxSuplentes: 5
     },
     {
+        id_event: 5,
         nombre: "Curso de Gestión de Proyectos",
         descripcion: "Curso para mejorar las habilidades en la gestión de proyectos utilizando metodologías ágiles.",
         horasValidezBecaria: "6 horas",
@@ -52,6 +57,7 @@ export const events = [
         maxSuplentes: 3
     },
     {
+        id_event: 6,
         nombre: "Seminario de Innovación Tecnológica",
         descripcion: "Un seminario para explorar las últimas tendencias en innovación tecnológica.",
         horasValidezBecaria: "3 horas",
@@ -62,6 +68,7 @@ export const events = [
         maxSuplentes: 10
     },
     {
+        id_event: 7,
         nombre: "Taller de Desarrollo Web",
         descripcion: "Un taller intensivo para aprender las últimas tecnologías en desarrollo web.",
         horasValidezBecaria: "4 horas",
@@ -72,6 +79,7 @@ export const events = [
         maxSuplentes: 5
     },
     {
+        id_event: 8,
         nombre: "Curso de Gestión de Proyectos",
         descripcion: "Curso para mejorar las habilidades en la gestión de proyectos utilizando metodologías ágiles.",
         horasValidezBecaria: "6 horas",
@@ -82,6 +90,7 @@ export const events = [
         maxSuplentes: 3
     },
     {
+        id_event: 9,
         nombre: "Seminario de Innovación Tecnológica",
         descripcion: "Un seminario para explorar las últimas tendencias en innovación tecnológica.",
         horasValidezBecaria: "3 horas",
