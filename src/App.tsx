@@ -26,6 +26,7 @@ import GraduationProcessPage from "./pages/graduation/GraduationProcessPage";
 import EventsPage from "./pages/Events/EventsPage";
 import CrearEvento from "./pages/Events/CrearEvento"; 
 import InternsListPage from "./pages/interns/InternsListPage";
+import UpdateEventForm from "./pages/Events/UpdateEventForm";
 
 function loader() {
   return getProcess();
@@ -162,6 +163,11 @@ const router = createBrowserRouter([
         path: "/interns",
         element :(
           <InternsListPage />
+        )},
+        {
+        path: "/editEvent/:id_event",
+        element: (
+          <UpdateEventForm/>
         )
       }
     ],
