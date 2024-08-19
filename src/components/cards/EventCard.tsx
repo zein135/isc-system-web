@@ -42,6 +42,7 @@ interface EventCardProps {
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { expand, ...other } = props;
     return <IconButton {...other} />;
 })(({ theme, expand }) => ({
@@ -131,7 +132,8 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                     expand={expanded}
                     onClick={handleExpandClick}
                     aria-expanded={expanded}
-                    aria-label="detalles del evento"
+                    title='Descripción'
+                    aria-label="descripcion"
                 >
                     <DescriptionIcon />
                 </ExpandMore>
@@ -143,7 +145,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                         <strong>Duración:</strong> {duracion}
                     </Typography>
                     <Typography paragraph>
-                        <strong>Horas becarias: {horasValidezBecaria}</strong> {duracion}
+                        <strong>Horas becarias: </strong> {horasValidezBecaria}
                     </Typography>
                     <Typography paragraph>
                         <strong>Lugar:</strong> {lugar}
