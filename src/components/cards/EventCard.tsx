@@ -75,9 +75,13 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
 
     const subheaderProp = (
         <>
-            Fecha: {fechaInicio.format('LL')}
+            Fecha inicio: {fechaInicio.format('LL')}
+            <br /> 
+            Fecha final: {fechaInicio.format('LL')}
             <br />
             Horas becarias: {horasValidezBecaria}
+            <br />
+            Encargado: Ernesto
         </>
     );
 
