@@ -1,4 +1,5 @@
 import { styled } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -30,6 +31,7 @@ interface ExpandMoreProps extends IconButtonProps {
 
 interface EventCardProps {
     event: {
+        id_event: number;
         nombre: string;
         descripcion: string;
         horasValidezBecaria: string; // ex: 4 horas
@@ -55,11 +57,17 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const EventCard: FC<EventCardProps> = ({ event }) => {
     const [expanded, setExpanded] = useState(false);
+    const {id_event, nombre, descripcion, horasValidezBecaria, fechaInicio, duracion, lugar, maxBecarios, maxSuplentes } = event
     const [dialogOpen, setDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-    const { nombre, descripcion, horasValidezBecaria, fechaInicio, duracion, lugar, maxBecarios, maxSuplentes } = event;
     dayjs.locale('es');
+
+    const navigate = useNavigate();
+
+    const goToEditEvent = () => {
+        navigate(`/editEvent/${id_event}`);
+      };
 
     const subheaderProp = (
         <>
@@ -119,7 +127,8 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Editar">
-                    <IconButton aria-label="editar">
+                    <IconButton aria-label="editar"
+                    onClick={goToEditEvent}>
                         <EditIcon />
                     </IconButton>
                 </Tooltip>
