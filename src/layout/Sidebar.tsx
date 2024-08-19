@@ -251,7 +251,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             </ListItemIcon>
             <ListItemText
               color="primary"
-              primary={"Ver Inscritos"}
+              primary={"Ver Becarios"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
@@ -259,6 +259,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
       </List>
     </Drawer>
   );
+
 };
 
 export default Sidebar;
