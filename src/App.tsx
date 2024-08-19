@@ -24,6 +24,7 @@ import EditStudentPage from "./pages/Student/EditStudentPage";
 import Profile from "./pages/profile/Profile";
 import GraduationProcessPage from "./pages/graduation/GraduationProcessPage";
 import EventsPage from "./pages/Events/EventsPage";
+import CrearEvento from "./pages/Events/CrearEvento"; 
 import InternsListPage from "./pages/interns/InternsListPage";
 
 function loader() {
@@ -51,7 +52,6 @@ const router = createBrowserRouter([
         element: <Navigate to="/login" replace />,
       },
       {
-        index: true,
         path: "/dashboard",
         element: (
           <RequireAuth>
@@ -149,6 +149,14 @@ const router = createBrowserRouter([
       {
         path: "/events",
         element: <EventsPage />,
+      },
+      {
+        path: "/events/create",
+        element: (
+          <RequireAuth>
+            <CrearEvento />
+          </RequireAuth>
+        ),
       },
       {
         path: "/interns",
