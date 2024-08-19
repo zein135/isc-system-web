@@ -157,5 +157,16 @@
         { "accion": "Realizar cita con estudiante", "permiso": false }
       ]
     }
+  ],
+  "roles":[
+    {
+      "roleName":"Jefe de Carrera"
+    },
+    {
+      "roleName":"Docente"
+    },
+    {
+      "roleName":"Estudiante"
+    }
   ]
 }
