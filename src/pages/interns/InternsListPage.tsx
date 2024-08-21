@@ -78,11 +78,13 @@ const InternsListPage = () => {
     const eventDetails: EventDetails = {
       title: "Evento de 100 mejores",
       date: "Domingo, 02 de Septiembre de 2024",
-      duration: "8:00am-12:00pm",
+      endDate: "Domingo, 02 de Septiembre de 2024",
+      duration: 6,
       scholarshipHours: "4 horas",
       location: "Centro de Eventos, Campus Achocalla",
       maxParticipants: 30,
-      maxSubstitutes: 5,
+      minParticipants: 5,
+      responsiblePerson: "Juan",
       description: "Se necesitan becarios que ayuden en la logística del evento donde se recibirá a los estudiantes ganadores de la beca 100 mejores."
     };
     

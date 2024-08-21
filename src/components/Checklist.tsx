@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import {
   FaEnvelope,
   FaCalendarCheck,
@@ -10,7 +10,7 @@ import {
 import { useProcessStore } from "../store/store";
 import { Seminar } from "../models/studentProcess";
 
-import 'dayjs/locale/es';
+import "dayjs/locale/es";
 
 const Checklist = () => {
   const process = useProcessStore((state) => state.process);
