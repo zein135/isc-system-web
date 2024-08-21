@@ -1,5 +1,5 @@
 import React from 'react';
-import EventForm from '../../components/formulario/FormEvent';
+import EventForm from '../../components/formulario/FormEvent.tsx';
 import { EventDetails } from '../../models/eventInterface.ts';
 
 const CreateEventPage: React.FC = () => {

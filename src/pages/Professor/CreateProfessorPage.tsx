@@ -76,9 +76,9 @@ const CreateProfessorPage = () => {
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     const formattedValue = value
-      .replace(/[^+\d\s]/g, "")
-      .replace(/(\+\d{1,3})\s?(\d{0,})/, "$1 $2");
-    formik.setFieldValue("phone", formattedValue);
+      .replace(/[^+\d\s]/g, '')
+      .replace(/(\+\d{1,3})\s?(\d{0,})/, '$1 $2');
+    formik.setFieldValue('phone', formattedValue);
   };
 
   const handleCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {

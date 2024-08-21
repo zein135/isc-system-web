@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { EventDetails } from '../../models/eventInterface.ts'; // Asegúrate de que la ruta sea correcta
+import { EventDetails } from '../../models/eventInterface.ts';
+import { EventFormState } from '../../models/formEventInterface.ts';
 
 interface EventFormProps {
   onSubmit: (eventDetails: EventDetails) => void;
@@ -7,10 +8,10 @@ interface EventFormProps {
 }
 
 const EventForm: React.FC<EventFormProps> = ({ onSubmit, onCancel }) => {
-  const [eventDetails, setEventDetails] = useState<EventDetails>({
+  const [eventDetails, setEventDetails] = useState<EventFormState>({
     title: "",
     date: "",
-    duration: "",
+    duration: 0,
     scholarshipHours: "",
     location: "",
     maxParticipants: 0,
@@ -29,7 +30,7 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit, onCancel }) => {
     setEventDetails({
       title: "",
       date: "",
-      duration: "",
+      duration: 0,
       scholarshipHours: "",
       location: "",
       maxParticipants: 0,
