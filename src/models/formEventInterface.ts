@@ -1,4 +1,4 @@
-export interface EventDetails {
+export interface EventFormState {
     title: string;
     date: string;
     duration: number;
@@ -7,4 +7,4 @@ export interface EventDetails {
     maxParticipants: number;
     maxSubstitutes: number;
     description: string;
-}
+ };

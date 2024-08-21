@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Paper, Typography, TextField, Grid, Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { events } from '../../data/events'; // Importa la lista de eventos
+import { events } from '../../data/events';
 
 const UpdateEventForm: React.FC = () => {
-    const { id_event } = useParams<{ id_event: string }>(); // Obtener el id desde la URL
+    const { id_event } = useParams<{ id_event: string }>();
     const [eventData, setEventData] = useState<any>(null);
 
-    const [eventName, setEventName] = useState(eventData?.nombre);
-    const [hours, setHours] = useState(eventData?.horasValidezBecaria);
-    const [date, setDate] = useState(eventData?.fechaInicio.format('YYYY-MM-DD'));
-    const [startTime, setStartTime] = useState(eventData?.fechaInicio.format('HH:mm'));
-    const [endTime, setEndTime] = useState(''); // Ajusta según cómo quieras manejar la duración
-    const [description, setDescription] = useState(eventData?.descripcion);
-    const [numBecarios, setNumBecarios] = useState(eventData?.maxBecarios);
+    const [eventName, setEventName] = useState(eventData?.name);
+    const [hours, setHours] = useState(eventData?.validatedHours);
+    const [date, setDate] = useState(eventData?.startDate.format('YYYY-MM-DD'));
+    const [startTime, setStartTime] = useState(eventData?.startDate.format('HH:mm'));
+    const [endTime, setEndTime] = useState('');
+    const [description, setDescription] = useState(eventData?.description);
+    const [maxInterns, setmaxInterns] = useState(eventData?.maxInterns);
     const [responsable, setResponsable] = useState('');
 
     useEffect(() => {
-        // Filtrar el evento con el id correspondiente
         const event = events.find(e => e.id_event === parseInt(id_event!, 10));
         setEventData(event);
         console.log(id_event, event)
@@ -25,13 +24,13 @@ const UpdateEventForm: React.FC = () => {
 
     useEffect(() => {
         if (eventData) {
-            setEventName(eventData.nombre || '');
-            setHours(eventData.horasValidezBecaria || '');
-            setDate(eventData.fechaInicio?.format('DD-MM-YYYY') || '');
-            setStartTime(eventData.fechaInicio?.format('HH:mm') || '');
-            setEndTime(eventData.fechaFin?.format('HH:mm') || '');
-            setDescription(eventData.descripcion || '');
-            setNumBecarios(eventData.maxBecarios || '');
+            setEventName(eventData.name || '');
+            setHours(eventData.validatedHours || '');
+            setDate(eventData.startDate?.format('DD-MM-YYYY') || '');
+            setStartTime(eventData.startDate?.format('HH:mm') || '');
+            setEndTime(eventData.endDate?.format('HH:mm') || '');
+            setDescription(eventData.description || '');
+            setmaxInterns(eventData.maxInterns || '');
             setResponsable(eventData.responsable || '');
         }
     }, [eventData]);
@@ -40,22 +39,20 @@ const UpdateEventForm: React.FC = () => {
     
     const handleUpdateEvent = () => {
         if (eventData) {
-            eventData.nombre = eventName;
-            eventData.horasValidezBecaria = hours;
-            //eventData.fechaInicio = new Date(date + 'T' + startTime);
-            //eventData.fechaFin = new Date(date + 'T' + endTime);
-            eventData.descripcion = description;
-            eventData.maxBecarios = numBecarios;
+            eventData.name = eventName;
+            eventData.validatedHours = hours;
+            //TODO: eventData.startDate = new Date(date + 'T' + startTime);
+            //TODO: eventData.endDate = new Date(date + 'T' + endTime);
+            eventData.description = description;
+            eventData.maxInterns = maxInterns;
             eventData.responsable = responsable;
     
-            // Redirigir a la página de eventos después de actualizar
             navigate('/events');
         }
     };
 
     
 
-    // Si no hay datos de evento, mostrar un mensaje de carga o error
     if (!eventData) {
         return <Typography variant="h6">Cargando evento...</Typography>;
     }
@@ -68,7 +65,7 @@ const UpdateEventForm: React.FC = () => {
             </Typography>
             <Grid container justifyContent="center">
                 <Grid item xs={12} sm={8} md={6}>
-                    <Typography variant="h6" sx={{ color: '#333' }}>Nombre del evento</Typography>
+                    <Typography variant="h6" sx={{ color: '#333' }}>name del evento</Typography>
                     <TextField
                     defaultValue={eventName}
                         fullWidth
@@ -240,8 +237,8 @@ const UpdateEventForm: React.FC = () => {
                     <Typography variant="h6" sx={{ color: '#333' }}>Nro de Becarios</Typography>
                     <TextField
                         fullWidth
-                        value={numBecarios}
-                        onChange={(e) => setNumBecarios(e.target.value)}
+                        value={maxInterns}
+                        onChange={(e) => setmaxInterns(e.target.value)}
                         variant="outlined"
                         size="small"
                         sx={{

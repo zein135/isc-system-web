@@ -1,29 +1,29 @@
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import dayjs, { Dayjs } from 'dayjs';
-import 'dayjs/locale/es';
-import { FC, useState } from 'react';
-import Tooltip from '@mui/material/Tooltip';
-import DescriptionIcon from '@mui/icons-material/Description';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import DialogContent from '@mui/material/DialogContent';
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import Avatar from "@mui/material/Avatar";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import { red } from "@mui/material/colors";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import dayjs, { Dayjs } from "dayjs";
+import "dayjs/locale/es";
+import { FC, useState } from "react";
+import Tooltip from "@mui/material/Tooltip";
+import DescriptionIcon from "@mui/icons-material/Description";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import DialogContent from "@mui/material/DialogContent";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -32,19 +32,18 @@ interface ExpandMoreProps extends IconButtonProps {
 interface EventCardProps {
     event: {
         id_event: number;
-        nombre: string;
-        descripcion: string;
-        horasValidezBecaria: string; // ex: 4 horas
-        fechaInicio: Dayjs;
-        duracion: string;
-        lugar: string;
-        maxBecarios: number;
-        maxSuplentes: number;
+        name: string;
+        description: string;
+        validatedHours: string;
+        startDate: Dayjs;
+        duration: number;
+        place: string;
+        maxInterns: number;
+        maxSubtitutes: number;
     }
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { expand, ...other } = props;
     return <IconButton {...other} />;
 })(({ theme, expand }) => ({
@@ -56,11 +55,12 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 const EventCard: FC<EventCardProps> = ({ event }) => {
+    
     const [expanded, setExpanded] = useState(false);
-    const {id_event, nombre, descripcion, horasValidezBecaria, fechaInicio, duracion, lugar, maxBecarios, maxSuplentes } = event
+    const {id_event, name: name, description: description, validatedHours: validatedHours, startDate: startDate, duration: duration, place: place, maxInterns: maxInterns, maxSubtitutes: maxSubtitutes } = event
     const [dialogOpen, setDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-
+    
     dayjs.locale('es');
 
     const navigate = useNavigate();
@@ -75,11 +75,11 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
 
     const subheaderProp = (
         <>
-            Fecha inicio: {fechaInicio.format('LL')}
+            Fecha inicio: {startDate.format('DD/MM/YYYY')}
             <br /> 
-            Fecha final: {fechaInicio.format('LL')}
+            Fecha final: {startDate.format('DD/MM/YYYY')} 
             <br />
-            Horas becarias: {horasValidezBecaria}
+            Horas becarias: {validatedHours}
             <br />
             Encargado: Ernesto
         </>
@@ -98,7 +98,6 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
     };
 
     const handleConfirm = () => {
-        // Aquí se procesaría la solicitud de registro (ej. llamada a API)
         setDialogOpen(false);
         setSnackbarOpen(true);
     };
@@ -112,8 +111,8 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         <Card sx={{ maxWidth: 345 }}>
             <CardHeader
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        R
+                    <Avatar 
+                    sx={{ bgcolor: red[500] }} aria-label="recipe">  
                     </Avatar>
                 }
                 action={
@@ -121,13 +120,13 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                         <MoreVertIcon />
                     </IconButton>
                 }
-                title={nombre}
+                title={name}
                 subheader={subheaderProp}
                 onClick={goToEventDetails}
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    {descripcion}
+                    {description}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -161,24 +160,23 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                 <CardContent>
                     <Typography align='center' paragraph>Detalles del evento:</Typography>
                     <Typography paragraph>
-                        <strong>Duración:</strong> {duracion}
+                        <strong>Duración:</strong> {duration}
                     </Typography>
                     <Typography paragraph>
-                        <strong>Horas becarias: </strong> {horasValidezBecaria}
+                        <strong>Horas becarias: </strong> {validatedHours}
                     </Typography>
                     <Typography paragraph>
-                        <strong>Lugar:</strong> {lugar}
+                        <strong>Lugar:</strong> {place}
                     </Typography>
                     <Typography paragraph>
-                        <strong>Máximo de Becarios:</strong> {maxBecarios}
+                        <strong>Máximo de Becarios:</strong> {maxInterns}
                     </Typography>
                     <Typography paragraph>
-                        <strong>Máximo de Suplentes:</strong> {maxSuplentes}
+                        <strong>Máximo de Suplentes:</strong> {maxSubtitutes}
                     </Typography>
                 </CardContent>
             </Collapse>
 
-            {/*Pestaña cuando pones la opcion de registrarse */}
             <Dialog
                 open={dialogOpen}
                 onClose={handleDialogClose}
@@ -187,7 +185,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
             >
                 <DialogContent>
                     <Typography align='center' variant='h6'>
-                        ¿Estás seguro de inscribirte al evento "{nombre}"?
+                        ¿Estás seguro de inscribirte al evento "{name}"?
                     </Typography>
                 </DialogContent>
                 <DialogActions sx={{ justifyContent: 'center' }}>
@@ -200,14 +198,13 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                 </DialogActions>
             </Dialog>
 
-            {/* Mensaje Temporal para confirmar el registro del becario */}
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={6000}
                 onClose={handleSnackbarClose}
             >
                 <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
-                    ¡Te has registrado con éxito en el evento {nombre}!
+                    ¡Te has registrado con éxito en el evento {name}!
                 </Alert>
             </Snackbar>
         </Card>
