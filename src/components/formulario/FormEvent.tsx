@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { EventDetails } from '../../models/eventInterface.ts';
 import { EventFormState } from '../../models/formEventInterface.ts';
 
 interface EventFormProps {
-  onSubmit: (eventDetails: EventDetails) => void;
+  onSubmit: (eventDetails: EventFormState) => void;
   onCancel: () => void;
 }
 
@@ -17,6 +16,8 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit, onCancel }) => {
     maxParticipants: 0,
     maxSubstitutes: 0,
     description: "",
+    endDate: "", 
+    responsiblePerson: "",
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +37,8 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit, onCancel }) => {
       maxParticipants: 0,
       maxSubstitutes: 0,
       description: "",
+      endDate: "",
+        responsiblePerson: "", 
     });
   };
 

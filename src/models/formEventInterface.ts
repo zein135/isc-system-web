@@ -7,4 +7,6 @@ export interface EventFormState {
     maxParticipants: number;
     maxSubstitutes: number;
     description: string;
+    endDate: string;
+    responsiblePerson: string;
  };
