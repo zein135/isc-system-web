@@ -1,19 +1,10 @@
-import { Grid, Switch, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState  } from "react";
+import { Switch, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import getPermissions from "../../services/permissionsService";
+import { Section } from "../../models/sectionInterface";
+
 
 // Define los tipos de datos
-interface Permission {
-  accion: string;
-  permiso: boolean;
-}
-
-interface Section {
-  subtitle: string;
-  permissions: Permission[];
-}
-
 const PermissionTable = () => {
   const [sections, setSections] = useState<Section[]>([]);
 
