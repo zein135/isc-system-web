@@ -16,8 +16,8 @@ import UPB_LOGO from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import AssignmentInd from "@mui/icons-material/AssignmentInd";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 const drawerWidth = 240;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -102,6 +102,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const goToEnrolled = () => {
     navigate("/enrolled");
   };
+
+  const goToScholarshipHours = () => {
+    navigate("/scholarshipHours")
+  }
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -233,31 +237,56 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             <ListItemText primary={"Eventos"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
           <ListItem key={"enrolled"} disablePadding sx={{ display: "block" }}>
-  <ListItemButton
-      sx={{
-      minHeight: 48,
-      justifyContent: open ? "initial" : "center",
-      px: 2.5,
-    }}
-    onClick={goToEnrolled}
-  >
-    <ListItemIcon
-      sx={{
-        minWidth: 0,
-        mr: open ? 3 : "auto",
-        justifyContent: "center",
-      }}
-    >
-      <AssignmentInd color="primary" />
-    </ListItemIcon>
+            <ListItemButton
+                sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+                }}
+                onClick={goToEnrolled}
+              >
+              <ListItemIcon
+                sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+                }}
+                >
+              <AssignmentInd color="primary" />
+              </ListItemIcon>
               <ListItemText
                 primary={"Ver Inscritos"}
                 sx={{ opacity: open ? 1 : 0 }}
               />
-  </ListItemButton>
-</ListItem>
+              </ListItemButton>
+            </ListItem>
+          </ListItem>
 
+          <ListItem key={"hours"} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToScholarshipHours}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <AccessTimeIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText
+              primary={"Horas"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
         </ListItem>
+        
       </List>
     </Drawer>
   );
