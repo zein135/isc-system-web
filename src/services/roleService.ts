@@ -8,3 +8,17 @@ export const getRoles = async ()=>{
         throw Error("Faild to get roles")
     }
 }
+
+export const addRole = async (role: {}) => {
+  try {
+    console.log(role);
+    const response = await jsonClient.post('roles/', role);
+    if (response.status === 201) {
+      return response.data;
+    } else {
+      throw new Error('Failed to add role');
+    }
+  } catch (error) {
+    throw new Error('Failed to add role: ' + (error as Error).message);
+  }
+};
