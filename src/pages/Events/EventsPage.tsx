@@ -1,13 +1,13 @@
-import { useNavigate } from 'react-router-dom';
-import { Grid, Button } from '@mui/material';
-import EventCard from '../../components/cards/EventCard';
-import { events } from '../../data/events';
+import { useNavigate } from "react-router-dom";
+import { Grid, Button } from "@mui/material";
+import EventCard from "../../components/cards/EventCard";
+import { events } from "../../data/events";
 
 const EventsPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleAddEventClick = () => {
-    navigate('/events/create');
+    navigate("/events/create");
   };
   console.log(events)
 
@@ -20,7 +20,7 @@ const EventsPage: React.FC = () => {
           </Grid>
         ))}
       </Grid>
-      <Grid container justifyContent="center" style={{ marginTop: '20px' }}>
+      <Grid container justifyContent="center" style={{ marginTop: "20px" }}>
         <Button variant="contained" color="primary" onClick={handleAddEventClick}>
           Agregar Evento
         </Button>
