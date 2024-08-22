@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import {
   FaEnvelope,
   FaCalendarCheck,
@@ -17,8 +17,8 @@ const Checklist = () => {
   let formattedDate = "";
   if (process) {
     formattedDate = process.tutor_approval_date
-      ? dayjs(process.tutor_approval_date).format("DD/MM/YYYY")
-      : "";
+      ? dayjs(process.tutor_approval_date).format('DD/MM/YYYY')
+      : '';
   }
 
   const {

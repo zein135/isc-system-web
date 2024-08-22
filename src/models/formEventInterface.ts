@@ -1,12 +1,12 @@
-export interface EventDetails {
+export interface EventFormState {
     title: string;
     date: string;
-    endDate: string;
     duration: number;
     scholarshipHours: string;
     location: string;
     maxParticipants: number;
-    minParticipants: number;
+    maxSubstitutes: number;
     description: string;
+    endDate: string;
     responsiblePerson: string;
-}
+ };

@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 import { Container, Grid, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-import { EventDetails } from '../../models/eventInterface';
+import { EventDetails } from "../../models/eventInterface";
 
 
 interface TablePageProps {
@@ -41,7 +41,7 @@ const TablePage: React.FC<TablePageProps> = ({ event, children }) => {
                 <strong>Máximo de becarios:</strong> {event.maxParticipants}
               </Typography>
               <Typography variant="body1" color="textSecondary">
-                <strong>Máximo de suplentes:</strong> {event.maxSubstitutes}
+                <strong>Máximo de suplentes:</strong> {event.minParticipants}
               </Typography>
             </Grid>
             <Grid item xs={4}>
