@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Button, ButtonProps } from "@mui/material";
-import DownloadIcon from "@mui/icons-material/Download";
-import { generateDocument } from "../../utils/files";
+import React, { useState } from 'react';
+import { Button, ButtonProps } from '@mui/material';
+import DownloadIcon from '@mui/icons-material/Download';
+import { generateDocument } from '../../utils/files';
 
 interface DownloadButtonProps extends ButtonProps {
   url: string;

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 import { Container, Grid, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 

@@ -1,4 +1,4 @@
-import apiClient from "./apiInstance";
+import apiClient from './apiInstance';
 
 const getModes = async () => {
   try {
