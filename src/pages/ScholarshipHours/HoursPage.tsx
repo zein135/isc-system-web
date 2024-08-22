@@ -17,7 +17,7 @@ function CircularProgressWithLabel(props: CircularProgressProps & { value: numbe
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'space-between',
-            width: '100%',  // Mantener el ancho al 100% del contenedor padre
+            width: '100%',
             marginBottom: '20px',
             position: 'relative'
         }}>
@@ -63,16 +63,16 @@ export default function CircularWithValueLabel() {
         <Box 
             sx={{ 
                 display: 'flex', 
-                flexDirection: { xs: 'column', md: 'row' },  // Columnas en pantallas pequeñas, filas en pantallas grandes
+                flexDirection: { xs: 'column', md: 'row' },  
                 justifyContent: 'center', 
                 alignItems: 'center', 
                 width: '90%',
-                padding: { xs: '10px', md: '20px' },  // Ajuste de padding para pantallas pequeñas
+                padding: { xs: '10px', md: '20px' },  
             }}
         >
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: { xs: '0', md: '40px' }, width: '100%' }}>
                 {progresses.map((progress, index) => (
-                    <Box key={index} sx={{ width: '100%', maxWidth: '400px' }}>  {/* Fijar un ancho máximo */}
+                    <Box key={index} sx={{ width: '100%', maxWidth: '400px' }}>  
                         <Typography variant="h6" component="div" sx={{ marginBottom: '10px', textAlign: 'center' }}>
                             {labels[index]}
                         </Typography>
