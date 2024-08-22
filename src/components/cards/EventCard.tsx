@@ -40,7 +40,7 @@ interface EventCardProps {
         duration: number;
         place: string;
         maxInterns: number;
-        maxSubtitutes: number;
+        minInterns: number;
     }
 }
 
@@ -58,11 +58,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 const EventCard: FC<EventCardProps> = ({ event }) => {
     
     const [expanded, setExpanded] = useState(false);
-    const {id_event, name: name, description: description, validatedHours: validatedHours, startDate: startDate, duration: duration, place: place, maxInterns: maxInterns, maxSubtitutes: maxSubtitutes } = event
+    const {id_event, name: name, description: description, validatedHours: validatedHours, startDate: startDate, duration: duration, place: place, maxInterns: maxInterns, minInterns: minInterns } = event
     const [dialogOpen, setDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     
-    dayjs.locale('es');
+    dayjs.locale("es");
 
     const navigate = useNavigate();
 
@@ -76,9 +76,9 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
 
     const subheaderProp = (
         <>
-            Fecha inicio: {startDate.format('DD/MM/YYYY')}
+            Fecha inicio: {startDate.format("DD/MM/YYYY")}
             <br /> 
-            Fecha final: {startDate.format('DD/MM/YYYY')} 
+            Fecha final: {startDate.format("DD/MM/YYYY")} 
             <br />
             Horas becarias: {validatedHours}
             <br />
@@ -151,7 +151,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                     expand={expanded}
                     onClick={handleExpandClick}
                     aria-expanded={expanded}
-                    title='Descripción'
+                    title="Descripción"
                     aria-label="descripcion"
                 >
                     <DescriptionIcon />
@@ -159,7 +159,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography align='center' paragraph>Detalles del evento:</Typography>
+                    <Typography align="center" paragraph>Detalles del evento:</Typography>
                     <Typography paragraph>
                         <strong>Duración:</strong> {duration}
                     </Typography>
@@ -173,7 +173,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                         <strong>Máximo de Becarios:</strong> {maxInterns}
                     </Typography>
                     <Typography paragraph>
-                        <strong>Máximo de Suplentes:</strong> {maxSubtitutes}
+                        <strong>Máximo de Suplentes:</strong> {minInterns}
                     </Typography>
                 </CardContent>
             </Collapse>
@@ -185,15 +185,15 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogContent>
-                    <Typography align='center' variant='h6'>
+                    <Typography align="center" variant="h6">
                         ¿Estás seguro de inscribirte al evento "{name}"?
                     </Typography>
                 </DialogContent>
-                <DialogActions sx={{ justifyContent: 'center' }}>
-                    <Button onClick={handleConfirm} variant="contained" sx={{ bgcolor: '#002E5D', color: '#FFFFFF', '&:hover': { bgcolor: '#001F3B' } }}>
+                <DialogActions sx={{ justifyContent: "center" }}>
+                    <Button onClick={handleConfirm} variant="contained" sx={{ bgcolor: "#002E5D", color: "#FFFFFF", "&:hover": { bgcolor: "#001F3B" } }}>
                         Confirmar
                     </Button>
-                    <Button onClick={handleDialogClose} variant="contained" sx={{ bgcolor: '#FF4C4C', color: '#FFFFFF', '&:hover': { bgcolor: '#CC0000' } }}>
+                    <Button onClick={handleDialogClose} variant="contained" sx={{ bgcolor: "#FF4C4C", color: "#FFFFFF", "&:hover": { bgcolor: "#CC0000" } }}>
                         Cancelar
                     </Button>
                 </DialogActions>
@@ -204,7 +204,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                 autoHideDuration={6000}
                 onClose={handleSnackbarClose}
             >
-                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: "100%" }}>
                     ¡Te has registrado con éxito en el evento {name}!
                 </Alert>
             </Snackbar>

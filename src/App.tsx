@@ -24,9 +24,9 @@ import EditStudentPage from "./pages/Student/EditStudentPage";
 import Profile from "./pages/profile/Profile";
 import GraduationProcessPage from "./pages/graduation/GraduationProcessPage";
 import EventsPage from "./pages/Events/EventsPage";
+import CreateEventPage from "./pages/Events/CreateEventPage"; 
 import InternsListPage from "./pages/interns/InternsListPage";
 import UpdateEventForm from "./pages/Events/UpdateEventForm";
-import CreateEventPage from "./pages/Events/CreateEventPage";
 
 function loader() {
   return getProcess();
@@ -187,3 +187,5 @@ function App() {
 }
 
 export default App;
+
+
