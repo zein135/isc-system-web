@@ -19,7 +19,7 @@ const validationSchema = Yup.object({
   endDate: Yup.date().required("La fecha de finalización es obligatoria"),
   duration: Yup.number()
     .required("La duración es obligatoria")
-    .min(1, "La duracion minima es de 1"),
+    .min(1, "La duracion minima es de 1 hora"),
   scholarshipHours: Yup.string().required("Las horas becarias son obligatorias"),
   maxParticipants: Yup.number()
     .required("El número de becarios es obligatorio")
