@@ -7,7 +7,7 @@ import PermissionTable from "../../components/administration/PermissionTable";
 import AddTextModal from "../../components/common/AddTextModal";
 import { getRoles, addRole } from "../../services/roleService";
 
-const AdminsitratorPage = () => {
+const AdministratorPage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [roles, setRoles] = useState([]);
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -54,5 +54,4 @@ const AdminsitratorPage = () => {
     </Grid>
   );
 }
-
-export default AdminsitratorPage;
+export default AdministratorPage

@@ -1,7 +1,7 @@
-import { Checkbox, TableCell, TableRow } from "@mui/material";
 import { useState } from "react";
+import { Checkbox, TableCell, TableRow } from "@mui/material";
 
-type Permission = {
+interface Permission  {
   permissionName: string;
   permissionsDefaultState: boolean;
 };
