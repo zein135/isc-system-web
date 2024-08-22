@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
 import { getRoles } from "../../services/roleService";
-import { useEffect, useState } from "react";
 import RoleComponent from "./RoleComponent";
 import RoleComponentXs from "./RoleComponentXS";
 

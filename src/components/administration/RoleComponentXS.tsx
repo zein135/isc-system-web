@@ -1,9 +1,10 @@
+import { useState } from 'react';
+import { Card, CardContent, Collapse, IconButton, IconButtonProps, styled, Typography, Box } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PermissionTable from './PermissionTable';
-import { Card, CardContent, Collapse, IconButton, IconButtonProps, styled, Typography, Box } from '@mui/material';
-import { useState } from 'react';
 
-type Role = {
+
+interface Role  {
     roleName: string
 }
 

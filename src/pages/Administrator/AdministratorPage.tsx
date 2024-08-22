@@ -1,9 +1,9 @@
-import "../../components/administration/AdministratorPageComponents.css"
 import { Grid, useMediaQuery } from "@mui/material";
+import "../../components/administration/AdministratorPageComponents.css"
 import RoleTable from "../../components/administration/RoleTable";
 import PermissionTable from "../../components/administration/PermissionTable";
 
-const AdminsitratorPage = () => {
+const AdministratorPage = () => {
   const isSmallScreen = useMediaQuery('(max-width:600px)'); // ajusta el valor según sea necesario
 
   return (
@@ -18,4 +18,4 @@ const AdminsitratorPage = () => {
   );
 }
 
-export default AdminsitratorPage
+export default AdministratorPage

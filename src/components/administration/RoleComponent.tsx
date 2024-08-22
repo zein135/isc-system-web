@@ -1,6 +1,5 @@
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material"
-
-type Role = {
+interface Role {
     roleName: string
 }
 
