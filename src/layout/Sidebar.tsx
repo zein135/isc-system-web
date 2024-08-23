@@ -10,13 +10,13 @@ import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import { Divider, ListItemButton } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import ChecklistOutlinedIcon from "@mui/icons-material/ChecklistOutlined";
+import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import UPB_LOGO from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
-import LocalActivityIcon from '@mui/icons-material/LocalActivity';
-
-import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import LocalActivityIcon from "@mui/icons-material/LocalActivity";
+import AccessTimeIcon from "@mui/icons-material/AccessTime"
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 const drawerWidth = 240;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -24,7 +24,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -100,6 +99,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const goToInterns = () => {
     navigate("/interns")
   }
+  const goToScholarshipHours = () => {
+    navigate("/scholarshipHours")
+  }
+
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -256,6 +259,31 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             />
           </ListItemButton>
         </ListItem>
+        <ListItem key={"hours"} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToScholarshipHours}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <AccessTimeIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText
+              primary={"Horas"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
+        </ListItem>
+
       </List>
     </Drawer>
   );

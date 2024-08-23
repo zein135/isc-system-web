@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 import { Container, Grid, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-import { EventDetails } from '../../models/eventInterface';
+import { EventDetails } from "../../models/eventInterface";
 
 
 interface TablePageProps {
