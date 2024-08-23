@@ -15,7 +15,7 @@ import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import UPB_LOGO from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
-import AccessTimeIcon from "@mui/icons-material/AccessTime"
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 const drawerWidth = 240;
 
@@ -87,22 +87,23 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
 
   const goToStudents = () => {
     navigate("/students");
-  }
+  };
 
   const goToProcess = () => {
     navigate("/process");
-  }
+  };
 
   const goToEvents = () => {
     navigate("/events");
-  }
-  const goToInterns = () => {
-    navigate("/interns")
-  }
-  const goToScholarshipHours = () => {
-    navigate("/scholarshipHours")
-  }
+  };
 
+  const goToScholarshipHours = () => {
+    navigate("/scholarshipHours");
+  };
+
+  const goToProgramDirector = () => {
+    navigate("/programDirector");
+  };
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -165,10 +166,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             >
               <ChecklistOutlinedIcon color="primary" />
             </ListItemIcon>
-            <ListItemText
-              primary={"Procesos"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
+            <ListItemText primary={"Procesos"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
         <ListItem key={"professors"} disablePadding sx={{ display: "block" }}>
@@ -210,7 +208,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             >
               <SchoolOutlinedIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary={"Estudiantes"} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText
+              primary={"Estudiantes"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
           </ListItemButton>
         </ListItem>
         <ListItem key={"events"} disablePadding sx={{ display: "block" }}>
@@ -234,14 +235,18 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             <ListItemText primary={"Eventos"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
-        <ListItem key={"interns"} disablePadding sx={{ display: "block" }}>
+        <ListItem
+          key={"programDirector"}
+          disablePadding
+          sx={{ display: "block" }}
+        >
           <ListItemButton
             sx={{
               minHeight: 48,
               justifyContent: open ? "initial" : "center",
               px: 2.5,
             }}
-            onClick={goToInterns}
+            onClick={goToProgramDirector}
           >
             <ListItemIcon
               sx={{
@@ -250,11 +255,11 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                 justifyContent: "center",
               }}
             >
-              <EmojiPeopleIcon color="primary"/>
+              <EmojiPeopleIcon color="primary" />
             </ListItemIcon>
             <ListItemText
               color="primary"
-              primary={"Ver Becarios"}
+              primary={"Jefe de carrera"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
@@ -277,17 +282,12 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             >
               <AccessTimeIcon color="primary" />
             </ListItemIcon>
-            <ListItemText
-              primary={"Horas"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
+            <ListItemText primary={"Horas"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
-
       </List>
     </Drawer>
   );
-
 };
 
 export default Sidebar;
