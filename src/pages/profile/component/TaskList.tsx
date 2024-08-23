@@ -47,7 +47,6 @@ const tasks = [
     amount: 80,
     rate: 22,
   },
-  // Puedes agregar más tareas aquí
 ];
 
 const TaskList = () => {
