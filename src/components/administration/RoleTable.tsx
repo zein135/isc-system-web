@@ -1,20 +1,18 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
-import { getRoles } from "../../services/roleService";
-import { useEffect, useState } from "react";
 import RoleComponent from "./RoleComponent";
 import RoleComponentXs from "./RoleComponentXS";
 
-function RoleTable({ smallSize }: { smallSize: boolean }) { // Corregir la función para recibir un parámetro
+type Role = {
+  roleName: string;
+};
 
-  const [roles, setRoles] = useState([])
+interface RoleTableProps {
+roles: Role[];
+smallSize: boolean;
+}
 
-  const getData = async () => {
-    const response = await getRoles();
-    setRoles(response)
-  }
-  useEffect(() => {
-    getData();
-  }, [])
+
+const RoleTable: React.FC<RoleTableProps> = ({ roles, smallSize }) => { // Corregir la función para recibir un parámetro
 
   return (
     <Table className="border-table">
@@ -26,8 +24,8 @@ function RoleTable({ smallSize }: { smallSize: boolean }) { // Corregir la funci
         </TableRow>
       </TableHead>
       <TableBody>
-        {roles && roles.map((role) => (
-          <TableRow>
+        {roles && roles.map((role, index) => (
+          <TableRow key={index}>
             {smallSize ? (
               <RoleComponent role={role} />
             ) : (
