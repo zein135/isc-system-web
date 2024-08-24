@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 
 const InternsListPage = () => {
+  //TODO: Delete this simulation of database
   const [open, setOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [students, setStudents] = useState([

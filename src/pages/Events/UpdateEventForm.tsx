@@ -19,7 +19,6 @@ const UpdateEventForm: React.FC = () => {
     useEffect(() => {
         const event = events.find(e => e.id_event === parseInt(id_event!, 10));
         setEventData(event);
-        console.log(id_event, event)
     }, [id_event]);
 
     useEffect(() => {
