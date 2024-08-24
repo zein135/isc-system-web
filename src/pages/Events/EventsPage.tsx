@@ -9,7 +9,6 @@ const EventsPage: React.FC = () => {
   const handleAddEventClick = () => {
     navigate("/events/create");
   };
-  console.log(events)
 
   return (
     <>

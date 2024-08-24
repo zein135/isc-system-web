@@ -66,8 +66,7 @@ const CreateForm = () => {
       responsiblePerson: "",
     },
     validationSchema,
-    onSubmit: async (values) => {
-      console.log("Formulario enviado:", values);
+    onSubmit: async () => {
       setLoading(true);
       try {
         formik.resetForm();

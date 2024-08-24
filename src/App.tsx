@@ -24,10 +24,12 @@ import EditStudentPage from "./pages/Student/EditStudentPage";
 import Profile from "./pages/profile/Profile";
 import GraduationProcessPage from "./pages/graduation/GraduationProcessPage";
 import EventsPage from "./pages/Events/EventsPage";
-import CreateEventPage from "./pages/Events/CreateEventPage"; 
+import CreateEventPage from "./pages/Events/CreateEventPage";
 import InternsListPage from "./pages/interns/InternsListPage";
 import UpdateEventForm from "./pages/Events/UpdateEventForm";
 import CompleteScholarshipHourPage from "./pages/CompleteScholarshipHour/CompleteScholarshipHourPage";
+import HoursPage from "./pages/ScholarshipHours/HoursPage";
+import EventTable from "./pages/Events/EventTable";
 
 function loader() {
   return getProcess();
@@ -153,6 +155,11 @@ const router = createBrowserRouter([
         element: <EventsPage />,
       },
       {
+        path: "/scholarshipHours",
+        element: <HoursPage />,
+      },
+
+      {
         path: "/events/create",
         element: (
           <RequireAuth>
@@ -161,21 +168,17 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/interns",
-        element :(
-          <InternsListPage />
-        )},
-        {
-        path: "/editEvent/:id_event",
-        element: (
-          <UpdateEventForm/>
-        )
+        path: "/programDirector",
+        element: <EventTable />,
       },
       {
-        path: "/completeHours",
-        element :(
-          <CompleteScholarshipHourPage />
-        )}
+        path: "/editEvent/:id_event",
+        element: <UpdateEventForm />,
+      },
+      {
+        path: "/event/detail",
+        element: <InternsListPage />,
+      },
     ],
   },
   {
@@ -193,5 +196,3 @@ function App() {
 }
 
 export default App;
-
-
