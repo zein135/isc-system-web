@@ -30,7 +30,7 @@ const EventTable = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
-      // TODO: cambiar any por interfaz 
+      // TODO: cambiar any por interfaz
       valueGetter: (params: any) =>
         dayjs(params.startDate).format("DD/MM/YYYY"),
     },
@@ -101,12 +101,11 @@ const EventTable = () => {
   };
 
   const handleView = (id: number) => {
+    // TODO: use id to show proper event details
     navigate(`/event/detail`);
-    console.log(`Ver evento con id: ${id}`);
   };
 
   const handleEdit = (id: string) => {
-    console.log(id);
     navigate(`/editEvent/${id}`);
   };
 
@@ -121,16 +120,7 @@ const EventTable = () => {
   };
 
   const handleDelete = async () => {
-    if (selectedId !== null) {
-      try {
-        console.log(`Eliminar evento con id: ${selectedId}`);
-        // Lógica para eliminar el evento
-      } catch (error) {
-        console.log(error);
-      } finally {
-        handleClose();
-      }
-    }
+    // TODO: Add delete event logic
   };
 
   return (
