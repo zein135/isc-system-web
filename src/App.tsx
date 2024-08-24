@@ -27,6 +27,7 @@ import EventsPage from "./pages/Events/EventsPage";
 import CreateEventPage from "./pages/Events/CreateEventPage"; 
 import InternsListPage from "./pages/interns/InternsListPage";
 import UpdateEventForm from "./pages/Events/UpdateEventForm";
+import CompleteScholarshipHourPage from "./pages/CompleteScholarshipHour/CompleteScholarshipHourPage";
 
 function loader() {
   return getProcess();
@@ -169,7 +170,12 @@ const router = createBrowserRouter([
         element: (
           <UpdateEventForm/>
         )
-      }
+      },
+      {
+        path: "/completeHours",
+        element :(
+          <CompleteScholarshipHourPage />
+        )}
     ],
   },
   {

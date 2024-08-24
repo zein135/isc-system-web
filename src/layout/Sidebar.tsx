@@ -19,6 +19,8 @@ import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 const drawerWidth = 240;
 
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
+
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -100,6 +102,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const goToInterns = () => {
     navigate("/interns")
   }
+  const goToCSHEvents = () => {
+    navigate("/CSHEvents")
+  }
+
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -252,6 +258,31 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             <ListItemText
               color="primary"
               primary={"Ver Becarios"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key={"Completar Horas"} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToCSHEvents}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <PendingActionsIcon color="primary"/>
+            </ListItemIcon>
+            <ListItemText
+              color="primary"
+              primary={"Completar Horas"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
