@@ -98,10 +98,9 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         setDialogOpen(false);
     };
 
-    const handleConfirm = () => {
-        setDialogOpen(false);
-        setSnackbarOpen(true);
-    };
+      const handleConfirm = () => {
+        navigate('/registrationEvent', { state: { event } });
+      };
 
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);

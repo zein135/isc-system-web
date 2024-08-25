@@ -30,6 +30,7 @@ import UpdateEventForm from "./pages/Events/UpdateEventForm";
 import CompleteScholarshipHourPage from "./pages/CompleteScholarshipHour/CompleteScholarshipHourPage";
 import HoursPage from "./pages/ScholarshipHours/HoursPage";
 import EventTable from "./pages/Events/EventTable";
+import RegistrationEvent from "./components/cards/RegistrationEvent";
 
 function loader() {
   return getProcess();
@@ -176,13 +177,23 @@ const router = createBrowserRouter([
         element: <UpdateEventForm />,
       },
       {
-        path: "/event/detail",
-        element: <InternsListPage />,
+        path: "/interns",
+        element :(
+          <InternsListPage />
+        )
       },
       {
-        path: "/CSHEvents",
+        path: "/CompleteScholarshipHour",
         element: <CompleteScholarshipHourPage />,
       },
+      {
+      path: "/registrationEvent",
+      element: (
+        <RequireAuth>
+          <RegistrationEvent />
+        </RequireAuth>
+        )
+      }
     ],
   },
   {
