@@ -1,16 +1,15 @@
 import { Grid } from "@mui/material";
 import { events } from "../../data/events";
-import CSHEventCard from "../../components/cards/CSHEventCard";
+import CompleteScholarshipHourEventCard from "../../components/cards/CompleteScholarshipHourEventCard";
 
 const CompleteScholarshipHourPage: React.FC = () => {
     return (
         <>
-            <Grid container spacing={2}>
+            <Grid container spacing={1} direction="column" alignItems="center" justifyContent="center">
                 {events.map((event, index) => {
                     return (
-                        <Grid item xs={3}>
-                            {" "}
-                            <CSHEventCard key={index} event={event} />{" "}
+                        <Grid item xs={12}>
+                            <CompleteScholarshipHourEventCard key={index} event={event} />
                         </Grid>
                     );
                 })}

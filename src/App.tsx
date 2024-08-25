@@ -179,6 +179,10 @@ const router = createBrowserRouter([
         path: "/event/detail",
         element: <InternsListPage />,
       },
+      {
+        path: "/CSHEvents",
+        element: <CompleteScholarshipHourPage />,
+      },
     ],
   },
   {
