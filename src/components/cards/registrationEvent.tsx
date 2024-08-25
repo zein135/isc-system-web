@@ -61,7 +61,7 @@ const RegistrationEvent: FC = () => {
     };
 
     const handleBackClick = () => {
-        navigate("/eventCard"); 
+        navigate("/events"); 
     };
 
     return (
