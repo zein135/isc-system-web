@@ -64,6 +64,7 @@ const CreateForm = () => {
       minParticipants: 0,
       description: "",
       responsiblePerson: "",
+      status: "PENDIENTE",
     },
     validationSchema,
     onSubmit: async () => {

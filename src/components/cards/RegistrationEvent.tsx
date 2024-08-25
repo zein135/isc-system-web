@@ -1,5 +1,5 @@
-import { FC, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { FC, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { red } from "@mui/material/colors";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -17,40 +17,60 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { EventDetails } from "../../models/eventInterface";
+import { events } from "../../data/events";
 
 const RegistrationEvent: FC = () => {
+
+    const { id_event } = useParams<{ id_event: string }>();
+    const [eventData, setEventData] = useState<any>(null);
     const [expanded, setExpanded] = useState(false);
     const [notAttending, setNotAttending] = useState(false);
-    const location = useLocation();
     const navigate = useNavigate();
-    const { state } = location;
-    const event = state?.event as EventDetails;
+    const [eventInterface, setEventInterface] = useState<EventDetails>(
+        {
+            title: "",
+            date: "",
+            endDate: "",
+            duration: 0,
+            scholarshipHours: "",
+            location: "",
+            maxParticipants: 0,
+            minParticipants: 0,
+            description: "",
+            responsiblePerson: "",
+            status: "PENDIENTE",
+        }
+    );
 
-    if (!event) {
-        return <div>No se encontró el evento.</div>;
-    }
+    useEffect(() => {
+        const eventDetails = events.find(e => e.id_event === parseInt(id_event!, 10));
+        setEventData(eventDetails);
+    }, [id_event]);
 
-    const {
-        title = 'Título no disponible',
-        date,
-        duration = 'Duración no disponible',
-        scholarshipHours = 0,
-        location: eventLocation = 'Ubicación no disponible',
-        maxParticipants = 0,
-        maxSubstitutes = 0,
-        status = 'PENDIENTE'
-    } = event;
+    
+    useEffect(() => {
+        if (eventData) {
+            const eventDetails: EventDetails = {
+                title: eventData.name,
+                date: eventData.startDate,
+                endDate: eventData.startDate,
+                duration: eventData.duration,
+                scholarshipHours: eventData.validatedHours.split(' ')[0],
+                location: eventData.place,
+                maxParticipants: eventData.maxInterns,
+                minParticipants: eventData.minInterns,
+                description: eventData.description,
+                responsiblePerson: eventData.responsiblePerson,
+                status: "PENDIENTE",
+            };
+            setEventInterface(eventDetails);
+        }
+        
+    }, [eventData]);
 
-    const avatarText = title ? title.charAt(0) : '?';
+
 
     dayjs.locale('es');
-    const subheaderProp = (
-        <>
-            Fecha: {dayjs(date).format('LL')}
-            <br />
-            Horas becarias: {scholarshipHours}
-        </>
-    );
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -69,11 +89,16 @@ const RegistrationEvent: FC = () => {
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="event">
-                        {avatarText}
                     </Avatar>
                 }
-                title={title}
-                subheader={subheaderProp}
+                title={eventInterface.title}
+                subheader={
+                    <>
+                        Fecha: {dayjs(eventInterface.date).format('LL')}
+                        <br />
+                        Horas becarias: {eventInterface.scholarshipHours}
+                    </>
+                }
                 action={
                     <IconButton onClick={handleBackClick} aria-label="back">
                         <ArrowBackIcon />
@@ -83,34 +108,34 @@ const RegistrationEvent: FC = () => {
             <CardContent>
                 <Box display="flex" flexDirection="row" justifyContent="space-between" mb={2}>
                     <Box sx={{ border: '1px solid #ccc', borderRadius: '4px', p: 1, flex: 1, mx: 1 }}>
-                        <Typography variant="body2"><strong>Título:</strong> {title}</Typography>
+                        <Typography variant="body2"><strong>Título:</strong> {eventInterface.title}</Typography>
                     </Box>
                     <Box sx={{ border: '1px solid #ccc', borderRadius: '4px', p: 1, flex: 1, mx: 1 }}>
-                        <Typography variant="body2"><strong>Duración:</strong> {duration}</Typography>
+                        <Typography variant="body2"><strong>Duración:</strong> {eventInterface.duration}</Typography>
                     </Box>
                     <Box sx={{ border: '1px solid #ccc', borderRadius: '4px', p: 1, flex: 1, mx: 1 }}>
-                        <Typography variant="body2"><strong>Fecha:</strong> {dayjs(date).format('DD MMMM YYYY')}</Typography>
+                        <Typography variant="body2"><strong>Fecha:</strong> {dayjs(eventInterface.date).format('DD MMMM YYYY')}</Typography>
                     </Box>
                     <Box sx={{ border: '1px solid #ccc', borderRadius: '4px', p: 1, flex: 1, mx: 1 }}>
-                        <Typography variant="body2"><strong>Horas Becarias:</strong> {scholarshipHours}</Typography>
+                        <Typography variant="body2"><strong>Horas Becarias:</strong> {eventInterface.scholarshipHours}</Typography>
                     </Box>
                 </Box>
             </CardContent>
             <CardActions disableSpacing>
                 <Box display="flex" flexDirection="row" justifyContent="space-between" width="100%">
-                    <Tooltip title={status === "ACEPTADO" ? "Aceptado" : status === "PENDIENTE" ? "Pendiente" : "Rechazado"}>
+                    <Tooltip title={eventInterface.status === "ACEPTADO" ? "Aceptado" : eventInterface.status === "PENDIENTE" ? "Pendiente" : "Rechazado"}>
                         <Button
                             variant="contained"
                             color={
-                                status === "ACEPTADO"
+                                eventInterface.status === "ACEPTADO"
                                     ? "success"
-                                    : status === "PENDIENTE"
+                                    : eventInterface.status === "PENDIENTE"
                                     ? "warning"
                                     : "error"
                             }
                             disabled
                         >
-                            {status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()}
+                            {eventInterface.status.charAt(0).toUpperCase() + eventInterface.status.slice(1).toLowerCase()}
                         </Button>
                     </Tooltip>
                     <Tooltip title="No podré asistir">
@@ -135,9 +160,9 @@ const RegistrationEvent: FC = () => {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography paragraph><strong>Lugar:</strong> {eventLocation}</Typography>
-                    <Typography paragraph><strong>Máximo de Participantes:</strong> {maxParticipants}</Typography>
-                    <Typography paragraph><strong>Máximo de Suplentes:</strong> {maxSubstitutes}</Typography>
+                    <Typography paragraph><strong>Lugar:</strong> {eventInterface.location} </Typography>
+                    <Typography paragraph><strong>Máximo de Becarios:</strong> {eventInterface.maxParticipants}</Typography>
+                    <Typography paragraph><strong>Minimo de Becarios:</strong> {eventInterface.minParticipants}</Typography>
                 </CardContent>
             </Collapse>
         </Card>

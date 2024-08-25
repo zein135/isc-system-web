@@ -32,6 +32,7 @@ import HoursPage from "./pages/ScholarshipHours/HoursPage";
 import EventTable from "./pages/Events/EventTable";
 import RegistrationEvent from "./components/cards/RegistrationEvent";
 
+
 function loader() {
   return getProcess();
 }
@@ -187,7 +188,7 @@ const router = createBrowserRouter([
         element: <CompleteScholarshipHourPage />,
       },
       {
-      path: "/registrationEvent",
+      path: "/registrationEvent/:id_event",
       element: (
         <RequireAuth>
           <RegistrationEvent />
