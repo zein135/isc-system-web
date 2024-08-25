@@ -74,6 +74,10 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         navigate(`/interns/${id_event}`);
     };
 
+    const handleConfirm = () => {
+        navigate(`/registrationEvent/${id_event}`);
+      };
+    
     const subheaderProp = (
         <>
             Fecha inicio: {startDate.format("DD/MM/YYYY")}
@@ -98,9 +102,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         setDialogOpen(false);
     };
 
-      const handleConfirm = () => {
-        navigate('/registrationEvent', { state: { event } });
-      };
+      
 
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);

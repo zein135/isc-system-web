@@ -29,7 +29,8 @@ import InternsListPage from "./pages/interns/InternsListPage";
 import UpdateEventForm from "./pages/Events/UpdateEventForm";
 import HoursPage from "./pages/ScholarshipHours/HoursPage";
 import EventTable from "./pages/Events/EventTable";
-import RegistrationEvent from "./components/cards/RegistrationEvent";
+import RegistrationEvent from "./components/cards/registrationEvent";
+
 
 function loader() {
   return getProcess();
@@ -186,7 +187,7 @@ const router = createBrowserRouter([
         )
       },
       {
-      path: "/registrationEvent",
+      path: "/registrationEvent/:id_event",
       element: (
         <RequireAuth>
           <RegistrationEvent />
