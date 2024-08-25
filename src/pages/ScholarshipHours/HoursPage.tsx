@@ -59,6 +59,10 @@ export default function CircularWithValueLabel() {
         navigate("/events");
     };
 
+    const handleRegistrationEventsClick = () => {
+        navigate("/registrationEvent/2")
+    }
+
     return (
         <Box 
             sx={{ 
@@ -87,6 +91,7 @@ export default function CircularWithValueLabel() {
                         variant="contained" 
                         color="primary" 
                         sx={{ margin: "10px", width: "200px" }}
+                        onClick={handleRegistrationEventsClick}                           
                     >
                         Pre inscripciones
                     </Button>
