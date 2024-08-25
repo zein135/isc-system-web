@@ -183,7 +183,7 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: "/CompleteScholarshipHour",
+        path: "/CSHEvents",
         element: <CompleteScholarshipHourPage />,
       },
       {
