@@ -29,7 +29,7 @@ import InternsListPage from "./pages/interns/InternsListPage";
 import UpdateEventForm from "./pages/Events/UpdateEventForm";
 import HoursPage from "./pages/ScholarshipHours/HoursPage";
 import EventTable from "./pages/Events/EventTable";
-import RegistrationEvent from "./components/cards/registrationEvent";
+import RegistrationEvent from "./components/cards/RegistrationEvent";
 
 
 function loader() {
