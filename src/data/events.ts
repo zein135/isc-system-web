@@ -15,6 +15,7 @@ export const events = [
     responsiblePerson: "Ernesto",
     pendingInterns: 8,
     selectedInterns: 5,
+    status: "PENDIENTE",
   },
   {
     id_event: 2,
@@ -30,6 +31,7 @@ export const events = [
     responsiblePerson: "Ernesto",
     pendingInterns: 8,
     selectedInterns: 5,
+    status: "RECHAZADO",
   },
   {
     id_event: 3,
@@ -45,6 +47,7 @@ export const events = [
     responsiblePerson: "Ernesto",
     pendingInterns: 8,
     selectedInterns: 5,
+    status: "PENDIENTE",
   },
   {
     id_event: 4,
@@ -60,6 +63,7 @@ export const events = [
     responsiblePerson: "Ernesto",
     pendingInterns: 8,
     selectedInterns: 5,
+    status: "ACEPTADO",
   },
   {
     id_event: 5,
@@ -75,6 +79,7 @@ export const events = [
     responsiblePerson: "Ernesto",
     pendingInterns: 8,
     selectedInterns: 5,
+    status: "PENDIENTE",
   },
   {
     id_event: 6,
@@ -90,6 +95,7 @@ export const events = [
     responsiblePerson: "Ernesto",
     pendingInterns: 8,
     selectedInterns: 5,
+    status: "PENDIENTE",
   },
   {
     id_event: 7,
@@ -105,6 +111,7 @@ export const events = [
     responsiblePerson: "Ernesto",
     pendingInterns: 8,
     selectedInterns: 5,
+    status: "PENDIENTE",
   },
   {
     id_event: 8,
@@ -120,6 +127,7 @@ export const events = [
     responsiblePerson: "Ernesto",
     pendingInterns: 8,
     selectedInterns: 5,
+    status: "ACEPTADO",
   },
   {
     id_event: 9,
@@ -135,5 +143,6 @@ export const events = [
     responsiblePerson: "Ernesto",
     pendingInterns: 8,
     selectedInterns: 5,
+    status: "PENDIENTE",
   },
 ];
