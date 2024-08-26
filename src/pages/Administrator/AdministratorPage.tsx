@@ -7,7 +7,7 @@ import PermissionTable from "../../components/administration/PermissionTable";
 import AddTextModal from "../../components/common/AddTextModal";
 import { getRoles, addRole } from "../../services/roleService";
 
-const AdminsitratorPage = () => {
+const AdministratorPage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [roles, setRoles] = useState([]);
   const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -36,7 +36,7 @@ const AdminsitratorPage = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={!isSmallScreen ? 3 : 12}>
-        <RoleTable smallSize={!isSmallScreen}/>
+        <RoleTable roles = {roles} smallSize={!isSmallScreen}/>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '16px' }}>
           <IconButton aria-label="add" onClick={() => setIsModalVisible(true)}>
             <AddCircleIcon color="primary" style={{ fontSize: 40 }} />
@@ -54,5 +54,4 @@ const AdminsitratorPage = () => {
     </Grid>
   );
 }
-
-export default AdminsitratorPage;
+export default AdministratorPage

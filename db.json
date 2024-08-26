@@ -234,6 +234,18 @@
     {
       "roleName": "ayuda",
       "id": 7
+    },
+    {
+      "roleName": "si",
+      "id": 8
+    },
+    {
+      "roleName": "ayuda",
+      "id": 9
+    },
+    {
+      "roleName": "Jefe de Carrera FIA",
+      "id": 10
     }
   ]
 }
