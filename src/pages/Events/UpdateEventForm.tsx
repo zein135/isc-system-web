@@ -312,7 +312,7 @@ const UpdateEventForm: React.FC = () => {
         <Grid container spacing={2} justifyContent="flex-end" style={{ marginTop: "20px" }}>
           <Grid item>
             <Button variant="contained" color="primary" type="submit">
-              Crear
+              Actualizar
             </Button>
           </Grid>
           <Grid item>
