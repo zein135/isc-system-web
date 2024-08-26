@@ -102,7 +102,7 @@ const EventTable = () => {
 
   const handleView = (id: number) => {
     // TODO: use id to show proper event details
-    navigate(`/event/detail`);
+    navigate(`/interns`);
   };
 
   const handleEdit = (id: string) => {
