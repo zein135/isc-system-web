@@ -30,9 +30,8 @@ import UpdateEventForm from "./pages/Events/UpdateEventForm";
 import CompleteScholarshipHourPage from "./pages/CompleteScholarshipHour/CompleteScholarshipHourPage";
 import HoursPage from "./pages/ScholarshipHours/HoursPage";
 import EventTable from "./pages/Events/EventTable";
-import MyEventCard from "./components/cards/MyEventsTable";
 import RegistrationEvent from "./components/cards/RegistrationEvent";
-import MyEventsTable from "./components/cards/MyEventsTable";
+import MyEventsTable from "./pages/interns/MyEventsTable";
 
 function loader() {
   return getProcess();

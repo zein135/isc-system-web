@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { events } from "../../data/events";
 import dayjs from "dayjs";
-import ContainerPage from "../common/ContainerPage";
+import ContainerPage from "../../components/common/ContainerPage";
 import { useState } from "react";
 
 const MyEventsTable = () => {
@@ -70,7 +70,6 @@ const MyEventsTable = () => {
           }
         >
           {params.row.status}
-          {console.log(params.row)}
         </Button>
       ),
     },
@@ -85,7 +84,6 @@ const MyEventsTable = () => {
   }));
 
   const updatedRows = rows.slice(1, rows.length);
-  console.log(rows, updatedRows, "xdd");
 
   return (
     <ContainerPage
