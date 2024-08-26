@@ -1,6 +1,6 @@
 
-export interface Permission {
-    accion: string;
-    permiso: boolean;
-  }
+export interface Permission  {
+  name: string;
+  state: boolean;
+}
   
