@@ -72,7 +72,6 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
 
   const navigate = useNavigate();
 
-
   const subheaderProp = (
     <>
       Fecha inicio: {startDate.format("DD/MM/YYYY")}
@@ -98,7 +97,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   };
 
   const handleConfirm = () => {
-    navigate("/registrationEvent", { state: { event } });
+    navigate("/registrationEvent/2", { state: { event } });
   };
 
   const handleSnackbarClose = () => {

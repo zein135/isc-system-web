@@ -7,7 +7,7 @@ export const events = [
     description:
       "Un taller intensivo para aprender las últimas tecnologías en desarrollo web.",
     validatedHours: "4 horas",
-    startDate: dayjs("2024-09-01T10:00:00Z"),
+    startDate: dayjs("2024-07-01T10:00:00Z"),
     duration: 4,
     place: "Sala de conferencias A",
     maxInterns: 30,
@@ -23,7 +23,7 @@ export const events = [
     description:
       "Curso para mejorar las habilidades en la gestión de proyectos utilizando metodologías ágiles.",
     validatedHours: "6 horas",
-    startDate: dayjs("2024-09-15T09:00:00Z"),
+    startDate: dayjs("2024-08-15T09:00:00Z"),
     duration: 6,
     place: "Auditorio principal",
     maxInterns: 20,
@@ -39,7 +39,7 @@ export const events = [
     description:
       "Un seminario para explorar las últimas tendencias en innovación tecnológica.",
     validatedHours: "3 horas",
-    startDate: dayjs("2024-10-01T14:00:00Z"),
+    startDate: dayjs("2024-08-01T14:00:00Z"),
     duration: 3,
     place: "Centro de eventos B",
     maxInterns: 50,
