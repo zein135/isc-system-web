@@ -1,21 +1,19 @@
 import { useState } from "react";
 import { Checkbox, TableCell, TableRow } from "@mui/material";
+import { Permission } from "../../models/permissionInterface";
 
-interface Permission  {
-  permissionName: string;
-  permissionsDefaultState: boolean;
-};
 
 const PermissionComponent = ({ permission }: { permission: Permission }) => {
-  const [permissionsDefaultState, setPermissionsDefaultState] = useState(permission.permissionsDefaultState);
+  const [permissionsDefaultState, setPermissionsDefaultState] = useState(permission.state);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.checked)
     setPermissionsDefaultState(event.target.checked);
   };
 
   return (
     <TableRow>
-      <TableCell>{permission.permissionName}</TableCell>
+      <TableCell>{permission.name}</TableCell>
       <TableCell>
         <Checkbox
           checked={permissionsDefaultState}
