@@ -30,7 +30,7 @@ const EventTable = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
-      // TODO: cambiar any por interfaz
+      // TODO: change any to an interface 
       valueGetter: (params: any) =>
         dayjs(params.startDate).format("DD/MM/YYYY"),
     },
@@ -102,7 +102,7 @@ const EventTable = () => {
 
   const handleView = (id: number) => {
     // TODO: use id to show proper event details
-    navigate(`/event/detail`);
+    navigate(`/interns`);
   };
 
   const handleEdit = (id: string) => {
@@ -120,7 +120,8 @@ const EventTable = () => {
   };
 
   const handleDelete = async () => {
-    // TODO: Add delete event logic
+    // TODO: add actual delete event logic
+    setOpen(false)
   };
 
   return (

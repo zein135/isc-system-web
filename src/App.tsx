@@ -27,10 +27,11 @@ import EventsPage from "./pages/Events/EventsPage";
 import CreateEventPage from "./pages/Events/CreateEventPage";
 import InternsListPage from "./pages/interns/InternsListPage";
 import UpdateEventForm from "./pages/Events/UpdateEventForm";
+import CompleteScholarshipHourPage from "./pages/CompleteScholarshipHour/CompleteScholarshipHourPage";
 import HoursPage from "./pages/ScholarshipHours/HoursPage";
 import EventTable from "./pages/Events/EventTable";
 import RegistrationEvent from "./components/cards/RegistrationEvent";
-
+import MyEventsTable from "./pages/interns/MyEventsTable";
 
 function loader() {
   return getProcess();
@@ -159,7 +160,6 @@ const router = createBrowserRouter([
         path: "/scholarshipHours",
         element: <HoursPage />,
       },
-
       {
         path: "/events/create",
         element: (
@@ -177,23 +177,29 @@ const router = createBrowserRouter([
         element: <UpdateEventForm />,
       },
       {
-        path: "/event/detail",
+        path: "/interns",
         element: <InternsListPage />,
       },
       {
-        path: "/interns",
-        element :(
-          <InternsListPage />
-        )
+        path: "/CompleteScholarshipHour",
+        element: <CompleteScholarshipHourPage />,
       },
       {
-      path: "/registrationEvent/:id_event",
-      element: (
-        <RequireAuth>
-          <RegistrationEvent />
-        </RequireAuth>
-        )
-      }
+        path: "/registrationEvent/:id_event",
+        element: (
+          <RequireAuth>
+            <RegistrationEvent />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/myEvents",
+        element: (
+          <RequireAuth>
+            <MyEventsTable />
+          </RequireAuth>
+        ),
+      },
     ],
   },
   {

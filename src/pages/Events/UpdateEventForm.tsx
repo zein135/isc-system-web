@@ -43,7 +43,7 @@ const UpdateEventForm: React.FC = () => {
 
     const handleCancel = () => {
         formik.resetForm();
-        navigate("/events"); 
+        navigate("/programDirector"); 
     };
     
     const sucessDialogClose = () => {
@@ -82,7 +82,7 @@ const UpdateEventForm: React.FC = () => {
                 formik.resetForm();
                 setMessage("Evento actualizado con éxito");
                 setSuccessDialog(true);
-                navigate("/events");
+                navigate("/programDirector");
             } catch (error) {
                 setMessage("Error al actualizar el evento");
                 setErrorDialog(true);
@@ -96,11 +96,11 @@ const UpdateEventForm: React.FC = () => {
 
   return (
     <FormContainer>
-      {loading && <LoadingOverlay message="Creando Evento..." />}
+      {loading && <LoadingOverlay message="Actualizar Evento..." />}
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2} sx={{ padding: 2 }}>
           <Grid item xs={12}>
-            <Typography variant="h4">Crear Nuevo Evento</Typography>
+            <Typography variant="h4">Actualizar Evento</Typography>
             <Typography 
             margin="normal"
             variant="body2" sx={{ fontSize: 14, color: "gray" }}>
@@ -312,7 +312,7 @@ const UpdateEventForm: React.FC = () => {
         <Grid container spacing={2} justifyContent="flex-end" style={{ marginTop: "20px" }}>
           <Grid item>
             <Button variant="contained" color="primary" type="submit">
-              Crear
+              Actualizar
             </Button>
           </Grid>
           <Grid item>

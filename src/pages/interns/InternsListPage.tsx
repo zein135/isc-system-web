@@ -94,7 +94,8 @@ const InternsListPage = () => {
     responsiblePerson: "Juan",
     description:
       "Se necesitan becarios que ayuden en la logística del evento donde se recibirá a los estudiantes ganadores de la beca 100 mejores.",
-  };
+    status: "PENDIENTE"
+    };
 
   return (
     <EventDetailsPage
