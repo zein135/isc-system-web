@@ -43,7 +43,7 @@ const UpdateEventForm: React.FC = () => {
 
     const handleCancel = () => {
         formik.resetForm();
-        navigate("/events"); 
+        navigate("/programDirector"); 
     };
     
     const sucessDialogClose = () => {
@@ -82,7 +82,7 @@ const UpdateEventForm: React.FC = () => {
                 formik.resetForm();
                 setMessage("Evento actualizado con éxito");
                 setSuccessDialog(true);
-                navigate("/events");
+                navigate("/programDirector");
             } catch (error) {
                 setMessage("Error al actualizar el evento");
                 setErrorDialog(true);
