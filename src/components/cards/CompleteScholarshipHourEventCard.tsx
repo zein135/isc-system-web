@@ -28,7 +28,7 @@ const CompleteScholarshipHourEventCard: FC<CompleteScholarshipHourEventCardProps
     const navigate = useNavigate();
 
     const goToShowEvent = () => {
-        navigate(`/event/detail`);
+        navigate(`/interns`);
     }
 
     const handleDialogConfirmationFinishEventOpen = () => {
@@ -50,7 +50,7 @@ const CompleteScholarshipHourEventCard: FC<CompleteScholarshipHourEventCardProps
 
     const handleConfirmationEnding = () => {
         setDialogShowTheResultsFinishEventOpen(false);
-        navigate(`/event/detail`);
+        navigate(`/interns`);
     };
 
     return (

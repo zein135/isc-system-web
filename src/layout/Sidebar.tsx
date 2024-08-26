@@ -105,7 +105,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
     navigate("/programDirector");
   }
   const goToCompleteScholarshipHour = () => {
-    navigate("/CSHEvents")
+    navigate("/CompleteScholarshipHour")
   };
 
   return (
@@ -306,7 +306,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             >
               <PendingActionsIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary={"Completar horas becarias"} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primary={"Finalización eventos"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
       </List>
