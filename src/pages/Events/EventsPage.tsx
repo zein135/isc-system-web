@@ -41,7 +41,7 @@ const EventsPage: React.FC = () => {
           onChange={handleTabChange}
           aria-label="event tabs"
         >
-          <Tab label="Evento del mes" />
+          <Tab label="Eventos del mes" />
           <Tab label="Evento próximo" />
           <Tab label="Evento pasado" />
         </Tabs>

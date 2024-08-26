@@ -120,7 +120,8 @@ const EventTable = () => {
   };
 
   const handleDelete = async () => {
-    // TODO: Add delete event logic
+    // TODO: add actual delete event logic
+    setOpen(false)
   };
 
   return (
