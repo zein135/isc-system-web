@@ -49,7 +49,7 @@ const CreateForm = () => {
 
   const handleCancel = () => {
     formik.resetForm();
-    navigate("/events"); 
+    navigate("/programDirector"); 
   };
 
   const formik = useFormik<EventDetails>({
@@ -71,7 +71,7 @@ const CreateForm = () => {
       setLoading(true);
       try {
         formik.resetForm();
-        navigate("/events"); 
+        navigate("/programDirector"); 
         setMessage("Evento actualizado con éxito");
         setSuccessDialog(true);
       } catch (error) {
