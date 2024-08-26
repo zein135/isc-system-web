@@ -27,6 +27,7 @@ import EventsPage from "./pages/Events/EventsPage";
 import CreateEventPage from "./pages/Events/CreateEventPage";
 import InternsListPage from "./pages/interns/InternsListPage";
 import UpdateEventForm from "./pages/Events/UpdateEventForm";
+import CompleteScholarshipHourPage from "./pages/CompleteScholarshipHour/CompleteScholarshipHourPage";
 import HoursPage from "./pages/ScholarshipHours/HoursPage";
 import EventTable from "./pages/Events/EventTable";
 import RegistrationEvent from "./components/cards/RegistrationEvent";
@@ -177,14 +178,14 @@ const router = createBrowserRouter([
         element: <UpdateEventForm />,
       },
       {
-        path: "/event/detail",
-        element: <InternsListPage />,
-      },
-      {
         path: "/interns",
         element :(
           <InternsListPage />
         )
+      },
+      {
+        path: "/CSHEvents",
+        element: <CompleteScholarshipHourPage />,
       },
       {
       path: "/registrationEvent/:id_event",

@@ -19,6 +19,8 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 const drawerWidth = 240;
 
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
+
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -95,14 +97,15 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
 
   const goToEvents = () => {
     navigate("/events");
-  };
-
+  }
   const goToScholarshipHours = () => {
     navigate("/scholarshipHours");
-  };
-
+  }
   const goToProgramDirector = () => {
     navigate("/programDirector");
+  }
+  const goToCompleteScholarshipHour = () => {
+    navigate("/CSHEvents")
   };
 
   return (
@@ -283,6 +286,27 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
               <AccessTimeIcon color="primary" />
             </ListItemIcon>
             <ListItemText primary={"Horas"} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key={"CompleteScholarship"} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToCompleteScholarshipHour}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <PendingActionsIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText primary={"Completar horas becarias"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
       </List>
