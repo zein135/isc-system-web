@@ -7,6 +7,7 @@ export default function GraphicHours() {
         return hours < 50 ? "#FF0000" : "#4CAF50";
     };
 
+    
     return (
         <Box sx={{ width: "500px" }}>
             <BarChart width={500} height={450} data={barData}>
