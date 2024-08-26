@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Card, CardContent, Collapse, IconButton, styled, Typography, Box, Button, Icon } from '@mui/material';
+import { Card, CardContent, Collapse, IconButton, IconButtonProps, styled, Typography, Box, Button, Icon } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Card, CardContent, Collapse, IconButton, IconButtonProps, styled, Typography, Box, Button, Icon } from '@mui/material';
