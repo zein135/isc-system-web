@@ -1,17 +1,11 @@
 import { FC, useEffect, useState } from "react";
 import { Modal as MuiModal, Box, TextField, Button, useMediaQuery, Typography } from "@mui/material";
-
-interface AddTextModalProps {
-    isVisible: boolean;
-    setIsVisible: (isVisible: boolean) => void;
-    onCreate: (name: string) => void;
-}
+import { AddTextModalProps } from "../../models/addTextModalPropsInterface";
 
 const AddTextModal: FC<AddTextModalProps> = ({ isVisible, setIsVisible, onCreate }) => {
 const [name, setName] = useState('');
 const isSmallScreen = useMediaQuery('(max-width:500px)');
 
-//Limpia el text holder cada vez que se abre el modal
   useEffect(() => {
       if (isVisible) {
         setName('');

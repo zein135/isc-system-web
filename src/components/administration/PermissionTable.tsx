@@ -4,7 +4,6 @@ import getPermissions from "../../services/permissionsService";
 import { Section } from "../../models/sectionInterface";
 
 
-// Define los tipos de datos
 const PermissionTable = () => {
   const [sections, setSections] = useState<Section[]>([]);
 
@@ -18,7 +17,7 @@ const PermissionTable = () => {
 
   const handleSwitchChange = (sectionIndex:number, permissionIndex:number) => (event:any) => {
     const newSections = [...sections];
-    newSections[sectionIndex].permissions[permissionIndex].permiso = event.target.checked;
+    newSections[sectionIndex].permissions[permissionIndex].state = event.target.checked;
     setSections(newSections);
   };
   return (
@@ -43,7 +42,7 @@ const PermissionTable = () => {
                     <TableCell>{permission.accion}</TableCell>
                     <TableCell>
                       <Switch
-                        checked={permission.permiso}
+                        checked={permission.state}
                         onChange={handleSwitchChange(sectionIndex, permissionIndex)}
                       />
                     </TableCell>

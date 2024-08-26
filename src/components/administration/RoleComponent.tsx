@@ -4,10 +4,7 @@ import { Box, Button, Card, CardActionArea, CardContent, Icon, Typography } from
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import ConfirmDelete from "./ConfirmDelete"
-
-type Role = {
-    roleName: string
-}
+import { Role } from "../../models/roleInterface";
 
 const RoleComponent = ({ role }: { role: Role }) => {
 
