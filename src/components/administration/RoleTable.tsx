@@ -1,18 +1,10 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
 import RoleComponent from "./RoleComponent";
 import RoleComponentXs from "./RoleComponentXS";
-
-type Role = {
-  roleName: string;
-};
-
-interface RoleTableProps {
-roles: Role[];
-smallSize: boolean;
-}
+import { RoleTableProps } from "../../models/roleTablePropsInterface";
 
 
-const RoleTable: React.FC<RoleTableProps> = ({ roles, smallSize }) => { // Corregir la función para recibir un parámetro
+const RoleTable: React.FC<RoleTableProps> = ({ roles, smallSize }) => { // TODO: Corregir la función para recibir un parámetro
 
   return (
     <Table className="border-table">

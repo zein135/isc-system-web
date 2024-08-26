@@ -1,18 +1,13 @@
 import { useState } from 'react';
 
-import { Card, CardContent, Collapse, IconButton, IconButtonProps, styled, Typography, Box } from '@mui/material';
+import { Card, CardContent, Collapse, IconButton, styled, Typography, Box, Button, Icon } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import ConfirmDelete from './ConfirmDelete';
 import PermissionTable from './PermissionTable';
-type Role = {
-    roleName: string
-}
-
-interface ExpandMoreProps extends IconButtonProps {
-    expand: boolean;
-}
+import { Role } from '../../models/roleInterface';
+import { ExpandMoreProps } from '../../models/expandMorePropsInterface';
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
     const { ...other } = props;
