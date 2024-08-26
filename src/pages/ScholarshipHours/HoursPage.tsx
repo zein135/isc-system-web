@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import CircularProgress, { CircularProgressProps } from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
@@ -7,13 +6,12 @@ import Button from "@mui/material/Button";
 import GraphicHours from "./GraphicHours";
 import { colors, labels, progresses } from "../../data/hoursData";
 
-
 function CircularProgressWithLabel(props: CircularProgressProps & { value: number, customColor: string }) {
     return (
         <Box sx={{ 
             backgroundColor: props.customColor, 
             padding: "10px", 
-            borderRadius: "16px", 
+            borderRadius: "15px", 
             display: "flex", 
             alignItems: "center", 
             justifyContent: "space-between",
@@ -21,32 +19,22 @@ function CircularProgressWithLabel(props: CircularProgressProps & { value: numbe
             marginBottom: "20px",
             position: "relative"
         }}>
-            <Box sx={{ position: "relative", display: "inline-flex", marginRight: "10px" }}>
+            <Box sx={{ position: "relative", display: "inline-flex", marginRight: "20px" }}>
                 <CircularProgress
                     variant="determinate"
                     {...props}
                     size={90}
-                    thickness={8}
+                    thickness={9}
                     sx={{
                         color: "white",
                     }}
                 />
-                <Box
-                    sx={{
-                        top: 0,
-                        left: 0,
-                        bottom: 0,
-                        right: 0,
-                        position: "absolute",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
-                >
-                    <Typography variant="h6" component="div" color="WHITE">
-                        {`${Math.round(props.value)}%`}
-                    </Typography>
-                </Box>
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Typography variant="h4" component="div" color="white">
+                    {`${Math.round(props.value)} Horas`}
+                </Typography>
             </Box>
         </Box>
     );
@@ -60,8 +48,8 @@ export default function CircularWithValueLabel() {
     };
 
     const handleRegistrationEventsClick = () => {
-        navigate("/registrationEvent/2")
-    }
+        navigate("/registrationEvent/2");
+    };
 
     return (
         <Box 
@@ -86,6 +74,7 @@ export default function CircularWithValueLabel() {
                         />
                     </Box>
                 ))}
+                
                 <Box sx={{ display: "flex", justifyContent: "center", marginTop: "20px", flexDirection: { xs: "column", md: "row" } }}>
                     <Button 
                         variant="contained" 
