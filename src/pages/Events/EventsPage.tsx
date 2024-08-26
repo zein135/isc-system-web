@@ -5,7 +5,7 @@ import { events } from "../../data/events";
 import dayjs from "dayjs";
 
 const EventsPage: React.FC = () => {
-  const [tabValue, setTabValue] = useState(1);
+  const [tabValue, setTabValue] = useState(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);

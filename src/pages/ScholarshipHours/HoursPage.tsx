@@ -48,7 +48,7 @@ export default function CircularWithValueLabel() {
     };
 
     const handleRegistrationEventsClick = () => {
-        navigate("/registrationEvent/2");
+        navigate("/myEvents");
     };
 
     return (

@@ -32,6 +32,7 @@ import HoursPage from "./pages/ScholarshipHours/HoursPage";
 import EventTable from "./pages/Events/EventTable";
 import MyEventCard from "./components/cards/MyEventsTable";
 import RegistrationEvent from "./components/cards/RegistrationEvent";
+import MyEventsTable from "./components/cards/MyEventsTable";
 
 function loader() {
   return getProcess();
@@ -196,7 +197,7 @@ const router = createBrowserRouter([
         path: "/myEvents",
         element: (
           <RequireAuth>
-            <MyEventCard />
+            <MyEventsTable />
           </RequireAuth>
         ),
       },
