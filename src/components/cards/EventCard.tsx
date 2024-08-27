@@ -1,5 +1,4 @@
 import { styled } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -8,11 +7,6 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import dayjs, { Dayjs } from "dayjs";
-import "dayjs/locale/es";
-import { FC, useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AddIcon from "@mui/icons-material/Add";
@@ -24,24 +18,18 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import DialogContent from "@mui/material/DialogContent";
-
+import { red } from "@mui/material/colors";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import "dayjs/locale/es";
+import { FC, useState } from "react";
+import "../../style.css"
+import { EventCardProps } from "../../models/eventCardProps";
+import EventSubheader from "./EventSubheader";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
-}
-
-interface EventCardProps {
-    event: {
-        id_event: number;
-        name: string;
-        description: string;
-        validatedHours: string;
-        startDate: Dayjs;
-        duration: number;
-        place: string;
-        maxInterns: number;
-        minInterns: number;
-    }
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
@@ -74,18 +62,6 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         navigate(`/interns/${id_event}`);
     };
 
-    const subheaderProp = (
-        <>
-            Fecha inicio: {startDate.format("DD/MM/YYYY")}
-            <br /> 
-            Fecha final: {startDate.format("DD/MM/YYYY")} 
-            <br />
-            Horas becarias: {validatedHours}
-            <br />
-            Encargado: Ernesto
-        </>
-    );
-
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -106,7 +82,6 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
     };
-    
 
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -122,7 +97,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                     </IconButton>
                 }
                 title={name}
-                subheader={subheaderProp}
+                subheader={<EventSubheader event={event}/>}
                 onClick={goToEventDetails}
             />
             <CardContent>
@@ -190,10 +165,10 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                     </Typography>
                 </DialogContent>
                 <DialogActions sx={{ justifyContent: "center" }}>
-                    <Button onClick={handleConfirm} variant="contained" sx={{ bgcolor: "#002E5D", color: "#FFFFFF", "&:hover": { bgcolor: "#001F3B" } }}>
+                    <Button onClick={handleConfirm} variant="contained" className="confirm-button">
                         Confirmar
                     </Button>
-                    <Button onClick={handleDialogClose} variant="contained" sx={{ bgcolor: "#FF4C4C", color: "#FFFFFF", "&:hover": { bgcolor: "#CC0000" } }}>
+                    <Button onClick={handleDialogClose} variant="contained" className="cancel-button">
                         Cancelar
                     </Button>
                 </DialogActions>
@@ -204,9 +179,9 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                 autoHideDuration={6000}
                 onClose={handleSnackbarClose}
             >
-                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: "100%" }}>
-                    ¡Te has registrado con éxito en el evento {name}!
-                </Alert>
+            <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: "100%" }}>
+                ¡Te has registrado con éxito en el evento {name}!
+            </Alert>
             </Snackbar>
         </Card>
     );

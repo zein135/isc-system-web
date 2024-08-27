@@ -1,13 +1,13 @@
 import  { useState } from "react";
-import { EventDetails } from "../../models/eventInterface.ts";
+import { useNavigate } from "react-router-dom";
+import { Typography, Grid, TextField, Button, Divider } from "@mui/material";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { FormContainer } from "../../pages/CreateGraduation/components/FormContainer.tsx";
 import LoadingOverlay from "../../components/common/Loading.tsx";
-import { Typography, Grid, TextField, Button, Divider } from "@mui/material";
 import ErrorDialog from "../../components/common/ErrorDialog.tsx";
 import SuccessDialog from "../../components/common/SucessDialog.tsx";
-import { useNavigate } from "react-router-dom";
+import { EventDetails } from "../../models/eventInterface.ts";
 
 
 
@@ -82,7 +82,6 @@ const CreateForm = () => {
     },
   });
 
-
   return (
     <FormContainer>
       {loading && <LoadingOverlay message="Creando Evento..." />}
@@ -97,8 +96,6 @@ const CreateForm = () => {
             </Typography>
             <Divider flexItem sx={{ mt: 2, mb: 2 }} />
           </Grid>
-
-
           <Grid item xs={12} >
             <Grid container spacing={2} sx={{padding: 2}}>
               <Grid item xs={3}>
@@ -135,7 +132,6 @@ const CreateForm = () => {
                     margin="normal"
                   />
                 </Grid>
-
                 <Grid item xs={12}>
                   <TextField
                     id="location"
@@ -150,7 +146,6 @@ const CreateForm = () => {
                     margin="normal"
                   />
                 </Grid>
-                
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
                     <TextField
@@ -188,7 +183,6 @@ const CreateForm = () => {
                       }}
                     />
                   </Grid>
-
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
@@ -206,11 +200,9 @@ const CreateForm = () => {
                   />
                 </Grid>
               </Grid>
-
             </Grid>
             <Divider flexItem sx={{ mt: 2, mb: 2 }} />
           </Grid>
-        
           <Grid item xs={12} >
             <Grid container spacing={2} sx={{padding: 2}}>
               <Grid item xs={3}>
@@ -233,7 +225,6 @@ const CreateForm = () => {
                       helperText={formik.touched.scholarshipHours && formik.errors.scholarshipHours}
                     />
                   </Grid>
-                  
                   <Grid item xs={3}>
                     <TextField
                       id="minParticipants"
@@ -249,7 +240,6 @@ const CreateForm = () => {
                       helperText={formik.touched.minParticipants && formik.errors.minParticipants}
                     />  
                   </Grid>
-
                   <Grid item xs={3}>
                     <TextField
                       id="maxParticipants"
@@ -270,7 +260,6 @@ const CreateForm = () => {
             </Grid>
             <Divider flexItem sx={{ mt: 2, mb: 2 }} />
           </Grid>
-          
           <Grid item xs={12} >
             <Grid container spacing={2} sx={{padding: 2}}>
               <Grid item xs={3}>
@@ -290,14 +279,9 @@ const CreateForm = () => {
                 helperText={formik.touched.responsiblePerson && formik.errors.responsiblePerson}
               />
               </Grid>
-
             </Grid>
           </Grid>    
         </Grid>
-
-
-
-        
         <Grid container spacing={2} justifyContent="flex-end" style={{ marginTop: "20px" }}>
           <Grid item>
             <Button variant="contained" color="primary" type="submit">

@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import "dayjs/locale/es";
 import {
   FaEnvelope,
   FaCalendarCheck,
@@ -7,18 +8,16 @@ import {
   // FaUserShield,
   // FaUserGraduate,
 } from "react-icons/fa";
-import { useProcessStore } from "../store/store";
 import { Seminar } from "../models/studentProcess";
-
-import "dayjs/locale/es";
+import { useProcessStore } from "../store/store";
 
 const Checklist = () => {
   const process = useProcessStore((state) => state.process);
   let formattedDate = "";
   if (process) {
     formattedDate = process.tutor_approval_date
-      ? dayjs(process.tutor_approval_date).format('DD/MM/YYYY')
-      : '';
+      ? dayjs(process.tutor_approval_date).format("DD/MM/YYYY")
+      : "";
   }
 
   const {
