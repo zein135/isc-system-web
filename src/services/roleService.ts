@@ -5,7 +5,7 @@ export const getRoles = async ()=>{
     if(response.status === 200){
         return response.data
     }else{
-        throw Error("Faild to get roles")
+        throw Error("Failed to get roles")
     }
 }
 
