@@ -7,7 +7,6 @@ const PermissionComponent = ({ permission }: { permission: Permission }) => {
   const [permissionsDefaultState, setPermissionsDefaultState] = useState(permission.state);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.checked)
     setPermissionsDefaultState(event.target.checked);
   };
 
