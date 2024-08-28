@@ -32,6 +32,7 @@ import HoursPage from "./pages/ScholarshipHours/HoursPage";
 import EventTable from "./pages/Events/EventTable";
 import RegistrationEvent from "./components/cards/RegistrationEvent";
 import MyEventsTable from "./pages/interns/MyEventsTable";
+import "./style.css"
 
 function loader() {
   return getProcess();

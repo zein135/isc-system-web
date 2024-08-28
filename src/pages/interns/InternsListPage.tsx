@@ -1,8 +1,8 @@
+import { useState } from "react";
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { EventDetails } from "../../models/eventInterface";
 import EventDetailsPage from "../../components/common/EventDetailsPage";
-import { useState } from "react";
-import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 
 const InternsListPage = () => {
   //TODO: Delete this simulation of database
@@ -94,8 +94,8 @@ const InternsListPage = () => {
     responsiblePerson: "Juan",
     description:
       "Se necesitan becarios que ayuden en la logística del evento donde se recibirá a los estudiantes ganadores de la beca 100 mejores.",
-    status: "PENDIENTE"
-    };
+    status: "PENDIENTE",
+  };
 
   return (
     <EventDetailsPage
