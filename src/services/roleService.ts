@@ -1,24 +1,19 @@
 import jsonClient from "./jsonServerInstance"
 
 export const getRoles = async ()=>{
+  try {
     const response = await jsonClient.get('roles/');
-    if(response.status === 200){
-        return response.data
-    }else{
-        throw Error("Failed to get roles")
-    }
+    return response.data
+  } catch (error) {
+    throw new Error('Failed to get roles: ' + (error as Error).message);
+  }
 }
 
 export const addRole = async (role: {}) => {
   try {
-    console.log(role);
     const response = await jsonClient.post('roles/', role);
-    if (response.status === 201) {
-      return response.data;
-    } else {
-      throw new Error('Failed to add role');
-    }
-  } catch (error) {
+    return response.data;
+  }catch (error) {
     throw new Error('Failed to add role: ' + (error as Error).message);
   }
 };
