@@ -124,8 +124,8 @@
       "subtitle": "Reportes",
       "permissions": [
         {
-          "accion": "Ver el dashboard",
-          "permiso": false
+          "action": "Ver el dashboard",
+          "permission": false
         }
       ]
     },
@@ -133,20 +133,20 @@
       "subtitle": "Proceso de graduación",
       "permissions": [
         {
-          "accion": "Ver reporte de los procesos de graduación",
-          "permiso": false
+          "action": "Ver reporte de los procesos de graduación",
+          "permission": false
         },
         {
-          "accion": "Crear proceso de graduación",
-          "permiso": false
+          "action": "Crear proceso de graduación",
+          "permission": false
         },
         {
-          "accion": "Ver proceso de graduación por estudiante",
-          "permiso": false
+          "action": "Ver proceso de graduación por estudiante",
+          "permission": false
         },
         {
-          "accion": "Asignar proceso de graduación",
-          "permiso": false
+          "action": "Asignar proceso de graduación",
+          "permission": false
         }
       ]
     },
@@ -154,28 +154,28 @@
       "subtitle": "Docentes",
       "permissions": [
         {
-          "accion": "Ver lista de docentes",
-          "permiso": false
+          "action": "Ver lista de docentes",
+          "permission": false
         },
         {
-          "accion": "Agregar docente",
-          "permiso": false
+          "action": "Agregar docente",
+          "permission": false
         },
         {
-          "accion": "Ver reporte de docente",
-          "permiso": false
+          "action": "Ver reporte de docente",
+          "permission": false
         },
         {
-          "accion": "Realizar una cita con docente",
-          "permiso": false
+          "action": "Realizar una cita con docente",
+          "permission": false
         },
         {
-          "accion": "Eliminar docente",
-          "permiso": false
+          "action": "Eliminar docente",
+          "permission": false
         },
         {
-          "accion": "Editar información de docente",
-          "permiso": false
+          "action": "Editar información de docente",
+          "permission": false
         }
       ]
     },
@@ -183,28 +183,28 @@
       "subtitle": "Estudiantes",
       "permissions": [
         {
-          "accion": "Ver lista de estudiantes",
-          "permiso": false
+          "action": "Ver lista de estudiantes",
+          "permission": false
         },
         {
-          "accion": "Agregar estudiante",
-          "permiso": false
+          "action": "Agregar estudiante",
+          "permission": false
         },
         {
-          "accion": "Eliminar estudiante",
-          "permiso": false
+          "action": "Eliminar estudiante",
+          "permission": false
         },
         {
-          "accion": "Editar información de estudiante",
-          "permiso": false
+          "action": "Editar información de estudiante",
+          "permission": false
         },
         {
-          "accion": "Ver reporte de estudiante",
-          "permiso": false
+          "action": "Ver reporte de estudiante",
+          "permission": false
         },
         {
-          "accion": "Realizar cita con estudiante",
-          "permiso": false
+          "action": "Realizar cita con estudiante",
+          "permission": false
         }
       ]
     }
@@ -254,6 +254,18 @@
     {
       "roleName": "Paul",
       "id": 12
+    },
+    {
+      "roleName": "Encargada de becas",
+      "id": 13
+    },
+    {
+      "roleName": "Egresado por excelencia",
+      "id": 14
+    },
+    {
+      "roleName": "",
+      "id": 15
     }
   ]
 }

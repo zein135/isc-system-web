@@ -224,7 +224,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             >
               <ManageAccountsIcon color="primary"/>
             </ListItemIcon>
-            <ListItemText primary={"administración"} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primary={"Administrador"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
       </List>

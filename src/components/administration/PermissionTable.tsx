@@ -39,7 +39,7 @@ const PermissionTable = () => {
                 </TableRow>
                 {section.permissions.map((permission:any, permissionIndex:number) => (
                   <TableRow key={permissionIndex}>
-                    <TableCell>{permission.accion}</TableCell>
+                    <TableCell>{permission.action}</TableCell>
                     <TableCell>
                       <Switch
                         checked={permission.state}
