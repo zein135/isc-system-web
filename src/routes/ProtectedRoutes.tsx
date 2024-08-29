@@ -1,0 +1,168 @@
+import {
+  LoaderFunction,
+  LoaderFunctionArgs,
+  Navigate,
+  Params,
+} from "react-router-dom";
+import Layout from "../layout/Layout";
+import { DashboardPage } from "../pages/dashboard/Dashboard";
+import RoleGuard from "./RoleGuard";
+import { getProcess, getStudentById } from "../services/processServicer";
+import CreateProcessPage from "../pages/CreateGraduation/CreateProcessPage";
+import CreateEventPage from "../pages/Events/CreateEventPage";
+import EventsPage from "../pages/Events/EventsPage";
+import UpdateEventForm from "../pages/Events/UpdateEventForm";
+import GraduationProcessPage from "../pages/graduation/GraduationProcessPage";
+import ProcessInfoPage from "../pages/graduation/ProcessInfoPage";
+import InternsListPage from "../pages/interns/InternsListPage";
+import CreateProfessorPage from "../pages/Professor/CreateProfessorPage";
+import ProfessorPage from "../pages/Professor/ProfessorPage";
+import Profile from "../pages/profile/Profile";
+import CreateStudentPage from "../pages/Student/CreateStudentPage";
+import EditStudentPage from "../pages/Student/EditStudentPage";
+import StudentPage from "../pages/Student/StudentsPage";
+
+function loader() {
+  return getProcess();
+}
+
+interface StudentParams extends Params {
+  id: string;
+}
+
+const getStudentProcess: LoaderFunction = async ({
+  params,
+}: LoaderFunctionArgs<StudentParams>) => {
+  const studentId = Number(params.id);
+  return getStudentById(studentId);
+};
+
+const protectedRoutes = [
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/login" replace />,
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <RoleGuard allowedRoles={["admin", "student", "professor"]}>
+            <DashboardPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/process",
+        loader: loader,
+        element: (
+          <RoleGuard allowedRoles={["admin", "professor"]}>
+            <GraduationProcessPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/professors",
+        loader: loader,
+        element: (
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <ProfessorPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/students",
+        loader: loader,
+        element: (
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <StudentPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/edit-student/:id",
+        element: (
+          <RoleGuard allowedRoles={["admin", "professor"]}>
+            <EditStudentPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/create-professor",
+        loader: loader,
+        element: (
+          <RoleGuard allowedRoles={["admin"]}>
+            <CreateProfessorPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/create-student",
+        loader: loader,
+        element: (
+          <RoleGuard allowedRoles={["admin", "professor"]}>
+            <CreateStudentPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/studentProfile/:id",
+        loader: getStudentProcess,
+        element: (
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <ProcessInfoPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/createProcess",
+        loader: loader,
+        element: (
+          <RoleGuard allowedRoles={["admin", "professor"]}>
+            <CreateProcessPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <Profile />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/profile/:id",
+        element: (
+          <RoleGuard allowedRoles={["admin", "student", "professor"]}>
+            <Profile />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/events",
+        element: <EventsPage />,
+      },
+      {
+        path: "/events/create",
+        element: (
+          <RoleGuard allowedRoles={["admin", "professor"]}>
+            <CreateEventPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/interns",
+        element: <InternsListPage />,
+      },
+      {
+        path: "/editEvent/:id_event",
+        element: <UpdateEventForm />,
+      },
+    ],
+  },
+];
+
+export default protectedRoutes;

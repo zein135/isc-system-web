@@ -118,5 +118,154 @@
         }
       }
     }
+  ],
+  "permissions": [
+    {
+      "subtitle": "Reportes",
+      "permissions": [
+        {
+          "action": "Ver el dashboard",
+          "permission": false
+        }
+      ]
+    },
+    {
+      "subtitle": "Proceso de graduación",
+      "permissions": [
+        {
+          "action": "Ver reporte de los procesos de graduación",
+          "permission": false
+        },
+        {
+          "action": "Crear proceso de graduación",
+          "permission": false
+        },
+        {
+          "action": "Ver proceso de graduación por estudiante",
+          "permission": false
+        },
+        {
+          "action": "Asignar proceso de graduación",
+          "permission": false
+        }
+      ]
+    },
+    {
+      "subtitle": "Docentes",
+      "permissions": [
+        {
+          "action": "Ver lista de docentes",
+          "permission": false
+        },
+        {
+          "action": "Agregar docente",
+          "permission": false
+        },
+        {
+          "action": "Ver reporte de docente",
+          "permission": false
+        },
+        {
+          "action": "Realizar una cita con docente",
+          "permission": false
+        },
+        {
+          "action": "Eliminar docente",
+          "permission": false
+        },
+        {
+          "action": "Editar información de docente",
+          "permission": false
+        }
+      ]
+    },
+    {
+      "subtitle": "Estudiantes",
+      "permissions": [
+        {
+          "action": "Ver lista de estudiantes",
+          "permission": false
+        },
+        {
+          "action": "Agregar estudiante",
+          "permission": false
+        },
+        {
+          "action": "Eliminar estudiante",
+          "permission": false
+        },
+        {
+          "action": "Editar información de estudiante",
+          "permission": false
+        },
+        {
+          "action": "Ver reporte de estudiante",
+          "permission": false
+        },
+        {
+          "action": "Realizar cita con estudiante",
+          "permission": false
+        }
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "roleName": "Jefe de Carrera"
+    },
+    {
+      "roleName": "Docente"
+    },
+    {
+      "roleName": "Estudiante"
+    },
+    {
+      "roleName": "Estudiante2",
+      "id": 4
+    },
+    {
+      "roleName": "Becario",
+      "id": 5
+    },
+    {
+      "roleName": "Jefe de carrera FACED",
+      "id": 6
+    },
+    {
+      "roleName": "ayuda",
+      "id": 7
+    },
+    {
+      "roleName": "si",
+      "id": 8
+    },
+    {
+      "roleName": "ayuda",
+      "id": 9
+    },
+    {
+      "roleName": "Jefe de Carrera FIA",
+      "id": 10
+    },
+    {
+      "roleName": "Darko",
+      "id": 11
+    },
+    {
+      "roleName": "Paul",
+      "id": 12
+    },
+    {
+      "roleName": "Encargada de becas",
+      "id": 13
+    },
+    {
+      "roleName": "Egresado por excelencia",
+      "id": 14
+    },
+    {
+      "roleName": "",
+      "id": 15
+    }
   ]
 }
