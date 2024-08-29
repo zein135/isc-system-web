@@ -21,6 +21,7 @@ import Profile from "../pages/profile/Profile";
 import CreateStudentPage from "../pages/Student/CreateStudentPage";
 import EditStudentPage from "../pages/Student/EditStudentPage";
 import StudentPage from "../pages/Student/StudentsPage";
+import "../style.css";
 
 function loader() {
   return getProcess();
@@ -143,7 +144,11 @@ const protectedRoutes = [
       },
       {
         path: "/events",
-        element: <EventsPage />,
+        element: (
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <EventsPage />
+          </RoleGuard>
+        ),
       },
       {
         path: "/events/create",
@@ -155,11 +160,19 @@ const protectedRoutes = [
       },
       {
         path: "/interns",
-        element: <InternsListPage />,
+        element: (
+          <RoleGuard allowedRoles={["admin", "professor"]}>
+            <InternsListPage />
+          </RoleGuard>
+        ),
       },
       {
         path: "/editEvent/:id_event",
-        element: <UpdateEventForm />,
+        element: (
+          <RoleGuard allowedRoles={["admin", "professor"]}>
+            <UpdateEventForm />
+          </RoleGuard>
+        ),
       },
     ],
   },
