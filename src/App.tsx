@@ -20,6 +20,9 @@ import StudentPage from "./pages/Student/StudentsPage";
 import CreateStudentPage from "./pages/Student/CreateStudentPage";
 import EditStudentPage from "./pages/Student/EditStudentPage";
 
+import publicRoutes from "./routes/PublicRoutes";
+import protectedRoutes from "./routes/ProtectedRoutes";
+import AuthGuard from "./routes/AuthGuard";
 function loader() {
   return getProcess();
 }
@@ -31,106 +34,114 @@ const getStudentProcess = ({ params }: any) => {
 };
 
 const router = createBrowserRouter([
+  ...publicRoutes,
   {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        index: true,
-        element: <Navigate to="/login" replace />,
-      },
-      {
-        index: true,
-        path: "/dashboard",
-        element: (
-          <RequireAuth>
-            <DashboardPage />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "/process",
-        loader: loader,
-        element: (
-          <RequireAuth>
-            <StudentsPage />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "/professors",
-        loader: loader,
-        element: (
-          <RequireAuth>
-            <ProfessorPage />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "/students",
-        loader: loader,
-        element: (
-          <RequireAuth>
-            <StudentPage />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "/edit-student/:id",
-        loader: loader,
-        element: (
-          <RequireAuth>
-            <EditStudentPage />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "/create-professor",
-        loader: loader,
-        element: (
-          <RequireAuth>
-            <CreateProfessorPage />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "/create-student",
-        loader: loader,
-        element: (
-          <RequireAuth>
-            <CreateStudentPage />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "/studentProfile/:id",
-        loader: getStudentProcess,
-        element: (
-          <RequireAuth>
-            <ProcessInfoPage />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "/createProcess",
-        loader: loader,
-        element: (
-          <RequireAuth>
-            <CreateProcessPage />
-          </RequireAuth>
-        ),
-      },
-    ],
-  },
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "*",
-    element: <ErrorPage />,
+    element: <AuthGuard />,
+    children: protectedRoutes,
   },
 ]);
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Layout />,
+//     children: [
+//       {
+//         index: true,
+//         element: <Navigate to="/login" replace />,
+//       },
+//       {
+//         index: true,
+//         path: "/dashboard",
+//         element: (
+//           <RequireAuth>
+//             <DashboardPage />
+//           </RequireAuth>
+//         ),
+//       },
+//       {
+//         path: "/process",
+//         loader: loader,
+//         element: (
+//           <RequireAuth>
+//             <StudentsPage />
+//           </RequireAuth>
+//         ),
+//       },
+//       {
+//         path: "/professors",
+//         loader: loader,
+//         element: (
+//           <RequireAuth>
+//             <ProfessorPage />
+//           </RequireAuth>
+//         ),
+//       },
+//       {
+//         path: "/students",
+//         loader: loader,
+//         element: (
+//           <RequireAuth>
+//             <StudentPage />
+//           </RequireAuth>
+//         ),
+//       },
+//       {
+//         path: "/edit-student/:id",
+//         loader: loader,
+//         element: (
+//           <RequireAuth>
+//             <EditStudentPage />
+//           </RequireAuth>
+//         ),
+//       },
+//       {
+//         path: "/create-professor",
+//         loader: loader,
+//         element: (
+//           <RequireAuth>
+//             <CreateProfessorPage />
+//           </RequireAuth>
+//         ),
+//       },
+//       {
+//         path: "/create-student",
+//         loader: loader,
+//         element: (
+//           <RequireAuth>
+//             <CreateStudentPage />
+//           </RequireAuth>
+//         ),
+//       },
+//       {
+//         path: "/studentProfile/:id",
+//         loader: getStudentProcess,
+//         element: (
+//           <RequireAuth>
+//             <ProcessInfoPage />
+//           </RequireAuth>
+//         ),
+//       },
+//       {
+//         path: "/createProcess",
+//         loader: loader,
+//         element: (
+//           <RequireAuth>
+//             <CreateProcessPage />
+//           </RequireAuth>
+//         ),
+//       },
+//     ],
+//   },
+//   {
+//     path: "/login",
+//     element: <LoginPage />,
+//   },
+//   {
+//     path: "*",
+//     element: <ErrorPage />,
+//   },
+// ]);
 
 function App() {
   return <RouterProvider router={router} />;
