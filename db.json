@@ -207,6 +207,31 @@
           "permission": false
         }
       ]
+    },
+    {
+      "subtitle": "Usuarios",
+      "permissions": [
+        {
+          "action": "Ver lista de usuarios",
+          "permission": false
+        },
+        {
+          "action": "Ver reporte de usuarios",
+          "permission": false
+        },
+        {
+          "action": "Eliminar usuario",
+          "permission": false
+        },
+        {
+          "action": "Editar informacion de usuario",
+          "permission": false
+        },
+        {
+          "action": "Agregar usuario",
+          "permission": false
+       }
+    ]
     }
   ],
   "roles": [
