@@ -14,12 +14,12 @@ import ChecklistOutlinedIcon from "@mui/icons-material/ChecklistOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import UPB_LOGO from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
-import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 const drawerWidth = 240;
 
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import EventIcon from '@mui/icons-material/Event';
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -233,7 +233,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
                 justifyContent: "center",
               }}
             >
-              <LocalActivityIcon color="primary" />
+              <EventIcon color="primary" />
             </ListItemIcon>
             <ListItemText primary={"Eventos"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
