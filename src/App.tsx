@@ -23,6 +23,7 @@ import CreateStudentPage from "./pages/Student/CreateStudentPage";
 import EditStudentPage from "./pages/Student/EditStudentPage";
 import Profile from "./pages/profile/Profile";
 import GraduationProcessPage from "./pages/graduation/GraduationProcessPage";
+import AdministratorPage from "./pages/Administrator/AdministratorPage";
 
 function loader() {
   return getProcess();
@@ -141,6 +142,14 @@ const router = createBrowserRouter([
         element: (
           <RequireAuth>
             <Profile />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "administration",
+        element: (
+          <RequireAuth>
+            <AdministratorPage />
           </RequireAuth>
         ),
       },
