@@ -13,6 +13,7 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import UPB_LOGO from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
 
@@ -95,6 +96,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
 
   const goToAdministration = () => {
     navigate("/administration")
+  }
+
+  const goToUsers = () => {
+    navigate("/users")
   }
 
   return (
@@ -225,6 +230,27 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
               <ManageAccountsIcon color="primary"/>
             </ListItemIcon>
             <ListItemText primary={"Administrador"} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key={"users"} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToUsers}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <SwitchAccountIcon color="primary"/>
+            </ListItemIcon>
+            <ListItemText primary={"Usuarios"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
       </List>
