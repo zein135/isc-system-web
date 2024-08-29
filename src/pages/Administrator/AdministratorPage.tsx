@@ -7,6 +7,7 @@ import PermissionTable from "../../components/administration/PermissionTable";
 import AddTextModal from "../../components/common/AddTextModal";
 import { getRoles, addRole } from "../../services/roleService";
 
+
 const AdministratorPage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [roles, setRoles] = useState([]);
@@ -54,4 +55,5 @@ const AdministratorPage = () => {
     </Grid>
   );
 }
-export default AdministratorPage
+
+export default AdministratorPage;
