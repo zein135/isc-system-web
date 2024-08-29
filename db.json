@@ -255,5 +255,46 @@
       "roleName": "Paul",
       "id": 12
     }
+  ],
+  "users": [
+    {
+      "name": "Zein",
+      "code": "68391",
+      "lastname": "Tonconi",
+      "mothername": "Mendoza",
+      "email": "zein@quya.com",
+      "cellphone": "70186881",
+      "roles": [
+        "Estudiante"
+      ],
+      "degree": "",
+      "id": 12346
+    },
+    {
+      "name": "Mildret",
+      "code": "69271",
+      "lastname": "Robles",
+      "mothername": "Gutierrez",
+      "email": "mildret@quya.com",
+      "cellphone": "70182881",
+      "roles": [
+        "Becario"
+      ],
+      "degree": "",
+      "id": 12347
+    },
+    {
+      "name": "Hade",
+      "code": "12347",
+      "lastname": "Villegas",
+      "mothername": "Minerva",
+      "email": "hade@hade.com",
+      "cellphone": "79282012",
+      "roles": [
+        "Estudiante"
+      ],
+      "degree": "",
+      "id": 12348
+    }
   ]
 }
