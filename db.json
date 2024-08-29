@@ -119,17 +119,6 @@
       }
     }
   ],
-  "roles":[
-    {
-      "roleName":"Jefe de Carrera"
-    },
-    {
-      "roleName":"Docente"
-    },
-    {
-      "roleName":"Estudiante"
-    }
-  ],
   "permissions": [
     {
       "subtitle": "Reportes",

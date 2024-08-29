@@ -46,112 +46,11 @@ const getStudentProcess: LoaderFunction = async ({
 const router = createBrowserRouter([
   ...publicRoutes,
   {
+
     element: <AuthGuard />,
     children: protectedRoutes,
   },
 ]);
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Layout />,
-//     children: [
-//       {
-//         index: true,
-//         element: <Navigate to="/login" replace />,
-//       },
-//       {
-//         index: true,
-//         path: "/dashboard",
-//         element: (
-//           <RequireAuth>
-//             <DashboardPage />
-//           </RequireAuth>
-//         ),
-//       },
-//       {
-//         path: "/process",
-//         loader: loader,
-//         element: (
-//           <RequireAuth>
-//             <StudentsPage />
-//           </RequireAuth>
-//         ),
-//       },
-//       {
-//         path: "/professors",
-//         loader: loader,
-//         element: (
-//           <RequireAuth>
-//             <ProfessorPage />
-//           </RequireAuth>
-//         ),
-//       },
-//       {
-//         path: "/students",
-//         loader: loader,
-//         element: (
-//           <RequireAuth>
-//             <StudentPage />
-//           </RequireAuth>
-//         ),
-//       },
-//       {
-//         path: "/edit-student/:id",
-//         loader: loader,
-//         element: (
-//           <RequireAuth>
-//             <EditStudentPage />
-//           </RequireAuth>
-//         ),
-//       },
-//       {
-//         path: "/create-professor",
-//         loader: loader,
-//         element: (
-//           <RequireAuth>
-//             <CreateProfessorPage />
-//           </RequireAuth>
-//         ),
-//       },
-//       {
-//         path: "/create-student",
-//         loader: loader,
-//         element: (
-//           <RequireAuth>
-//             <CreateStudentPage />
-//           </RequireAuth>
-//         ),
-//       },
-//       {
-//         path: "/studentProfile/:id",
-//         loader: getStudentProcess,
-//         element: (
-//           <RequireAuth>
-//             <ProcessInfoPage />
-//           </RequireAuth>
-//         ),
-//       },
-//       {
-//         path: "/createProcess",
-//         loader: loader,
-//         element: (
-//           <RequireAuth>
-//             <CreateProcessPage />
-//           </RequireAuth>
-//         ),
-//       },
-//     ],
-//   },
-//   {
-//     path: "/login",
-//     element: <LoginPage />,
-//   },
-//   {
-//     path: "*",
-//     element: <ErrorPage />,
-//   },
-// ]);
 
 function App() {
   return <RouterProvider router={router} />;
