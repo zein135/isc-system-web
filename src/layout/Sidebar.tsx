@@ -348,7 +348,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
               <PendingActionsIcon color="primary" />
             </ListItemIcon>
             <ListItemText
-              primary={"Finalización eventos"}
+              primary={"Finalizar"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
