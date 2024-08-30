@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Grid, IconButton, useMediaQuery } from "@mui/material";
+import { Grid, IconButton, Typography, useMediaQuery } from "@mui/material";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import "../../components/administration/AdministratorPageComponents.css";
 import RoleTable from "../../components/administration/RoleTable";
@@ -10,6 +10,7 @@ import { getRoles, addRole } from "../../services/roleService";
 const AdministratorPage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [roles, setRoles] = useState([]);
+  const [title, setTitle] = useState("Jefe de Carrera");
   const isSmallScreen = useMediaQuery('(max-width:600px)');
 
   useEffect(() => {
@@ -33,10 +34,15 @@ const AdministratorPage = () => {
       console.error("Error creating role:", error);
     }
   };
+
+  const handleRoleSelect = (roleName : string) => {
+    setTitle(roleName);
+  }
+
   return (
     <Grid container spacing={6}>
       <Grid item xs={!isSmallScreen ? 3 : 12}>
-        <RoleTable roles = {roles}/>
+        <RoleTable roles={roles} onRoleSelect={handleRoleSelect} selectedRole={""}/>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '16px' }}>
           <IconButton aria-label="add" onClick={() => setIsModalVisible(true)}>
             <AddCircleIcon color="primary" style={{ fontSize: 40 }} />
@@ -44,6 +50,9 @@ const AdministratorPage = () => {
         </div>
       </Grid>
       <Grid item xs={8}>
+        <Typography variant = "h4" align="left" gutterBottom>
+          {title}
+        </Typography>
         {!isSmallScreen && <PermissionTable />}
       </Grid>
         <AddTextModal

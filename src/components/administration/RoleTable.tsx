@@ -1,9 +1,21 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
 import RoleComponent from "./RoleComponent";
 import { RoleTableProps } from "../../models/roleTablePropsInterface";
+import { useState } from "react";
 
 
-const RoleTable: React.FC<RoleTableProps> = ({ roles }) => { // TODO: Corregir la función para recibir un parámetro
+const RoleTable: React.FC<RoleTableProps> = ({ roles, onRoleSelect }) => { // TODO: Corregir la función para recibir un parámetro
+
+  const [selectedRole, setSelectedRole] = useState("Jefe de Carrera");
+
+  const handleRoleClick = (roleName:  string) => {
+    setSelectedRole(roleName);
+    onRoleSelect(roleName);
+  };
+
+  const handleRoleDelete = (roleName: string) =>{
+    //TODO: Lógica para borrar el componente
+  }
 
   return (
     <Table className="border-table">
@@ -17,7 +29,7 @@ const RoleTable: React.FC<RoleTableProps> = ({ roles }) => { // TODO: Corregir l
       <TableBody>
         {roles && roles.map((role, index) => (
           <TableRow key={index}>
-              <RoleComponent role={role} />
+              <RoleComponent role={role} selectedRole={selectedRole} onRoleClick={handleRoleClick} onDelete={handleRoleDelete}/>
           </TableRow>
         ))}
       </TableBody>
