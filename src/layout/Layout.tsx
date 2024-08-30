@@ -48,7 +48,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const Layout = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
   const { clearUser, user } = useUserStore();
   console.log(user);

@@ -1,4 +1,3 @@
-// jsonServerInstance.ts
 import axios from 'axios';
 
 const jsonClient = axios.create({
