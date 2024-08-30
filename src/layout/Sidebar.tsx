@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -8,15 +9,10 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import { Divider, ListItemButton } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import ChecklistOutlinedIcon from "@mui/icons-material/ChecklistOutlined";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
+
 import UPB_LOGO from "../assets/upb_logo.png";
-import { useNavigate } from "react-router-dom";
-import LocalActivityIcon from "@mui/icons-material/LocalActivity";
-import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import { menu } from "../constants/menu";
+
 const drawerWidth = 240;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -48,51 +44,6 @@ const closedMixin = (theme: Theme): CSSObject => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
-
-const menu = [
-  {
-    key: "dashboard",
-    path: "/dashboard",
-    text: "Dashboard",
-    icon: <HomeIcon color="primary" />,
-  },
-  {
-    key: "process",
-    path: "/process",
-    text: "Procesos",
-    icon: <ChecklistOutlinedIcon color="primary" />,
-  },
-  {
-    key: 'professors',
-    path: '/professors',
-    text: 'Docentes',
-    icon: <SupervisorAccountIcon color="primary" />
-  },
-  {
-    key: 'students',
-    path: '/students',
-    text: 'Estudiantes',
-    icon: <SchoolOutlinedIcon color="primary" />
-  },
-  {
-    key: 'events',
-    path: '/events',
-    text: 'Eventos',
-    icon: <LocalActivityIcon color="primary" />
-  },
-  {
-    key: 'interns',
-    path: '/interns',
-    text: 'Ver Becarios',
-    icon: <EmojiPeopleIcon color="primary" />
-  },
-  {
-    key: 'administration',
-    path: '/administration',
-    text: 'Administrador',
-    icon: <ManageAccountsIcon color="primary" />
-  }  
-];
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
