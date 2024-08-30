@@ -17,6 +17,9 @@ import UPB_LOGO from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
+
 const drawerWidth = 240;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -104,6 +107,18 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
 
   const goToAdministration = () => {
     navigate("/administration");
+  };
+  
+
+
+  const goToScholarshipHours = () => {
+    navigate("/scholarshipHours");
+  }
+  const goToProgramDirector = () => {
+    navigate("/programDirector");
+  }
+  const goToCompleteScholarshipHour = () => {
+    navigate("/CompleteScholarshipHour")
   };
 
   return (
@@ -289,6 +304,84 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             />
           </ListItemButton>
         </ListItem>
+
+
+
+
+
+        <ListItem
+          key={"programDirector"}
+          disablePadding
+          sx={{ display: "block" }}
+        >
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToProgramDirector}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <EmojiPeopleIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText
+              color="primary"
+              primary={"Jefe de carrera"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key={"hours"} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToScholarshipHours}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <AccessTimeIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText primary={"Horas"} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key={"CompleteScholarship"} disablePadding sx={{ display: "block" }}>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToCompleteScholarshipHour}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <PendingActionsIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText primary={"Finalización eventos"} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
+
+        
       </List>
     </Drawer>
   );
