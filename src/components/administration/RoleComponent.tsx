@@ -21,16 +21,16 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const RoleComponent = ({ role }: { role: Role }) => {
 
-    const[expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(false)
     const [showDelete, setShowDelete] = useState<boolean>(false)
-    const isSmall = useMediaQuery((theme : any) => theme.breakpoints.down('sm'));
-    
+    const isSmall = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
+
     const handleExpandClick = () => {
         setExpanded(!expanded);
     }
     return (
         <>
-            <Card sx={{ maxWidth: isSmall ? 700 : '100%'}}>
+            <Card sx={{ maxWidth: isSmall ? 700 : '100%', marginBottom:2 }}>
                 <CardActionArea>
                     <CardContent>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -45,27 +45,17 @@ const RoleComponent = ({ role }: { role: Role }) => {
                                         aria-expanded={expanded}
                                         aria-label="show more"
                                     >
-                                    <ExpandMoreIcon />
+                                        <ExpandMoreIcon />
                                     </ExpandMore>
                                 )}
-                    
-                                <Button
-                                    sx={{
-                                        padding: 0,
-                                        minWidth: 0,
-                                        minHeight: 0,
-                                        width: 24,
-                                        height: 24,
-                                    }}
-                                onClick={() => {
-                                    setShowDelete(true)
-                                }}>
-                                    <Icon sx={{
-                                        fontSize: 27,
-                                    }}>
-                                        <DeleteIcon color="primary" />
-                                    </Icon>
-                                </Button>
+
+                                <IconButton
+                                    color="secondary"
+                                    aria-label="eliminar"
+                                    onClick={() => { setShowDelete(true) }}
+                                >
+                                    <DeleteIcon color = "primary"/>
+                                </IconButton>
                             </Box>
                         </Box>
                     </CardContent>
