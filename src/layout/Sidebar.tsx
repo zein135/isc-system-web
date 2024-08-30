@@ -11,15 +11,16 @@ import { Divider, ListItemButton } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import ChecklistOutlinedIcon from "@mui/icons-material/ChecklistOutlined";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import UPB_LOGO from "../assets/upb_logo.png";
 import { useNavigate } from "react-router-dom";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
-const drawerWidth = 240;
-
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import EventIcon from '@mui/icons-material/Event';
+
+const drawerWidth = 240;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -97,15 +98,22 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
 
   const goToEvents = () => {
     navigate("/events");
-  }
+  };
+
   const goToScholarshipHours = () => {
     navigate("/scholarshipHours");
-  }
+  };
+
   const goToProgramDirector = () => {
     navigate("/programDirector");
-  }
+  };
+
   const goToCompleteScholarshipHour = () => {
-    navigate("/CompleteScholarshipHour")
+    navigate("/CompleteScholarshipHour");
+  };
+
+  const goToAdministration = () => {
+    navigate("/administration");
   };
 
   return (
@@ -239,6 +247,35 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
           </ListItemButton>
         </ListItem>
         <ListItem
+          key={"administration"}
+          disablePadding
+          sx={{ display: "block" }}
+        >
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={goToAdministration}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <ManageAccountsIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText
+              primary={"Administrador"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem
           key={"programDirector"}
           disablePadding
           sx={{ display: "block" }}
@@ -288,7 +325,11 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             <ListItemText primary={"Horas"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
-        <ListItem key={"CompleteScholarship"} disablePadding sx={{ display: "block" }}>
+        <ListItem
+          key={"CompleteScholarship"}
+          disablePadding
+          sx={{ display: "block" }}
+        >
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -306,7 +347,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             >
               <PendingActionsIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary={"Finalización eventos"} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText
+              primary={"Finalización eventos"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
           </ListItemButton>
         </ListItem>
       </List>
