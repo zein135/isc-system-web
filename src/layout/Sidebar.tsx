@@ -27,7 +27,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -101,24 +100,20 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
     navigate("/events");
   };
 
-  const goToInterns = () => {
-    navigate("/interns");
+  const goToScholarshipHours = () => {
+    navigate("/scholarshipHours");
+  };
+
+  const goToProgramDirector = () => {
+    navigate("/programDirector");
+  };
+
+  const goToCompleteScholarshipHour = () => {
+    navigate("/CompleteScholarshipHour");
   };
 
   const goToAdministration = () => {
     navigate("/administration");
-  };
-  
-
-
-  const goToScholarshipHours = () => {
-    navigate("/scholarshipHours");
-  }
-  const goToProgramDirector = () => {
-    navigate("/programDirector");
-  }
-  const goToCompleteScholarshipHour = () => {
-    navigate("/CompleteScholarshipHour")
   };
 
   return (
@@ -251,31 +246,6 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             <ListItemText primary={"Eventos"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
-        <ListItem key={"interns"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToInterns}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <EmojiPeopleIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText
-              color="primary"
-              primary={"Ver Becarios"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
         <ListItem
           key={"administration"}
           disablePadding
@@ -304,10 +274,6 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             />
           </ListItemButton>
         </ListItem>
-
-
-
-
 
         <ListItem
           key={"programDirector"}
@@ -359,7 +325,11 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             <ListItemText primary={"Horas"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
-        <ListItem key={"CompleteScholarship"} disablePadding sx={{ display: "block" }}>
+        <ListItem
+          key={"CompleteScholarship"}
+          disablePadding
+          sx={{ display: "block" }}
+        >
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -377,11 +347,12 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             >
               <PendingActionsIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary={"Finalización eventos"} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText
+              primary={"Finalización eventos"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
           </ListItemButton>
         </ListItem>
-
-        
       </List>
     </Drawer>
   );

@@ -9,4 +9,5 @@ export interface EventDetails {
     minParticipants: number;
     description: string;
     responsiblePerson: string;
+    status: "PENDIENTE" | "ACEPTADO" | "RECHAZADO";
 }
