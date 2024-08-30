@@ -7,7 +7,6 @@ interface GraduationProcessFormValues {
   project_name: string;
 }
 
-
 interface SelectFieldProps {
   label: string;
   name: keyof GraduationProcessFormValues;

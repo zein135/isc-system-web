@@ -34,7 +34,7 @@ export const MentorStage: FC<InternalDefenseStageProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(
-    CURRENT_STAGE < (process?.stage_id || 0)
+    CURRENT_STAGE < (process?.stage_id || 0),
   );
 
   const { formik, canApproveStage } = useMentorFormik(process, () => {

@@ -4,7 +4,7 @@ import { LoginResponse } from "./models/LoginResponse";
 
 const authenticateUser = async (
   email: string,
-  password: string
+  password: string,
 ): Promise<LoginResponse> => {
   try {
     const response = await apiClient.post(`auth/login`, { email, password });

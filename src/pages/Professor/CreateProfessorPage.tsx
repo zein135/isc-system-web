@@ -10,7 +10,7 @@ import {
   Grid,
   MenuItem,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import ErrorDialog from "../../components/common/ErrorDialog";
 import SuccessDialog from "../../components/common/SucessDialog";
@@ -23,8 +23,11 @@ const validationSchema = Yup.object({
     .email("Ingrese un correo electrónico válido")
     .required("El correo electrónico es obligatorio"),
   phone: Yup.string()
-    .matches(/^\+\d{1,3}\s\d+$/, 'El número de teléfono debe tener una extensión válida y un número de teléfono')
-    .required('El número de teléfono es requerido'),
+    .matches(
+      /^\+\d{1,3}\s\d+$/,
+      "El número de teléfono debe tener una extensión válida y un número de teléfono",
+    )
+    .required("El número de teléfono es requerido"),
   degree: Yup.string().required("El título académico es obligatorio"),
   code: Yup.number().required("El código de docente es obligatorio"),
 });
@@ -56,7 +59,7 @@ const CreateProfessorPage = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      setLoading(true); 
+      setLoading(true);
       try {
         await createProfessor(values);
         setMessage("Profesor creado con éxito");

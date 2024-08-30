@@ -16,9 +16,13 @@ const StatisticsCard: FC<StatisticsCardProps> = ({
   footer,
 }) => {
   return (
-    <div className={`bg-white rounded-2xl border border-${color}-100 shadow-sm m-5`}>
+    <div
+      className={`bg-white rounded-2xl border border-${color}-100 shadow-sm m-5`}
+    >
       <div className="flex">
-        <div className={`bg-${color}-500 h-14 w-14 items-center justify-center p-3`}>
+        <div
+          className={`bg-${color}-500 h-14 w-14 items-center justify-center p-3`}
+        >
           {icon}
         </div>
         <div className="flex-auto p-3 text-right">
@@ -27,9 +31,7 @@ const StatisticsCard: FC<StatisticsCardProps> = ({
         </div>
       </div>
       {footer && (
-        <div className="border-t border-blue-gray-50 p-4">
-          {footer}
-        </div>
+        <div className="border-t border-blue-gray-50 p-4">{footer}</div>
       )}
     </div>
   );

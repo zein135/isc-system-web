@@ -27,7 +27,7 @@ const GraduationProcessPage = () => {
 
   useEffect(() => {
     const results = students.filter((item: Student) =>
-      item.student_name.toLowerCase().includes(search.toLowerCase())
+      item.student_name.toLowerCase().includes(search.toLowerCase()),
     );
     setFilteredData(results);
   }, [search, students]);
@@ -41,8 +41,8 @@ const GraduationProcessPage = () => {
   };
 
   const goToCreateProcessPage = () => {
-    navigate("/createProcess")
-  }
+    navigate("/createProcess");
+  };
 
   return (
     <>
@@ -63,7 +63,10 @@ const GraduationProcessPage = () => {
             onChange={handleSearchChange}
           />
         </div>
-        <button className="btn z-50 relative" onClick={goToCreateProcessPage}> Crear Proceso de Graduación</button>
+        <button className="btn z-50 relative" onClick={goToCreateProcessPage}>
+          {" "}
+          Crear Proceso de Graduación
+        </button>
       </div>
       <Table
         data={filteredData}
