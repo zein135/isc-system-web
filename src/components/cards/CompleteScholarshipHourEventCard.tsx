@@ -58,13 +58,13 @@ const CompleteScholarshipHourEventCard: FC<CompleteScholarshipHourEventCardProps
             <CardContent>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <Typography fontSize={20} color="text.primary" sx={{ fontWeight: 'bold' }}>
+                        <Typography fontSize={20} color="text.primary" sx={{ fontWeight: "bold" }}>
                             {name}
                         </Typography>
                     </Grid>
                     <Grid item xs={12} md={3.5}>
                         <Typography fontSize={17} color="text.primary">
-                            <strong>Fecha:</strong> {dayjs(startDate).format('DD/MM/YYYY')}
+                            <strong>Fecha:</strong> {dayjs(startDate).format("DD/MM/YYYY")}
                         </Typography>
                         <Typography fontSize={17} color="text.primary">
                             <strong>Duración:</strong> {duration}

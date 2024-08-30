@@ -21,12 +21,12 @@ import Profile from "../pages/profile/Profile";
 import CreateStudentPage from "../pages/Student/CreateStudentPage";
 import EditStudentPage from "../pages/Student/EditStudentPage";
 import StudentPage from "../pages/Student/StudentsPage";
-import "../style.css";
 import HoursPage from "../pages/ScholarshipHours/HoursPage";
 import EventTable from "../pages/Events/EventTable";
 import CompleteScholarshipHourPage from "../pages/CompleteScholarshipHour/CompleteScholarshipHourPage";
 import RegistrationEvent from "../components/cards/RegistrationEvent";
 import MyEventsTable from "../pages/interns/MyEventsTable";
+import "../style.css";
 
 function loader() {
   return getProcess();
@@ -180,7 +180,7 @@ const protectedRoutes = [
         ),
       },
       {
-        path: "/registartionEvent/:id_event",
+        path: "/registrationEvent/:id_event",
         element: (
           <RoleGuard allowedRoles={["admin", "professor"]}>
             <RegistrationEvent />
@@ -204,7 +204,7 @@ const protectedRoutes = [
         ),
       },
       {
-        path: "/CompleSchorlashipHour",
+        path: "/CompleteScholarshipHour",
         element: (
           <RoleGuard allowedRoles={["admin", "student"]}>
             <CompleteScholarshipHourPage />
