@@ -49,6 +49,51 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
 });
 
+const menu = [
+  {
+    key: "dashboard",
+    path: "/dashboard",
+    text: "Dashboard",
+    icon: <HomeIcon color="primary" />,
+  },
+  {
+    key: "process",
+    path: "/process",
+    text: "Procesos",
+    icon: <ChecklistOutlinedIcon color="primary" />,
+  },
+  {
+    key: 'professors',
+    path: '/professors',
+    text: 'Docentes',
+    icon: <SupervisorAccountIcon color="primary" />
+  },
+  {
+    key: 'students',
+    path: '/students',
+    text: 'Estudiantes',
+    icon: <SchoolOutlinedIcon color="primary" />
+  },
+  {
+    key: 'events',
+    path: '/events',
+    text: 'Eventos',
+    icon: <LocalActivityIcon color="primary" />
+  },
+  {
+    key: 'interns',
+    path: '/interns',
+    text: 'Ver Becarios',
+    icon: <EmojiPeopleIcon color="primary" />
+  },
+  {
+    key: 'administration',
+    path: '/administration',
+    text: 'Administrador',
+    icon: <ManageAccountsIcon color="primary" />
+  }  
+];
+
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -74,36 +119,13 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const theme = useTheme();
   const navigate = useNavigate();
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
 
-  const goToProfessors = () => {
-    navigate("/professors");
-  };
-
-  const goToDashboard = () => {
-    navigate("/dashboard");
-  };
-
-  const goToStudents = () => {
-    navigate("/students");
-  };
-
-  const goToProcess = () => {
-    navigate("/process");
-  };
-
-  const goToEvents = () => {
-    navigate("/events");
-  };
-
-  const goToInterns = () => {
-    navigate("/interns");
-  };
-
-  const goToAdministration = () => {
-    navigate("/administration");
+  const goToPage = (path: string) => {
+    navigate(path);
   };
 
   return (
@@ -124,171 +146,39 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
       </DrawerHeader>
       <Divider />
       <List>
-        <ListItem key={"dashboard"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToDashboard}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
+        {menu.map((item) => {
+          return (
+            <ListItem
+              key={item.key}
+              disablePadding
+              sx={{ display: "block" }}
             >
-              <HomeIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText
-              color="primary"
-              primary={"Dashboard"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"process"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToProcess}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <ChecklistOutlinedIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary={"Procesos"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"professors"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToProfessors}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <SupervisorAccountIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary={"Docentes"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"students"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToStudents}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <SchoolOutlinedIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText
-              primary={"Estudiantes"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"events"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToEvents}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <LocalActivityIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary={"Eventos"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"interns"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToInterns}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <EmojiPeopleIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText
-              color="primary"
-              primary={"Ver Becarios"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
-        <ListItem
-          key={"administration"}
-          disablePadding
-          sx={{ display: "block" }}
-        >
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToAdministration}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <ManageAccountsIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText
-              primary={"Administrador"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+                onClick={()=>goToPage(item.path)}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  color="primary"
+                  primary={item.text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
     </Drawer>
   );
