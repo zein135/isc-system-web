@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -8,17 +9,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import { Divider, ListItemButton } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import ChecklistOutlinedIcon from "@mui/icons-material/ChecklistOutlined";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
+
 import UPB_LOGO from "../assets/upb_logo.png";
-import { useNavigate } from "react-router-dom";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
-import PendingActionsIcon from "@mui/icons-material/PendingActions";
-import EventIcon from '@mui/icons-material/Event';
+import { menu } from "../constants/menu";
 
 const drawerWidth = 240;
 
@@ -76,44 +69,13 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const theme = useTheme();
   const navigate = useNavigate();
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
 
-  const goToProfessors = () => {
-    navigate("/professors");
-  };
-
-  const goToDashboard = () => {
-    navigate("/dashboard");
-  };
-
-  const goToStudents = () => {
-    navigate("/students");
-  };
-
-  const goToProcess = () => {
-    navigate("/process");
-  };
-
-  const goToEvents = () => {
-    navigate("/events");
-  };
-
-  const goToScholarshipHours = () => {
-    navigate("/scholarshipHours");
-  };
-
-  const goToProgramDirector = () => {
-    navigate("/programDirector");
-  };
-
-  const goToCompleteScholarshipHour = () => {
-    navigate("/CompleteScholarshipHour");
-  };
-
-  const goToAdministration = () => {
-    navigate("/administration");
+  const goToPage = (path: string) => {
+    navigate(path);
   };
 
   return (
@@ -134,225 +96,39 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
       </DrawerHeader>
       <Divider />
       <List>
-        <ListItem key={"dashboard"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToDashboard}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
+        {menu.map((item) => {
+          return (
+            <ListItem
+              key={item.key}
+              disablePadding
+              sx={{ display: "block" }}
             >
-              <HomeIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText
-              color="primary"
-              primary={"Dashboard"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"process"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToProcess}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <ChecklistOutlinedIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary={"Procesos"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"professors"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToProfessors}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <SupervisorAccountIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary={"Docentes"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"students"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToStudents}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <SchoolOutlinedIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText
-              primary={"Estudiantes"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"events"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToEvents}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <EventIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary={"Eventos"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem
-          key={"administration"}
-          disablePadding
-          sx={{ display: "block" }}
-        >
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToAdministration}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <ManageAccountsIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText
-              primary={"Administrador"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem
-          key={"programDirector"}
-          disablePadding
-          sx={{ display: "block" }}
-        >
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToProgramDirector}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <EmojiPeopleIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText
-              color="primary"
-              primary={"Jefe de carrera"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"hours"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToScholarshipHours}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <AccessTimeIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary={"Horas"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem
-          key={"CompleteScholarship"}
-          disablePadding
-          sx={{ display: "block" }}
-        >
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToCompleteScholarshipHour}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <PendingActionsIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText
-              primary={"Finalizar"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+                onClick={()=>goToPage(item.path)}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  color="primary"
+                  primary={item.text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
     </Drawer>
   );
