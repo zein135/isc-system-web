@@ -139,7 +139,6 @@ const CompleteScholarshipHourEventCard: FC<CompleteScholarshipHourEventCardProps
                         Ver resultados
                     </Button>
                 </DialogActions>
-
             </Dialog>
         </Card>
     );
