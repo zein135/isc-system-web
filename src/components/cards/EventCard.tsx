@@ -16,7 +16,6 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import DialogContent from "@mui/material/DialogContent";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
 import "dayjs/locale/es";
 import { FC, useState } from "react";
 import "../../style.css";
@@ -57,8 +56,6 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
 
   dayjs.locale("es");
 
-  const navigate = useNavigate();
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -72,7 +69,8 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   };
 
   const handleConfirm = () => {
-    navigate("/registrationEvent/2", { state: { event } });
+    setSnackbarOpen(true);
+    setDialogOpen(false);
   };
 
   const handleSnackbarClose = () => {
