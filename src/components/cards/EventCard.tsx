@@ -10,8 +10,6 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
@@ -33,8 +31,8 @@ interface ExpandMoreProps extends IconButtonProps {
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
   marginLeft: "auto",
@@ -44,44 +42,44 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 const EventCard: FC<EventCardProps> = ({ event }) => {
-    
-    const [expanded, setExpanded] = useState(false);
-    const {id_event, name: name, description: description, validatedHours: validatedHours, startDate: startDate, duration: duration, place: place, maxInterns: maxInterns, minInterns: minInterns } = event
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    
-    dayjs.locale("es");
+  const [expanded, setExpanded] = useState(false);
+  const {
+    id_event,
+    name: name,
+    description: description,
+    validatedHours: validatedHours,
+    startDate: startDate,
+    duration: duration,
+    place: place,
+    maxInterns: maxInterns,
+    minInterns: minInterns,
+  } = event;
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  dayjs.locale("es");
 
     const navigate = useNavigate();
 
-    const goToEditEvent = () => {
-        navigate(`/editEvent/${id_event}`);
-      };
-    
-      const goToEventDetails = () => {
-        navigate(`/interns/${id_event}`);
-    };
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
 
-    const handleDialogOpen = () => {
-        setDialogOpen(true);
-    };
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
 
-    const handleDialogClose = () => {
-        setDialogOpen(false);
-    };
+  const handleConfirm = () => {
+    navigate("/registrationEvent/2", { state: { event } });
+  };
 
-    const handleConfirm = () => {
-        setDialogOpen(false);
-        setSnackbarOpen(true);
-    };
-
-    const handleSnackbarClose = () => {
-        setSnackbarOpen(false);
-    };
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -98,7 +96,6 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                 }
                 title={name}
                 subheader={<EventSubheader event={event}/>}
-                onClick={goToEventDetails}
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
@@ -109,17 +106,6 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
                 <Tooltip title="Registrarse">
                     <IconButton aria-label="registrarse" onClick={handleDialogOpen}>
                         <AddIcon />
-                    </IconButton>
-                </Tooltip>
-                <Tooltip title="Editar">
-                    <IconButton aria-label="editar"
-                    onClick={goToEditEvent}>
-                        <EditIcon />
-                    </IconButton>
-                </Tooltip>
-                <Tooltip title="Borrar">
-                    <IconButton aria-label="borrar">
-                        <DeleteForeverIcon />
                     </IconButton>
                 </Tooltip>
                 <ExpandMore

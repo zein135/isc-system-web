@@ -21,6 +21,11 @@ import Profile from "../pages/profile/Profile";
 import CreateStudentPage from "../pages/Student/CreateStudentPage";
 import EditStudentPage from "../pages/Student/EditStudentPage";
 import StudentPage from "../pages/Student/StudentsPage";
+import HoursPage from "../pages/ScholarshipHours/HoursPage";
+import EventTable from "../pages/Events/EventTable";
+import CompleteScholarshipHourPage from "../pages/CompleteScholarshipHour/CompleteScholarshipHourPage";
+import RegistrationEvent from "../components/cards/RegistrationEvent";
+import MyEventsTable from "../pages/interns/MyEventsTable";
 import "../style.css";
 
 function loader() {
@@ -171,6 +176,46 @@ const protectedRoutes = [
         element: (
           <RoleGuard allowedRoles={["admin", "professor"]}>
             <UpdateEventForm />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/registrationEvent/:id_event",
+        element: (
+          <RoleGuard allowedRoles={["admin", "professor"]}>
+            <RegistrationEvent />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/scholarshipHours",
+        element: (
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <HoursPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/programDirector",
+        element: (
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <EventTable />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/CompleteScholarshipHour",
+        element: (
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <CompleteScholarshipHourPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/myEvents",
+        element: (
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <MyEventsTable />
           </RoleGuard>
         ),
       },

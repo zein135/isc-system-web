@@ -49,7 +49,7 @@ const CreateForm = () => {
 
   const handleCancel = () => {
     formik.resetForm();
-    navigate("/events"); 
+    navigate("/programDirector"); 
   };
 
   const formik = useFormik<EventDetails>({
@@ -64,13 +64,14 @@ const CreateForm = () => {
       minParticipants: 0,
       description: "",
       responsiblePerson: "",
+      status: "PENDIENTE",
     },
     validationSchema,
     onSubmit: async () => {
       setLoading(true);
       try {
         formik.resetForm();
-        navigate("/events"); 
+        navigate("/programDirector"); 
         setMessage("Evento actualizado con éxito");
         setSuccessDialog(true);
       } catch (error) {
