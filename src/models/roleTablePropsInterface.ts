@@ -4,4 +4,5 @@ export interface RoleTableProps {
     roles: Role[];
     selectedRole : string;
     onRoleSelect: (roleName: string) => void;
+    setIsModalVisible : any
     }

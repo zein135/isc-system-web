@@ -1,10 +1,11 @@
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
+import { IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material"
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import RoleComponent from "./RoleComponent";
 import { RoleTableProps } from "../../models/roleTablePropsInterface";
 import { useState } from "react";
 
 
-const RoleTable: React.FC<RoleTableProps> = ({ roles, onRoleSelect }) => { // TODO: Corregir la función para recibir un parámetro
+const RoleTable: React.FC<RoleTableProps> = ({ roles, onRoleSelect, setIsModalVisible}) => { // TODO: Corregir la función para recibir un parámetro
 
   const [selectedRole, setSelectedRole] = useState("Jefe de Carrera");
 
@@ -21,8 +22,13 @@ const RoleTable: React.FC<RoleTableProps> = ({ roles, onRoleSelect }) => { // TO
     <Table className="border-table">
       <TableHead className="orange-header large-header">
         <TableRow>
-          <TableCell>
-            Roles
+          <TableCell className="flex justify-center items-center w-full">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Typography variant="h6">Roles</Typography>
+              <IconButton aria-label="add" onClick={() => setIsModalVisible(true)}>
+                <PersonAddAlt1Icon fontSize="medium" style={{ color:"white" }} />
+              </IconButton>
+            </div>
           </TableCell>
         </TableRow>
       </TableHead>

@@ -1,5 +1,7 @@
 import { FC } from "react";
-import { Modal as MuiModal, Box, Button, Typography } from "@mui/material";
+import { Modal as MuiModal, Box, Button, Typography, IconButton } from "@mui/material";
+import CancelIcon from '@mui/icons-material/Cancel';
+
 import { DeleteRoleModalProps } from "../../models/deleteRoleModalPropsInterface";
 
 import './ModalStyle.css';
@@ -23,6 +25,10 @@ const DeleteRoleModal: FC<DeleteRoleModalProps> = ({ roleName, isVisible, setIsV
       aria-describedby="delete-modal-description"
     >
       <Box className='modal-box'>
+      <IconButton sx={{ position: 'absolute', top: 6, right: 6 }} 
+                  onClick={toggleModal}>
+                  <CancelIcon color="primary" />
+      </IconButton>
         <Typography id="delete-modal-title" variant='h5' align = 'center'>
           Eliminar rol
         </Typography>

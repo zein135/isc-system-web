@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import { Box, Button, Card, CardActionArea, CardContent, Collapse, Icon, IconButton, styled, Typography, useMediaQuery } from "@mui/material"
+import { Box, Card, CardActionArea, CardContent, Collapse, IconButton, styled, Typography, useMediaQuery } from "@mui/material"
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
@@ -21,22 +21,17 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const RoleComponent : React.FC<RoleComponentProps> = ({ role, selectedRole, onRoleClick, onDelete }) => {
 
-    const[expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(false)
     const [showDelete, setShowDelete] = useState<boolean>(false)
-    const isSmall = useMediaQuery((theme : any) => theme.breakpoints.down('sm'));
-    
+    const isSmall = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
+
     const handleExpandClick = () => {
         setExpanded(!expanded);
     }
 
-    const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-        setShowDelete(true);
-    }
-
     return (
         <>
-            <Card sx={{ maxWidth: isSmall ? 700 : '100%', backgroundColor: selectedRole === role.roleName ? 'LightGray' : 'inherit',}}>
+            <Card sx={{ maxWidth: isSmall ? 700 : '100%', backgroundColor: selectedRole === role.roleName ? 'LightGray' : 'inherit', marginBottom:2}}>
                 <CardActionArea onClick={() => onRoleClick(role.roleName)}>
                     <CardContent>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -58,22 +53,14 @@ const RoleComponent : React.FC<RoleComponentProps> = ({ role, selectedRole, onRo
                                         <ExpandMoreIcon />
                                     </ExpandMore>
                                 )}
-                    
-                                <Button
-                                    sx={{
-                                        padding: 0,
-                                        minWidth: 0,
-                                        minHeight: 0,
-                                        width: 24,
-                                        height: 24,
-                                    }}
-                                onClick={handleDeleteClick}>
-                                    <Icon sx={{
-                                        fontSize: 27,
-                                    }}>
-                                        <DeleteIcon color="primary" />
-                                    </Icon>
-                                </Button>
+
+                                <IconButton
+                                    color="secondary"
+                                    aria-label="eliminar"
+                                    onClick={() => { setShowDelete(true) }}
+                                >
+                                    <DeleteIcon color = "primary"/>
+                                </IconButton>
                             </Box>
                         </Box>
                     </CardContent>

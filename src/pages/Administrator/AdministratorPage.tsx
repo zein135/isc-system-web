@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Grid, IconButton, Typography, useMediaQuery } from "@mui/material";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Grid, Typography, useMediaQuery } from "@mui/material";
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+
 import "../../components/administration/AdministratorPageComponents.css";
 import RoleTable from "../../components/administration/RoleTable";
 import PermissionTable from "../../components/administration/PermissionTable";
@@ -40,19 +41,17 @@ const AdministratorPage = () => {
   }
 
   return (
-    <Grid container spacing={6}>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Typography variant="h5" align="left" sx={{ marginBottom: 2 }}>
+        <ManageAccountsIcon color="primary" fontSize="large" sx={{ marginRight: 2 }}/>
+          Permisos de {title}
+        </Typography>
+      </Grid>
       <Grid item xs={!isSmallScreen ? 3 : 12}>
-        <RoleTable roles={roles} onRoleSelect={handleRoleSelect} selectedRole={""}/>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '16px' }}>
-          <IconButton aria-label="add" onClick={() => setIsModalVisible(true)}>
-            <AddCircleIcon color="primary" style={{ fontSize: 40 }} />
-          </IconButton>
-        </div>
+        <RoleTable roles={roles} onRoleSelect={handleRoleSelect} selectedRole={""} setIsModalVisible = {setIsModalVisible}/>
       </Grid>
       <Grid item xs={8}>
-        <Typography variant = "h4" align="left" gutterBottom>
-          {title}
-        </Typography>
         {!isSmallScreen && <PermissionTable />}
       </Grid>
         <AddTextModal

@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
-import { Modal as MuiModal, Box, TextField, Button, Typography } from "@mui/material";
+import { Modal as MuiModal, Box, TextField, Button, Typography, IconButton } from "@mui/material";
+import CancelIcon from '@mui/icons-material/Cancel';
 import { AddTextModalProps } from "../../models/addTextModalPropsInterface";
 
 import './ModalStyle.css';
@@ -27,6 +28,12 @@ const [name, setName] = useState('');
       <Box
         className = 'modal-box'
       >
+        <IconButton 
+        sx={{position: 'absolute', top: 6, left: 450}}
+          onClick={toggleModal} 
+        >
+          <CancelIcon color = "primary"/>
+        </IconButton>
         <Typography id="create-modal-title" variant = 'h5'>Crear nuevo rol</Typography>
         <TextField
           fullWidth
