@@ -1,6 +1,5 @@
 import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
-import "dayjs/locale/es";
 import { EventCardProps } from "../../models/eventCardProps";
 
 const EventSubheader: React.FC<EventCardProps> = ({ event }) => {
