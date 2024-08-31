@@ -36,12 +36,7 @@ const AdministratorPage = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={!isSmallScreen ? 3 : 12}>
-        <RoleTable roles = {roles}/>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '16px' }}>
-          <IconButton aria-label="add" onClick={() => setIsModalVisible(true)}>
-            <AddCircleIcon color="primary" style={{ fontSize: 40 }} />
-          </IconButton>
-        </div>
+        <RoleTable roles = {roles} setIsModalVisible = {setIsModalVisible}/>
       </Grid>
       <Grid item xs={8}>
         {!isSmallScreen && <PermissionTable />}
