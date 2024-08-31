@@ -5,6 +5,8 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
 
 export const menu = [
   {
@@ -38,10 +40,22 @@ export const menu = [
     icon: <LocalActivityIcon color="primary" />,
   },
   {
-    key: "interns",
-    path: "/interns",
-    text: "Ver Becarios",
+    key: "hours",
+    path: "/scholarshipHours",
+    text: "Horas",
+    icon: <AccessTimeIcon color="primary" />,
+  },
+  {
+    key: "programDirector",
+    path: "/programDirector",
+    text: "Jefe de carrera",
     icon: <EmojiPeopleIcon color="primary" />,
+  },
+  {
+    key: "CompleteScholarship",
+    path: "/CompleteScholarshipHour",
+    text: "Finalización de eventos",
+    icon: <PendingActionsIcon color="primary" />,
   },
   {
     key: "administration",
