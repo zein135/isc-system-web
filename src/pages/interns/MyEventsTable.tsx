@@ -1,14 +1,20 @@
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { events } from "../../data/events";
 import dayjs from "dayjs";
 import ContainerPage from "../../components/common/ContainerPage";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MyEventsTable = () => {
-  //TODO: add real logic to "no podre asistir" button
+  const navigate = useNavigate();
+  const handleBackClick = () => {
+    navigate("/scholarshipHours");
+  };
+
   const [isDeleted, setIsDeleted] = useState(false);
-  //TODO: change any to an interface
+
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -86,35 +92,51 @@ const MyEventsTable = () => {
   const updatedRows = rows.slice(1, rows.length);
 
   return (
-    <ContainerPage
-      title="Eventos actuales"
-      subtitle="Administra y visualiza tus eventos"
-      actions={
-        <Button variant="contained" color="primary">
-          HISTORIAL
-        </Button>
-      }
-    >
-      <div style={{ height: 500, width: "100%" }}>
-        <DataGrid
-          rows={!isDeleted ? rows : updatedRows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          classes={{
-            root: "bg-white dark:bg-gray-800",
-            columnHeader: "bg-gray-200 dark:bg-gray-800 ",
-            cell: "bg-white dark:bg-gray-800",
-            row: "bg-white dark:bg-gray-800",
-            columnHeaderTitle: "!font-bold text-center",
-          }}
-          pageSizeOptions={[5, 10]}
-        />
-      </div>
-    </ContainerPage>
+    <div style={{ position: 'relative', height: '100vh', paddingTop: '20px' }}> 
+      <IconButton 
+        onClick={handleBackClick} 
+        aria-label="back"
+        style={{ 
+          position: 'absolute',
+          top: '19px', 
+          left: '16px', 
+          zIndex: 1
+        }}
+      >
+        <ArrowBackIcon />
+      </IconButton>
+      <ContainerPage
+        title="Eventos actuales"
+        subtitle="Administra y visualiza tus eventos"
+        actions={
+          <>
+            <Button variant="contained" color="primary">
+              HISTORIAL
+            </Button>
+          </>
+        }
+      >
+        <div style={{ height: 500, width: "100%" }}>
+          <DataGrid 
+            rows={!isDeleted ? rows : updatedRows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            classes={{
+              root: "bg-white dark:bg-gray-800",
+              columnHeader: "bg-gray-200 dark:bg-gray-800 ",
+              cell: "bg-white dark:bg-gray-800",
+              row: "bg-white dark:bg-gray-800",
+              columnHeaderTitle: "!font-bold text-center",
+            }}
+            pageSizeOptions={[5, 10]}
+          />
+        </div>
+      </ContainerPage>
+    </div>
   );
 };
 
