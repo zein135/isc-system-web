@@ -1,12 +1,12 @@
 import { Button, IconButton, TextField, Dialog, DialogActions, DialogTitle, DialogContent, MenuItem, Select } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import AddIcon from '@mui/icons-material/Add'; // Importar AddIcon
+import AddIcon from '@mui/icons-material/Add'; 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { EventDetails } from "../../models/eventInterface";
 import EventDetailsPage from "../../components/common/EventDetailsPage";
-import { useNavigate } from "react-router-dom"; // Importar useNavigate
+import { useNavigate } from "react-router-dom"; 
 
 const InternsListPage = () => {
   const [editHoursOpen, setEditHoursOpen] = useState(false);
@@ -31,7 +31,7 @@ const InternsListPage = () => {
     },
   ]);
   
-  const navigate = useNavigate(); // Inicializar useNavigate
+  const navigate = useNavigate(); 
 
   const handleStatusChange = (id: number, newStatus: string) => {
     setStudents((prevStudents) =>
