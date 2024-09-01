@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Grid, Button, TextField, Divider } from "@mui/material";
+import { Typography, Grid, Button, TextField, Divider, IconButton } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -47,6 +48,10 @@ const UpdateEventForm: React.FC = () => {
         navigate("/programDirector"); 
     };
     
+    const handleBackNavigate = () => {
+      navigate("/programDirector")
+    };
+
     const sucessDialogClose = () => {
         setSuccessDialog(false);
         formik.resetForm();
@@ -98,6 +103,9 @@ const UpdateEventForm: React.FC = () => {
   return (
     <FormContainer>
       {loading && <LoadingOverlay message="Actualizar Evento..." />}
+      <IconButton onClick={handleBackNavigate} aria-label="back">
+              <ArrowBackIcon />
+      </IconButton>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2} sx={{ padding: 2 }}>
           <Grid item xs={12}>
