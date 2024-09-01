@@ -3,10 +3,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add'; 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 import dayjs from "dayjs";
 import { EventDetails } from "../../models/eventInterface";
 import EventDetailsPage from "../../components/common/EventDetailsPage";
-import { useNavigate } from "react-router-dom"; 
 
 const InternsListPage = () => {
   const [editHoursOpen, setEditHoursOpen] = useState(false);
