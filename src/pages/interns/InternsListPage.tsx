@@ -1,9 +1,12 @@
-  import { useState } from "react";
-  import { Button, Dialog, DialogActions, DialogTitle, IconButton } from "@mui/material";
-  import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-  import { DataGrid, GridColDef } from "@mui/x-data-grid";
-  import { EventDetails } from "../../models/eventInterface";
-  import EventDetailsPage from "../../components/common/EventDetailsPage";
+
+import { Button, Dialog, DialogActions, DialogTitle, IconButton } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { useState } from "react";
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import dayjs from "dayjs";
+import { EventDetails } from "../../models/eventInterface";
+import EventDetailsPage from "../../components/common/EventDetailsPage";
 
   const InternsListPage = () => {
     //TODO: Delete this simulation of database
@@ -96,6 +99,7 @@
         "Se necesitan becarios que ayuden en la logística del evento donde se recibirá a los estudiantes ganadores de la beca 100 mejores.",
       status: "PENDIENTE",
     };
+
 
     return (
       <div style={{ position: 'relative', height: '100vh' }}> 

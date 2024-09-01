@@ -82,14 +82,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   };
 
   return (
-    <Card
-      sx={{
-        maxWidth: 345,
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-      }}
-    >
+    <Card sx={{maxWidth: 345}} >
       <CardHeader
         title={name}
         titleTypographyProps={{
@@ -98,9 +91,10 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           color: "primary",
           fontWeight: "bold",
         }}
+        sx={{ minHeight: 100, maxHeight: 150}}
       />
       <EventSubheader event={event} />
-      <CardContent sx={{ flexGrow: 1 }}>
+      <CardContent>
         <Typography
           fontSize={16}
           color="text.primary"

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import dayjs from 'dayjs';
 import { EventFormState } from "../../models/formEventInterface.ts";
 
 interface EventFormProps {
@@ -9,16 +10,18 @@ interface EventFormProps {
 const EventForm: React.FC<EventFormProps> = ({ onSubmit, onCancel }) => {
   const [eventDetails, setEventDetails] = useState<EventFormState>({
     title: "",
-    date: "",
+    date: dayjs(),
     duration: 0,
     scholarshipHours: "",
     location: "",
     maxParticipants: 0,
     maxSubstitutes: 0,
     description: "",
-    endDate: "", 
+    endDate: dayjs(), 
     responsiblePerson: "",
   });
+
+  dayjs.locale("es");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -30,14 +33,14 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit, onCancel }) => {
     onSubmit(eventDetails);
     setEventDetails({
       title: "",
-      date: "",
+      date: dayjs(),
       duration: 0,
       scholarshipHours: "",
       location: "",
       maxParticipants: 0,
       maxSubstitutes: 0,
       description: "",
-      endDate: "",
+      endDate: dayjs(),
         responsiblePerson: "", 
     });
   };
@@ -61,7 +64,7 @@ const EventForm: React.FC<EventFormProps> = ({ onSubmit, onCancel }) => {
           <input
             type="date"
             name="date"
-            value={eventDetails.date}
+            value={eventDetails.date.format('DD/MM/YYYY')}
             onChange={handleInputChange}
             style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
           />
