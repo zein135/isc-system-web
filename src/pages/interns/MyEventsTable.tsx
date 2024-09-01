@@ -144,9 +144,9 @@ const [isDeleted, setIsDeleted] = useState(false);
         subtitle="Administra y visualiza tus eventos"
         actions={
           <>
-            <Button variant="contained" color="primary">
-              HISTORIAL
-            </Button>
+        <Button variant="contained" color="primary"  onClick={() => navigate("/eventHistory")} >
+          HISTORIAL
+        </Button>
           </>
         }
       >
