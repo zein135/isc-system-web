@@ -24,7 +24,7 @@ const InternsListPage = () => {
       name: "Rodrigo Gustavo Reyes Monzón",
       code: "679523",
       time: "08:49",
-      status: "Seleccionado",
+      status: "Aceptado",
       hours: "4 horas",
     },
   ]);
@@ -82,7 +82,7 @@ const InternsListPage = () => {
     },
     {
       field: "status",
-      headerName: "Seleccionado/Rechazado",
+      headerName: "Aceptado/Rechazado",
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -105,7 +105,7 @@ const InternsListPage = () => {
             }
           }}
         >
-          <MenuItem value="Seleccionado">Seleccionado</MenuItem>
+          <MenuItem value="Aceptado">Seleccionado</MenuItem>
           <MenuItem value="Rechazado">Rechazado</MenuItem>
           <MenuItem value="Suplente">Suplente</MenuItem>
           <MenuItem value="Pendiente">Pendiente</MenuItem>
