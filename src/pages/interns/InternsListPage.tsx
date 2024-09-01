@@ -3,7 +3,6 @@ import { Button, Dialog, DialogActions, DialogTitle, IconButton } from "@mui/mat
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
-import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import dayjs from "dayjs";
 import { EventDetails } from "../../models/eventInterface";
 import EventDetailsPage from "../../components/common/EventDetailsPage";
@@ -87,8 +86,8 @@ import EventDetailsPage from "../../components/common/EventDetailsPage";
     ];
     const eventDetails: EventDetails = {
       title: "Evento de 100 mejores",
-      date: "Domingo, 02 de Septiembre de 2024",
-      endDate: "Domingo, 02 de Septiembre de 2024",
+      date:  dayjs("2024-07-01T10:00:00Z"),
+      endDate:  dayjs("2024-07-01T10:00:00Z"),
       duration: 6,
       scholarshipHours: "4 horas",
       location: "Centro de Eventos, Campus Achocalla",
