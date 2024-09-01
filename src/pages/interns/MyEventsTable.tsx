@@ -7,6 +7,7 @@ import ContainerPage from "../../components/common/ContainerPage";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const MyEventsTable = () => {
   const navigate = useNavigate();
   const handleBackClick = () => {
@@ -14,6 +15,21 @@ const MyEventsTable = () => {
   };
 
   const [isDeleted, setIsDeleted] = useState(false);
+  //TODO: change any to an interface
+
+const buttonStyle = {
+  borderRadius: "5px",
+  width: "120px",
+  height: "30px",
+  transition: "background-color 0.3s ease",
+};
+
+const statusButtonStyle = {
+  ...buttonStyle,
+  borderRadius: "30px",
+  padding: "5px 10px",
+  textTransform: "none" as const,
+};
 
   const columns: GridColDef[] = [
     {
@@ -55,8 +71,15 @@ const MyEventsTable = () => {
           variant="contained"
           color="info"
           onClick={() => setIsDeleted((prev) => !prev)}
+          style={{
+            ...buttonStyle,
+            backgroundColor: "#191970", 
+            color: "#FFFFFF", 
+          }}
+          onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#99c2ff"}
+          onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#191970"}
         >
-          No podré asistir
+          Cancelar
         </Button>
       ),
     },
@@ -67,13 +90,20 @@ const MyEventsTable = () => {
       renderCell: (params: any) => (
         <Button
           variant="contained"
-          color={
-            params.row.status === "PENDIENTE"
-              ? "info"
-              : params.row.status === "ACEPTADO"
-              ? "success"
-              : "error"
-          }
+          style={{
+            ...statusButtonStyle,
+            backgroundColor:
+              params.row.status === "PENDIENTE"
+                ? "#5F9EA0" 
+                : params.row.status === "ACEPTADO"
+                ? "#32CD32" 
+                : params.row.status === "SUPLENTE"
+                ? "#000000"
+                : "#FF0000", 
+            color: "#FFFFFF", 
+            cursor: "default", 
+          }}
+          disabled
         >
           {params.row.status}
         </Button>
