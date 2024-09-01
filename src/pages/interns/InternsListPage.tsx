@@ -92,16 +92,16 @@ const InternsListPage = () => {
           fullWidth
           value={params.value}
           onChange={(e) => handleStatusChange(params.row.id, e.target.value)}
-          variant="standard" // Elimina el borde y relleno del select
+          variant="standard" 
           sx={{
-            minHeight: 0,  // Elimina la altura mínima
-            lineHeight: 1.5,  // Ajusta la altura de la línea
-            padding: '2px 8px',  // Ajusta el relleno para eliminar espacios innecesarios
+            minHeight: 0, 
+            lineHeight: 1.5,  
+            padding: '2px 8px',  
             '& .MuiSelect-select': {
-              padding: 0,  // Ajusta el padding interno del select
+              padding: 0,  
             },
             '& .MuiInputBase-root': {
-              margin: 0,  // Elimina el margen del contenedor
+              margin: 0,  
             }
           }}
         >
