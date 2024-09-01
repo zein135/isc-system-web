@@ -1,5 +1,4 @@
-
-import { Button, Dialog, DialogActions, DialogTitle, IconButton } from "@mui/material";
+import { Button, IconButton, TextField, Dialog, DialogActions, DialogTitle, DialogContent, MenuItem, Select } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
@@ -7,108 +6,161 @@ import dayjs from "dayjs";
 import { EventDetails } from "../../models/eventInterface";
 import EventDetailsPage from "../../components/common/EventDetailsPage";
 
-  const InternsListPage = () => {
-    //TODO: Delete this simulation of database
-    const [open, setOpen] = useState(false);
-    const [selectedId, setSelectedId] = useState<number | null>(null);
-    const [students, setStudents] = useState([
-      {
-        id: 1,
-        name: "Alexia Diana Marín Mamani",
-        code: "608555",
-        time: "22:23",
-        status: "Rechazado",
-      },
-      {
-        id: 2,
-        name: "Rodrigo Gustavo Reyes Monzón",
-        code: "679523",
-        time: "08:49",
-        status: "Seleccionado",
-      },
-    ]);
+const InternsListPage = () => {
+  const [editHoursOpen, setEditHoursOpen] = useState(false);
+  const [newHours, setNewHours] = useState("");
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [students, setStudents] = useState([
+    {
+      id: 1,
+      name: "Alexia Diana Marín Mamani",
+      code: "608555",
+      time: "22:23",
+      status: "Rechazado",
+      hours: "4 horas",
+    },
+    {
+      id: 2,
+      name: "Rodrigo Gustavo Reyes Monzón",
+      code: "679523",
+      time: "08:49",
+      status: "Seleccionado",
+      hours: "4 horas",
+    },
+  ]);
 
-    const handleStatusChange = (newStatus: string) => {
-      setStudents((prevStudents) =>
-        prevStudents.map((student) =>
-          student.id === selectedId ? { ...student, status: newStatus } : student
-        )
-      );
-      handleClose();
-    };
+  const handleStatusChange = (id: number, newStatus: string) => {
+    setStudents((prevStudents) =>
+      prevStudents.map((student) =>
+        student.id === id ? { ...student, status: newStatus } : student
+      )
+    );
+  };
 
-    const handleClose = () => {
-      setOpen(false);
-      setSelectedId(null);
-    };
+  const handleHoursSave = () => {
+    setStudents((prevStudents) =>
+      prevStudents.map((student) =>
+        student.id === selectedId ? { ...student, hours: newHours } : student
+      )
+    );
+    handleEditHoursClose();
+  };
 
-    const handleClickOpen = (id: number) => {
-      setSelectedId(id);
-      setOpen(true);
-    };
+  const handleEditHoursOpen = (id: number, currentHours: string) => {
+    setSelectedId(id);
+    setNewHours(currentHours);
+    setEditHoursOpen(true);
+  };
 
-    const columns: GridColDef[] = [
-      {
-        field: "name",
-        headerName: "Nombre del becario/a",
-        headerAlign: "center",
-        align: "center",
-        flex: 1,
-      },
-      {
-        field: "code",
-        headerName: "Código",
-        headerAlign: "center",
-        align: "center",
-        flex: 1,
-      },
-      {
-        field: "time",
-        headerName: "Hora de registro",
-        type: "string",
-        headerAlign: "center",
-        align: "center",
-        flex: 1,
-      },
-      {
-        field: "status",
-        headerName: "Seleccionado/Rechazado",
-        headerAlign: "center",
-        align: "center",
-        flex: 1,
+  const handleEditHoursClose = () => {
+    setEditHoursOpen(false);
+    setSelectedId(null);
+  };
 
-        renderCell: (params) => (
-          <Button onClick={() => handleClickOpen(params.row.id)}>
-            {params.value}
-          </Button>
-        ),
-      },
-    ];
-    const eventDetails: EventDetails = {
-      title: "Evento de 100 mejores",
-      date:  dayjs("2024-07-01T10:00:00Z"),
-      endDate:  dayjs("2024-07-01T10:00:00Z"),
-      duration: 6,
-      scholarshipHours: "4 horas",
-      location: "Centro de Eventos, Campus Achocalla",
-      maxParticipants: 30,
-      minParticipants: 5,
-      responsiblePerson: "Juan",
-      description:
-        "Se necesitan becarios que ayuden en la logística del evento donde se recibirá a los estudiantes ganadores de la beca 100 mejores.",
-      status: "PENDIENTE",
-    };
+  const columns: GridColDef[] = [
+    {
+      field: "name",
+      headerName: "Nombre del becario/a",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+    },
+    {
+      field: "code",
+      headerName: "Código",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+    },
+    {
+      field: "time",
+      headerName: "Hora de registro",
+      type: "string",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+    },
+    {
+      field: "status",
+      headerName: "Seleccionado/Rechazado",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
 
+      renderCell: (params) => (
+        <Select
+          fullWidth
+          value={params.value}
+          onChange={(e) => handleStatusChange(params.row.id, e.target.value)}
+          variant="standard" // Elimina el borde y relleno del select
+          sx={{
+            minHeight: 0,  // Elimina la altura mínima
+            lineHeight: 1.5,  // Ajusta la altura de la línea
+            padding: '2px 8px',  // Ajusta el relleno para eliminar espacios innecesarios
+            '& .MuiSelect-select': {
+              padding: 0,  // Ajusta el padding interno del select
+            },
+            '& .MuiInputBase-root': {
+              margin: 0,  // Elimina el margen del contenedor
+            }
+          }}
+        >
+          <MenuItem value="Seleccionado">Seleccionado</MenuItem>
+          <MenuItem value="Rechazado">Rechazado</MenuItem>
+          <MenuItem value="Suplente">Suplente</MenuItem>
+          <MenuItem value="Pendiente">Pendiente</MenuItem>
+        </Select>
+      ),
+    },
+    {
+      field: "hours",
+      headerName: "Horas Becarias",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+    },
+    {
+      field: "edit",
+      headerName: "Editar",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
 
-    return (
-      <div style={{ position: 'relative', height: '100vh' }}> 
-      <IconButton 
-        onClick={() => window.history.back()} 
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          onClick={() => handleEditHoursOpen(params.row.id, params.row.hours)}
+        >
+          Editar
+        </Button>
+      ),
+    },
+  ];
+
+  const eventDetails: EventDetails = {
+    title: "Evento de 100 mejores",
+    date: dayjs("2024-07-01T10:00:00Z"),
+    endDate: dayjs("2024-07-01T10:00:00Z"),
+    duration: 6,
+    scholarshipHours: "4 horas",
+    location: "Centro de Eventos, Campus Achocalla",
+    maxParticipants: 30,
+    minParticipants: 5,
+    responsiblePerson: "Juan",
+    description:
+      "Se necesitan becarios que ayuden en la logística del evento donde se recibirá a los estudiantes ganadores de la beca 100 mejores.",
+    status: "PENDIENTE",
+  };
+
+  return (
+    <div style={{ position: 'relative', height: '100vh' }}>
+      <IconButton
+        onClick={() => window.history.back()}
         aria-label="back"
-        style={{ 
+        style={{
           position: 'absolute',
-          top: '23px', 
-          left: '16px', 
+          top: '23px',
+          left: '16px',
           zIndex: 1
         }}
       >
@@ -135,37 +187,40 @@ import EventDetailsPage from "../../components/common/EventDetailsPage";
               }}
               pageSizeOptions={[5, 10]}
             />
+
             <Dialog
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
+              open={editHoursOpen}
+              onClose={handleEditHoursClose}
+              aria-labelledby="edit-hours-dialog-title"
             >
-              <DialogTitle id="alert-dialog-title">
-                ¿Deseas cambiar la solicitud de{" "}
-                {students.find((student) => student.id === selectedId)?.name}?
+              <DialogTitle id="edit-hours-dialog-title">
+                Editar Horas Becarias de{" "}
+                {students.find((student) => student.id === selectedId)?.name}
               </DialogTitle>
+              <DialogContent>
+                <TextField
+                  fullWidth
+                  value={newHours}
+                  onChange={(e) => setNewHours(e.target.value)}
+                  label="Horas Becarias"
+                  type="text"
+                  margin="dense"
+                />
+              </DialogContent>
               <DialogActions>
-                <Button
-                  onClick={() => handleStatusChange("Seleccionado")}
-                  color="primary"
-                >
-                  Seleccionado
+                <Button onClick={handleEditHoursClose} color="secondary">
+                  Cancelar
                 </Button>
-                <Button
-                  onClick={() => handleStatusChange("Rechazado")}
-                  color="secondary"
-                  autoFocus
-                >
-                  Rechazado
+                <Button onClick={handleHoursSave} color="primary">
+                  Guardar
                 </Button>
               </DialogActions>
             </Dialog>
           </div>
         }
       />
-      </div>
-    );
-  };
+    </div>
+  );
+};
 
-  export default InternsListPage;
+export default InternsListPage;
