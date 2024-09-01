@@ -87,7 +87,6 @@ const CreateForm = () => {
       }
     },
   });
-
   return (
     <FormContainer>
       {loading && <LoadingOverlay message="Creando Evento..." />}

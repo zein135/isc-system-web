@@ -14,7 +14,7 @@ const MyEventsTable = () => {
     navigate("/scholarshipHours");
   };
 
-  const [isDeleted, setIsDeleted] = useState(false);
+const [isDeleted, setIsDeleted] = useState(false);
   //TODO: change any to an interface
 
 const buttonStyle = {

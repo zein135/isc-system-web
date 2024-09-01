@@ -82,7 +82,6 @@
         ),
       },
     ];
-
     const eventDetails: EventDetails = {
       title: "Evento de 100 mejores",
       date: "Domingo, 02 de Septiembre de 2024",
