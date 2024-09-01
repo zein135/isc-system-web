@@ -1,7 +1,9 @@
 import { Button, IconButton, TextField, Dialog, DialogActions, DialogTitle, DialogContent, MenuItem, Select } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AddIcon from '@mui/icons-material/Add'; 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 import dayjs from "dayjs";
 import { EventDetails } from "../../models/eventInterface";
 import EventDetailsPage from "../../components/common/EventDetailsPage";
@@ -28,6 +30,8 @@ const InternsListPage = () => {
       hours: "4 horas",
     },
   ]);
+  
+  const navigate = useNavigate(); 
 
   const handleStatusChange = (id: number, newStatus: string) => {
     setStudents((prevStudents) =>
@@ -55,6 +59,10 @@ const InternsListPage = () => {
   const handleEditHoursClose = () => {
     setEditHoursOpen(false);
     setSelectedId(null);
+  };
+
+  const handleAddStudent = () => {
+    navigate("/students"); 
   };
 
   const columns: GridColDef[] = [
@@ -105,7 +113,7 @@ const InternsListPage = () => {
             }
           }}
         >
-          <MenuItem value="Aceptado">Seleccionado</MenuItem>
+          <MenuItem value="Aceptado">Aeptado</MenuItem>
           <MenuItem value="Rechazado">Rechazado</MenuItem>
           <MenuItem value="Suplente">Suplente</MenuItem>
           <MenuItem value="Pendiente">Pendiente</MenuItem>
@@ -166,6 +174,20 @@ const InternsListPage = () => {
       >
         <ArrowBackIcon />
       </IconButton>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={handleAddStudent}
+        startIcon={<AddIcon />}
+        style={{
+          position: 'absolute',
+          top: '29px',
+          right: '39px',
+          zIndex: 1
+        }}
+      >
+        Agregar Estudiante
+      </Button>
       <EventDetailsPage
         event={eventDetails}
         children={
