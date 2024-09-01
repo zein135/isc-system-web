@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import dayjs from "dayjs";
 import { EventDetails } from "../../models/eventInterface";
 import EventDetailsPage from "../../components/common/EventDetailsPage";
 
@@ -84,8 +85,8 @@ const InternsListPage = () => {
 
   const eventDetails: EventDetails = {
     title: "Evento de 100 mejores",
-    date: "Domingo, 02 de Septiembre de 2024",
-    endDate: "Domingo, 02 de Septiembre de 2024",
+    date: dayjs(),
+    endDate: dayjs(),
     duration: 6,
     scholarshipHours: "4 horas",
     location: "Centro de Eventos, Campus Achocalla",

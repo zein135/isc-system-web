@@ -1,10 +1,10 @@
 import { Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { events } from "../../data/events";
-import dayjs from "dayjs";
-import ContainerPage from "../../components/common/ContainerPage";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+import { events } from "../../data/events";
+import ContainerPage from "../../components/common/ContainerPage";
 
 const MyEventsTable = () => {
   //TODO: add real logic to "no podre asistir" button
@@ -12,19 +12,19 @@ const MyEventsTable = () => {
   const navigate = useNavigate();
   //TODO: change any to an interface
 
-const buttonStyle = {
-  borderRadius: "5px",
-  width: "120px",
-  height: "30px",
-  transition: "background-color 0.3s ease",
-};
+  const buttonStyle = {
+    borderRadius: "5px",
+    width: "120px",
+    height: "30px",
+    transition: "background-color 0.3s ease",
+  };
 
-const statusButtonStyle = {
-  ...buttonStyle,
-  borderRadius: "30px",
-  padding: "5px 10px",
-  textTransform: "none",
-};
+  const statusButtonStyle = {
+    ...buttonStyle,
+    borderRadius: "30px",
+    padding: "5px 10px",
+    textTransform: "none",
+  };
 
   const columns: GridColDef[] = [
     {
@@ -68,11 +68,15 @@ const statusButtonStyle = {
           onClick={() => setIsDeleted((prev) => !prev)}
           style={{
             ...buttonStyle,
-            backgroundColor: "#191970", 
-            color: "#FFFFFF", 
+            backgroundColor: "#191970",
+            color: "#FFFFFF",
           }}
-          onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#99c2ff"}
-          onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#191970"}
+          onMouseOver={(e) =>
+            (e.currentTarget.style.backgroundColor = "#99c2ff")
+          }
+          onMouseOut={(e) =>
+            (e.currentTarget.style.backgroundColor = "#191970")
+          }
         >
           Cancelar
         </Button>
@@ -89,14 +93,14 @@ const statusButtonStyle = {
             ...statusButtonStyle,
             backgroundColor:
               params.row.status === "PENDIENTE"
-                ? "#5F9EA0" 
+                ? "#5F9EA0"
                 : params.row.status === "ACEPTADO"
-                ? "#32CD32" 
+                ? "#32CD32"
                 : params.row.status === "SUPLENTE"
                 ? "#000000"
-                : "#FF0000", 
-            color: "#FFFFFF", 
-            cursor: "default", 
+                : "#FF0000",
+            color: "#FFFFFF",
+            cursor: "default",
           }}
           disabled
         >
@@ -121,7 +125,11 @@ const statusButtonStyle = {
       title="Eventos actuales"
       subtitle="Administra y visualiza tus eventos"
       actions={
-        <Button variant="contained" color="primary"  onClick={() => navigate("/eventHistory")} >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/eventHistory")}
+        >
           HISTORIAL
         </Button>
       }
