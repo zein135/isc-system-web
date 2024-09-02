@@ -9,6 +9,8 @@ import Grow from '@mui/material/Grow';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
+import IconButton from "@mui/material/IconButton";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { events } from "../../data/events";
 
 type Event = {
@@ -86,7 +88,7 @@ const SplitButton = ({ options }: { options: { label: string, onClick: () => voi
   );
 };
 
-const EventHistory = () => {
+  const EventHistory = () => {
   const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
   const filteredEvents = (semester: number) =>
     events.filter((event) =>
@@ -96,7 +98,20 @@ const EventHistory = () => {
   const groupedEvents = (semester: number) => groupEventsByMonth(filteredEvents(semester));
 
   return (
-    <div>
+    <div style={{ position: 'relative', padding: '40px' }}>
+      <IconButton
+        onClick={() => window.history.back()}
+        aria-label="back"
+        style={{
+          position: 'absolute',
+          top: '35px',
+          left: '-8px',
+          zIndex: 1
+        }}
+      >
+        <ArrowBackIcon />
+      </IconButton>
+
       <SplitButton
         options={[
           { label: 'Primer Semestre', onClick: () => setSelectedSemester(0) },
@@ -115,20 +130,12 @@ const EventHistory = () => {
                 </Typography>
                 <div style={{ borderTop: '1px solid #ddd', paddingTop: '10px', marginTop: '10px', flexGrow: 1 }}>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
-                    <div style={{ textAlign: 'center', border: '1px solid #ddd', padding: '5px' }}>
-                      <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>Lugar</Typography>
-                      <Typography variant="body2">{place}</Typography>
-                    </div>
-                    <div style={{ textAlign: 'center', border: '1px solid #ddd', padding: '5px' }}>
-                      <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>Horas Becarias</Typography>
-                      <Typography variant="body2">{validatedHours}</Typography>
-                    </div>
-                    <div style={{ textAlign: 'center', border: '1px solid #ddd', padding: '5px' }}>
-                      <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>Participación</Typography>
-                      <Typography variant="body2">{status}</Typography>
-                    </div>
+                    {/* ... */}
                   </div>
                 </div>
+                <Typography variant="body2">Lugar: {place}</Typography>
+                <Typography variant="body2">Horas validadas: {validatedHours}</Typography>
+                <Typography variant="body2" style={{ color: status === "Validado" ? "green" : "red" }}>{status}</Typography>
               </div>
             ))}
           </div>

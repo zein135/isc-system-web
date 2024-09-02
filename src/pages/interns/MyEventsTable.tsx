@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 import { events } from "../../data/events";
 import ContainerPage from "../../components/common/ContainerPage";
 
-
 const MyEventsTable = () => {
   const navigate = useNavigate();
   const handleBackClick = () => {
@@ -126,14 +125,14 @@ const [isDeleted, setIsDeleted] = useState(false);
   const updatedRows = rows.slice(1, rows.length);
 
   return (
-    <div style={{ position: 'relative', height: '100vh', paddingTop: '20px' }}> 
+    <div style={{ position: 'relative', height: '100vh', paddingTop: '19px' }}> 
       <IconButton 
         onClick={handleBackClick} 
         aria-label="back"
         style={{ 
           position: 'absolute',
-          top: '19px', 
-          left: '16px', 
+          top: '17px', 
+          left: '-9px', 
           zIndex: 1
         }}
       >
