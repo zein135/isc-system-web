@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import DialogContent from "@mui/material/DialogContent";
+import CloseIcon from "@mui/icons-material/Close"
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { FC, useState } from "react";
@@ -174,14 +175,29 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           </Typography>
         </CardContent>
       </Collapse>
-
       <Dialog
-        open={dialogOpen}
-        onClose={handleDialogClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+          open={dialogOpen}
+          onClose={(event, reason) => {
+            if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
+              handleDialogClose();
+            }
+          }}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
       >
         <DialogContent>
+        <IconButton
+            aria-label="close"
+            onClick={handleDialogClose}
+            sx={{
+              position: "absolute",
+              right: 4,
+              top: 4,
+              color: (theme) => theme.palette.grey[800],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
           <Typography align="center" variant="h6">
             ¿Estás seguro de inscribirte al evento "{name}"?
           </Typography>

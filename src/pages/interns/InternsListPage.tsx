@@ -1,6 +1,7 @@
 import { Button, IconButton, TextField, Dialog, DialogActions, DialogTitle, DialogContent, MenuItem, Select } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add'; 
+import CloseIcon from "@mui/icons-material/Close";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
@@ -55,8 +56,9 @@ const InternsListPage = () => {
     setNewHours(currentHours);
     setEditHoursOpen(true);
   };
-
-  const handleEditHoursClose = () => {
+  
+  const handleEditHoursClose = (event?: object, reason?: string) => {
+    if (reason && reason === "backdropClick") return;
     setEditHoursOpen(false);
     setSelectedId(null);
   };
@@ -220,6 +222,18 @@ const InternsListPage = () => {
                 {students.find((student) => student.id === selectedId)?.name}
               </DialogTitle>
               <DialogContent>
+              <IconButton
+                aria-label="close"
+                onClick={handleEditHoursClose}
+                sx={{
+                  position: "absolute",
+                  right: 1,
+                  top: 1,
+                  color: (theme) => theme.palette.grey[800],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
                 <TextField
                   fullWidth
                   value={newHours}
