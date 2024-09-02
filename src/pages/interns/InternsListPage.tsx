@@ -161,14 +161,14 @@ const InternsListPage = () => {
   };
 
   return (
-    <div style={{ position: 'relative', height: '100vh' }}>
+    <div style={{ position: 'relative', height: '100vh', padding: '19px' }}>
       <IconButton
         onClick={() => window.history.back()}
         aria-label="back"
         style={{
           position: 'absolute',
-          top: '23px',
-          left: '16px',
+          top: '20px',
+          left: '1px',
           zIndex: 1
         }}
       >
