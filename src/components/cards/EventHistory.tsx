@@ -88,7 +88,7 @@ const SplitButton = ({ options }: { options: { label: string, onClick: () => voi
   );
 };
 
-const EventHistory = () => {
+  const EventHistory = () => {
   const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
   const filteredEvents = (semester: number) =>
     events.filter((event) =>

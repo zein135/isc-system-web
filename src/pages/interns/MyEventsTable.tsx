@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 import { events } from "../../data/events";
 import ContainerPage from "../../components/common/ContainerPage";
 
-
 const MyEventsTable = () => {
   const navigate = useNavigate();
   const handleBackClick = () => {

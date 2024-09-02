@@ -32,7 +32,6 @@ const InternsListPage = () => {
   ]);
   
   const navigate = useNavigate(); 
-
   const handleStatusChange = (id: number, newStatus: string) => {
     setStudents((prevStudents) =>
       prevStudents.map((student) =>
