@@ -48,14 +48,17 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const Layout = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
   const { clearUser, user } = useUserStore();
   console.log(user);
   const settings = [
-    { title: "Perfil", onClick: () => {
-      navigate("/profile");
-    } },
+    {
+      title: "Perfil",
+      onClick: () => {
+        navigate("/profile");
+      },
+    },
     {
       title: "Logout",
       onClick: () => {
@@ -67,7 +70,7 @@ const Layout = () => {
   ];
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
+    null,
   );
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -101,10 +104,20 @@ const Layout = () => {
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <Box mr={2}>
-            <Typography variant="subtitle1" noWrap color="primary" textAlign={"right"} className="font-bold">
+            <Typography
+              variant="subtitle1"
+              noWrap
+              color="primary"
+              textAlign={"right"}
+              className="font-bold"
+            >
               {user?.name}
             </Typography>
-            <Typography variant="subtitle2" color="textSecondary" textAlign={"right"}>
+            <Typography
+              variant="subtitle2"
+              color="textSecondary"
+              textAlign={"right"}
+            >
               {user?.role}
             </Typography>
           </Box>

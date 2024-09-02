@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -8,14 +9,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import { Divider, ListItemButton } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
-import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
+
 import UPB_LOGO from "../assets/upb_logo.png";
-import { useNavigate } from "react-router-dom";
+import { menu } from "../constants/menu";
 
 const drawerWidth = 240;
 
@@ -24,7 +20,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -74,33 +69,14 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const theme = useTheme();
   const navigate = useNavigate();
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
 
-  const goToProfessors = () => {
-    navigate("/professors");
+  const goToPage = (path: string) => {
+    navigate(path);
   };
-
-  const goToDashboard = () => {
-    navigate("/dashboard");
-  };
-
-  const goToStudents = () => {
-    navigate("/students");
-  }
-
-  const goToProcess = () => {
-    navigate("/process");
-  }
-
-  const goToAdministration = () => {
-    navigate("/administration")
-  }
-
-  const goToUsers = () => {
-    navigate("/users")
-  }
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -120,139 +96,39 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
       </DrawerHeader>
       <Divider />
       <List>
-        <ListItem key={"dashboard"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToDashboard}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
+        {menu.map((item) => {
+          return (
+            <ListItem
+              key={item.key}
+              disablePadding
+              sx={{ display: "block" }}
             >
-              <HomeIcon color="primary"/>
-            </ListItemIcon>
-            <ListItemText
-              color="primary"
-              primary={"Dashboard"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"process"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToProcess}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <ChecklistOutlinedIcon color="primary"/>
-            </ListItemIcon>
-            <ListItemText
-              primary={"Procesos"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"professors"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToProfessors}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <SupervisorAccountIcon color="primary"/>
-            </ListItemIcon>
-            <ListItemText primary={"Docentes"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"students"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToStudents}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <SchoolOutlinedIcon color="primary"/>
-            </ListItemIcon>
-            <ListItemText primary={"Estudiantes"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"administration"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToAdministration}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <ManageAccountsIcon color="primary"/>
-            </ListItemIcon>
-            <ListItemText primary={"Administrador"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem key={"users"} disablePadding sx={{ display: "block" }}>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
-            onClick={goToUsers}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              <SwitchAccountIcon color="primary"/>
-            </ListItemIcon>
-            <ListItemText primary={"Usuarios"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+                onClick={()=>goToPage(item.path)}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  color="primary"
+                  primary={item.text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
     </Drawer>
   );

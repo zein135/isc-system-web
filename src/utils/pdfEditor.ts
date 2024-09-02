@@ -1,4 +1,4 @@
-import { Color, PDFDocument, PDFFont, rgb, StandardFonts } from 'pdf-lib';
+import { Color, PDFDocument, PDFFont, rgb, StandardFonts } from "pdf-lib";
 
 export interface PDFInsertData {
   x: number;
@@ -17,9 +17,11 @@ export interface PDFDrawRectangle {
   color: Color;
 }
 
-
-export async function modifyPdf(inputPdf: ArrayBuffer, data: PDFInsertData[], draw?: PDFDrawRectangle[]): Promise<ArrayBuffer> {
-
+export async function modifyPdf(
+  inputPdf: ArrayBuffer,
+  data: PDFInsertData[],
+  draw?: PDFDrawRectangle[],
+): Promise<ArrayBuffer> {
   const pdfDoc = await PDFDocument.load(inputPdf);
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
