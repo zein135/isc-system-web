@@ -112,7 +112,7 @@ const InternsListPage = () => {
             }
           }}
         >
-          <MenuItem value="Aceptado">Aeptado</MenuItem>
+          <MenuItem value="Aceptado">Aceptado</MenuItem>
           <MenuItem value="Rechazado">Rechazado</MenuItem>
           <MenuItem value="Suplente">Suplente</MenuItem>
           <MenuItem value="Pendiente">Pendiente</MenuItem>
