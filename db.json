@@ -230,8 +230,8 @@
         {
           "action": "Agregar usuario",
           "permission": false
-       }
-    ]
+        }
+      ]
     }
   ],
   "roles": [
@@ -332,6 +332,19 @@
       ],
       "degree": "",
       "id": 12348
+    },
+    {
+      "name": "Adrian",
+      "code": "",
+      "lastname": "Thompson",
+      "mothername": "Machaca",
+      "email": "thomas@thompson.com",
+      "cellphone": "12312412",
+      "roles": [
+        "Jefe de carrera FACED"
+      ],
+      "degree": "Ing.",
+      "id": 12349
     }
   ]
 }
