@@ -24,6 +24,8 @@ import EditStudentPage from "./pages/Student/EditStudentPage";
 import Profile from "./pages/profile/Profile";
 import GraduationProcessPage from "./pages/graduation/GraduationProcessPage";
 import AdministratorPage from "./pages/Administrator/AdministratorPage";
+import UsersPage from "./pages/Users/UsersPage";
+import CreateUserPage from "./pages/Users/CreateUserPage";
 
 function loader() {
   return getProcess();
@@ -153,6 +155,31 @@ const router = createBrowserRouter([
           </RequireAuth>
         ),
       },
+      {
+        path: "users",
+        element: (
+          <RequireAuth>
+            <UsersPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "create-user",
+        element: (
+          <RequireAuth>
+            <CreateUserPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "edit-user/:id",
+        element: (
+          <RequireAuth>
+            <CreateUserPage/>
+          </RequireAuth>
+        )
+
+      }
     ],
   },
   {
