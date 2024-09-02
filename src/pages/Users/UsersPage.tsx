@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, IconButton, InputLabel, MenuItem, Select } from "@mui/material"
@@ -11,14 +11,16 @@ import { deleteUser, getUsers } from "../../services/usersService";
 import ContainerPage from "../../components/common/ContainerPage";
 import { getRoles } from "../../services/roleService";
 import { Role } from "../../models/roleInterface";
-
+import { User } from "../../models/userInterface";
 
 const UsersPage = () => {
     const navigate = useNavigate()
-    const [users, setUsers] = useState([])
+    const [users, setUsers] = useState<User[]>([])
+    const [filteredUsers, setFilteredUsers] = useState<User[]>(users);
     const [isOpenDelete, setOpenDelete] = useState(false)
     const [selectedUser, setSelectedUser] = useState<number | null>(null)
     const [roles, setRoles] = useState([])
+    const [search, setSearch] = useState("");
 
     const handleCreateUser = () => {
       navigate("/create-user");
@@ -53,6 +55,31 @@ const UsersPage = () => {
             handleCloseDelete();   
         }
     }
+
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.target.value);
+      filterUsers(search);
+    };
+
+    useEffect(() => {
+      filterUsers(search);
+    }, [search]);
+
+    const filterUsers = (searchValue: string) => {
+    const lowercasedFilter = searchValue.toLowerCase();
+    const filteredData = users.filter((user: User) => {
+      const codeName = `${user.code} ${user.name} ${user.lastname} ${user.mothername}`
+
+      return (
+        user.name?.toLowerCase().includes(lowercasedFilter) ||
+        user.lastname?.toLowerCase().includes(lowercasedFilter) ||
+        user.code?.toString().includes(lowercasedFilter) ||
+        codeName.toLowerCase().includes(lowercasedFilter)
+      );
+    });
+    setFilteredUsers(filteredData);
+  };
+  
 
     const columns: GridColDef[] = [
         {
@@ -135,6 +162,7 @@ const UsersPage = () => {
           user.fullName = `${user.name} ${user.lastname} ${user.mothername}`
         }
         setUsers(usersResponse)
+        setFilteredUsers(usersResponse)
     }
 
     const fetchRoles = async () => {
@@ -178,9 +206,8 @@ const UsersPage = () => {
                         id="table-search"
                         className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Buscar por codigo y nombre de estudiante"
-                        // TODO: Implementar funcionalidad de busqueda
-                        // value={search}
-                        // onChange={handleSearchChange}
+                        value={search}
+                        onChange={handleSearchChange}
                       />
                     </div>
                   </div>
@@ -200,7 +227,7 @@ const UsersPage = () => {
                   </Grid>
               </Grid>
               <DataGrid
-                rows={users}
+                rows={filteredUsers}
                 columns={columns}
                 initialState={{
                   pagination: {
@@ -255,4 +282,4 @@ const UsersPage = () => {
     )
 }
 
-export default UsersPage
+export default UsersPage;
