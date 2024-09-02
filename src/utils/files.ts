@@ -24,8 +24,12 @@ export const loadFile = async (url: string) => {
   }
 };
 
-export const generateDocument = async (url: string, data: { [key: string]: string | number; }, fileName: string) => {
-  const content = await loadFile(url); 
+export const generateDocument = async (
+  url: string,
+  data: { [key: string]: string | number },
+  fileName: string,
+) => {
+  const content = await loadFile(url);
   const zip = new PizZip(content);
   const doc = new Docxtemplater(zip, {
     paragraphLoop: true,
@@ -36,7 +40,7 @@ export const generateDocument = async (url: string, data: { [key: string]: strin
   try {
     doc.render();
   } catch (error) {
-    console.log(JSON.stringify({ error}));
+    console.log(JSON.stringify({ error }));
     throw error;
   }
 

@@ -105,7 +105,7 @@ const UsersPage = () => {
         },
         {
             field: "cellphone",
-            headerName: "Cellphone", 
+            headerName: "Teléfono", 
             headerAlign: "center",
             align: "center",
             flex: 1,
@@ -118,7 +118,7 @@ const UsersPage = () => {
             flex: 1,
             renderCell: ({row}) => (
               row.roles.map((rol:string) => (
-                <Chip key={rol} label={rol}/>
+                <Chip key={rol} label={rol} style={{color: "#ffffff", backgroundColor: "#337DD0"}}/>
               ))
             )
         },
@@ -192,7 +192,7 @@ const UsersPage = () => {
           children={
             <div style={{ height: 400, width: "100%" }}>
               <Grid container style={{paddingBottom: 20}}>
-                <Grid md={6}>
+                <Grid md={4}>
                   <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between m-5 mb-8 overflow-hidden">
                     <label htmlFor="table-search" className="sr-only">
                       Search
@@ -213,11 +213,12 @@ const UsersPage = () => {
                   </div>
                 </Grid>
                 <Grid md={4}>
-                  <FormControl fullWidth>
-                    <InputLabel>Rol</InputLabel>
+                  <FormControl fullWidth style={{paddingTop: 20}}>
+                    <InputLabel style={{paddingTop: 13}}>Rol</InputLabel>
                     <Select
                       fullWidth
                       label="Rol"
+                      style={{height: 40 }}
                     >
                       {roles.map((rol: Role) => (
                         <MenuItem value={rol.roleName}>{rol.roleName}</MenuItem>

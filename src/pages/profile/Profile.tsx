@@ -28,7 +28,6 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -100,19 +99,16 @@ const Profile: React.FC = () => {
             <Grid item xs={12}>
               <Paper elevation={3} sx={{ p: 2 }}>
                 <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                  <Tabs
-                    value={value}
-                    onChange={handleChange}
-                  >
+                  <Tabs value={value} onChange={handleChange}>
                     <Tab label="Tutorias" {...a11yProps(0)} />
                     <Tab label="Revisiones" {...a11yProps(1)} />
                   </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                  <TaskList/>
+                  <TaskList />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                  <TaskList/>
+                  <TaskList />
                 </CustomTabPanel>
               </Paper>
             </Grid>

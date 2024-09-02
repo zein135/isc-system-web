@@ -43,14 +43,14 @@ const useMentorFormik = (process: Seminar | null, onSubmit: () => void) => {
         formik.values.mentor &&
           formik.values.tutorDesignationLetterSubmitted &&
           formik.values.date_tutor_assignament &&
-          formik.values.tutorApprovalLetterSubmitted
+          formik.values.tutorApprovalLetterSubmitted,
       ),
     [
       formik.values.mentor,
       formik.values.tutorDesignationLetterSubmitted,
       formik.values.date_tutor_assignament,
       formik.values.tutorApprovalLetterSubmitted,
-    ]
+    ],
   );
 
   return { formik, canApproveStage };

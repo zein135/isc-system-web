@@ -1,5 +1,12 @@
 import { useState, useCallback, useEffect } from "react";
-import { TextField, Button, Grid, Typography, MenuItem, Autocomplete } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Grid,
+  Typography,
+  MenuItem,
+  Autocomplete,
+} from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { useFormik } from "formik";
 
@@ -52,9 +59,12 @@ function ProcessForm() {
     },
   });
 
-  const handleStudentChange = (_event: React.ChangeEvent<object | null>, value: Student | null) => {
-    formik.setFieldValue('studentId', value ? value.id : '');
-    formik.setFieldValue('studentCode', value ? value.code : '');
+  const handleStudentChange = (
+    _event: React.ChangeEvent<object | null>,
+    value: Student | null,
+  ) => {
+    formik.setFieldValue("studentId", value ? value.id : "");
+    formik.setFieldValue("studentCode", value ? value.code : "");
   };
 
   return (
@@ -75,7 +85,7 @@ function ProcessForm() {
               <Typography variant="body2">Informacion Estudiante</Typography>
             </Grid>
             <Grid item xs={9}>
-            <Autocomplete
+              <Autocomplete
                 fullWidth
                 options={students}
                 getOptionLabel={(student) => `${student.name}`}
@@ -87,8 +97,13 @@ function ProcessForm() {
                     label="Nombre Estudiante"
                     variant="outlined"
                     margin="normal"
-                    error={formik.touched.studentId && Boolean(formik.errors.studentId)}
-                    helperText={formik.touched.studentId && formik.errors.studentId}
+                    error={
+                      formik.touched.studentId &&
+                      Boolean(formik.errors.studentId)
+                    }
+                    helperText={
+                      formik.touched.studentId && formik.errors.studentId
+                    }
                   />
                 )}
               />

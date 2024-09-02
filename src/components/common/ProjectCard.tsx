@@ -18,7 +18,12 @@ function ProjectCard() {
               125
             </Typography>
             <Typography
-              sx={{ fontSize: 14, color: "#ffffff", mb: 1.5, fontWeight: "bold"}}
+              sx={{
+                fontSize: 14,
+                color: "#ffffff",
+                mb: 1.5,
+                fontWeight: "bold",
+              }}
               color="text.secondary"
             >
               Procesos finalizados
@@ -30,7 +35,16 @@ function ProjectCard() {
               2 en curso
             </Typography>
           </Grid>
-          <Grid item xs={6} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 100 }}>
+          <Grid
+            item
+            xs={6}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: 100,
+            }}
+          >
             <div style={{ width: "70%", height: 100 }}>
               <CircularProgressbar
                 value={percentage}

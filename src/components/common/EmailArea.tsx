@@ -33,7 +33,7 @@ const EmailSender = () => {
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string>("");
   const [subject, setSubject] = useState(
-    `Revision de Carpeta - ${carrer?.shortName} - ${process?.student_fullname}`
+    `Revision de Carpeta - ${carrer?.shortName} - ${process?.student_fullname}`,
   );
   const defaultEmailContent = `
     <p><strong><u>ALUMNO 1</u></strong></p>
@@ -48,7 +48,7 @@ const EmailSender = () => {
   useEffect(() => {
     setEmailContent(defaultEmailContent);
     setSubject(
-      `Revision de Carpeta - ${carrer?.shortName} - ${process?.student_fullname}`
+      `Revision de Carpeta - ${carrer?.shortName} - ${process?.student_fullname}`,
     );
   }, [process, carrer?.shortName]);
 
@@ -70,7 +70,9 @@ const EmailSender = () => {
       }
       setEmailSent(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Error al enviar el correo");
+      setError(
+        err instanceof Error ? err.message : "Error al enviar el correo",
+      );
     } finally {
       setIsSending(false);
     }
