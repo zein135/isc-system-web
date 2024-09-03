@@ -67,6 +67,8 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
+  // TODO: get user from zustand store
+  const user = { role: 'professor' };
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -77,6 +79,8 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const goToPage = (path: string) => {
     navigate(path);
   };
+
+  const filteredMenu = menu.filter((item) => item.roles.includes(user.role));
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -96,7 +100,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
       </DrawerHeader>
       <Divider />
       <List>
-        {menu.map((item) => {
+        {filteredMenu.map((item) => {
           return (
             <ListItem
               key={item.key}
