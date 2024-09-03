@@ -25,7 +25,7 @@ const TablePage: React.FC<TablePageProps> = ({ event, children }) => {
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={8}>
               <Typography variant="body1" color="textSecondary">
-                <strong>Fecha:</strong> {event.date}
+                <strong>Fecha:</strong> {event.date.format("DD/MM/YYYY")}
               </Typography>
               <Typography variant="body1" color="textSecondary">
                 <strong>Duración:</strong> {event.duration}
