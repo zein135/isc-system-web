@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { ProfessorInterface } from "../../services/models/Professor";
-import { createProfessor } from "../../services/mentorsService";
-import { FormContainer } from "../CreateGraduation/components/FormContainer";
 import {
   Button,
   Divider,
@@ -12,6 +9,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { ProfessorInterface } from "../../services/models/Professor";
+import { createProfessor } from "../../services/mentorsService";
+import { FormContainer } from "../CreateGraduation/components/FormContainer";
 import ErrorDialog from "../../components/common/ErrorDialog";
 import SuccessDialog from "../../components/common/SucessDialog";
 import LoadingOverlay from "../../components/common/Loading";

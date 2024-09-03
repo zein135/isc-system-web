@@ -3,10 +3,10 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import ChecklistOutlinedIcon from "@mui/icons-material/ChecklistOutlined";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
-import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import EventIcon from '@mui/icons-material/Event';
 
 import { roles } from "./roles";
 const { ADMIN, PROFESSOR, STUDENT } = roles;
@@ -62,7 +62,7 @@ export const menu = [
   {
     key: "CompleteScholarship",
     path: "/CompleteScholarshipHour",
-    text: "Finalización de eventos",
+    text: "Finalizar",
     icon: <PendingActionsIcon color="primary" />,
   },
   {
