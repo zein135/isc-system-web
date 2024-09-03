@@ -29,6 +29,7 @@ import MyEventsTable from "../pages/interns/MyEventsTable";
 import "../style.css";
 import UsersPage from "../pages/Users/UsersPage";
 import AdministratorPage from "../pages/Administrator/AdministratorPage";
+import CreateUserPage from "../pages/Users/CreateUserPage";
 
 function loader() {
   return getProcess();
@@ -231,6 +232,18 @@ const protectedRoutes = [
         path: "/users",
         element: (
           <UsersPage/>
+        )
+      },
+      {
+        path: "/create-user",
+        element: (
+          <CreateUserPage/>
+        )
+      },
+      {
+        path: "/edit-user/:id",
+        element: (
+          <CreateUserPage/>
         )
       }
     ],
