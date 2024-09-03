@@ -26,6 +26,8 @@ import EventTable from "../pages/Events/EventTable";
 import CompleteScholarshipHourPage from "../pages/CompleteScholarshipHour/CompleteScholarshipHourPage";
 import MyEventsTable from "../pages/interns/MyEventsTable";
 import "../style.css";
+import UsersPage from "../pages/Users/UsersPage";
+import AdministratorPage from "../pages/Administrator/AdministratorPage";
 import EventHistory from "../components/cards/EventHistory";
 
 function loader() {
@@ -226,6 +228,18 @@ const protectedRoutes = [
           </RoleGuard>
         ),
       },
+      {
+        path: "/administration",
+        element: (
+          <AdministratorPage/>
+        )
+      },
+      {
+        path: "/users",
+        element: (
+          <UsersPage/>
+        )
+      }
     ],
   },
 ];

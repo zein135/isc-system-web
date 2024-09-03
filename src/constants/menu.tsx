@@ -5,6 +5,7 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import EventIcon from '@mui/icons-material/Event';
 
@@ -72,4 +73,10 @@ export const menu = [
     icon: <ManageAccountsIcon color="primary" />,
     roles: [ADMIN],
   },
+  {
+    key: "users",
+    path: "/users",
+    text: "Usuarios",
+    icon: <SwitchAccountIcon color="primary"/>
+  }
 ];
