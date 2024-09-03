@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import { useUserStore } from "../store/store";
 
 interface RoleGuardProps {
   allowedRoles: string[];
@@ -7,13 +8,13 @@ interface RoleGuardProps {
 }
 
 const RoleGuard: React.FC<RoleGuardProps> = ({ allowedRoles, children }) => {
-  const { user } = { user: { role: "student" } };
+  const user = useUserStore((state) => state.user);
 
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  const hasRole = true; //allowedRoles.includes(user.role);
+  const hasRole = allowedRoles.includes(user.role_name || "");
 
   if (!hasRole) {
     return <Navigate to="/unauthorized" replace />;
