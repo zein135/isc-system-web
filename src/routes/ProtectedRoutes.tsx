@@ -71,9 +71,8 @@ const protectedRoutes = [
       },
       {
         path: "/professors",
-        loader: loader,
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["admin", "professor"]}>
             <ProfessorPage />
           </RoleGuard>
         ),

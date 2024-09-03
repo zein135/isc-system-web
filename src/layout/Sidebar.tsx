@@ -12,6 +12,7 @@ import { Divider, ListItemButton } from "@mui/material";
 
 import UPB_LOGO from "../assets/upb_logo.png";
 import { menu } from "../constants/menu";
+import { useUserStore } from "../store/store";
 
 const drawerWidth = 240;
 
@@ -67,8 +68,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
-  // TODO: get user from zustand store
-  const user = { role: 'professor' };
+  const user = useUserStore((state) => state.user);
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -80,7 +80,9 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
     navigate(path);
   };
 
-  const filteredMenu = menu.filter((item) => item.roles?.includes(user.role));
+  const filteredMenu = menu.filter((item) =>
+    item.roles?.includes(user?.role_name || "")
+  );
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -103,18 +105,14 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
       <List>
         {filteredMenu.map((item) => {
           return (
-            <ListItem
-              key={item.key}
-              disablePadding
-              sx={{ display: "block" }}
-            >
+            <ListItem key={item.key} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
-                onClick={()=>goToPage(item.path)}
+                onClick={() => goToPage(item.path)}
               >
                 <ListItemIcon
                   sx={{
