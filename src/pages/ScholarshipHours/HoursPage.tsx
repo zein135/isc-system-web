@@ -2,7 +2,7 @@ import { Grid, Box, Button, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import GraphicHours from "./GraphicHours";
-import HoursCard from "../../components/common/HoursCard";
+import NumberCard from "../../components/common/NumberCard";
 
 interface HoursStats {
     totalHorasRequeridas: number;
@@ -38,30 +38,33 @@ function HoursPage() {
         <Grid item xs={22} md={4}>
             <Grid container spacing={3}>
             <Grid item xs={12}>
-                <HoursCard
+                <NumberCard
                 backgroundColor="#f3a43f"
                 textColor="#FFFFFF"
                 title="Total de Horas Requeridas"
-                hours={stats?.totalHorasRequeridas || 0}
-                percentage={(stats?.totalHorasRequeridas || 0) / 1}
+                subtitle=""
+                count={stats?.totalHorasRequeridas || 0}
+                percentage={100}
                 />
             </Grid>
             <Grid item xs={12}>
-                <HoursCard
+                <NumberCard
                 backgroundColor="#359be5"
                 textColor="#FFFFFF"
                 title="Horas Realizadas"
-                hours={stats?.horasRealizadas || 0}
+                subtitle=""
+                count={stats?.horasRealizadas || 0}
                 percentage={(stats?.horasRealizadas || 0) / (stats?.totalHorasRequeridas || 1) * 100}
                 />
             </Grid>
             <Grid item xs={12}>
-                <HoursCard
+                <NumberCard
                 backgroundColor="#ef4444"
                 textColor="#FFFFFF"
                 title="Horas Faltantes"
-                hours={stats?.horasFaltantes || 0}
-                percentage={(stats?.horasFaltantes || 0) / 1}
+                subtitle=""
+                count={stats?.horasFaltantes || 0}
+                percentage={100}
                 />
             </Grid>
             </Grid>
