@@ -80,13 +80,14 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
     navigate(path);
   };
 
-  const filteredMenu = menu.filter((item) => item.roles.includes(user.role));
+  const filteredMenu = menu.filter((item) => item.roles?.includes(user.role));
 
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
         <img
           src={UPB_LOGO}
+          alt="UPB Logo"
           style={{ width: "100%", height: "auto", maxWidth: "125px" }}
           className="h-10 ms-6 me-1"
         />
