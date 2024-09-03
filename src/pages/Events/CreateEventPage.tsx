@@ -1,8 +1,10 @@
 import  { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Typography, Grid, TextField, Button, Divider } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Typography, Grid, TextField, Button, Divider, IconButton } from "@mui/material";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import dayjs from "dayjs";
 import { FormContainer } from "../../pages/CreateGraduation/components/FormContainer.tsx";
 import LoadingOverlay from "../../components/common/Loading.tsx";
 import ErrorDialog from "../../components/common/ErrorDialog.tsx";
@@ -52,11 +54,15 @@ const CreateForm = () => {
     navigate("/programDirector"); 
   };
 
+  const handleBackNavigate = () => {
+    navigate("/programDirector")
+  };
+
   const formik = useFormik<EventDetails>({
     initialValues: {
       title: "",
-      date: "",
-      endDate: "",
+      date: dayjs(),
+      endDate: dayjs(),
       duration: 0,
       scholarshipHours: "",
       location: "",
@@ -82,10 +88,12 @@ const CreateForm = () => {
       }
     },
   });
-
   return (
     <FormContainer>
       {loading && <LoadingOverlay message="Creando Evento..." />}
+          <IconButton onClick={handleBackNavigate} aria-label="back">
+              <ArrowBackIcon />
+          </IconButton>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2} sx={{ padding: 2 }}>
           <Grid item xs={12}>

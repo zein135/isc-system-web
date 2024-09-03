@@ -4,7 +4,6 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
@@ -16,13 +15,11 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import DialogContent from "@mui/material/DialogContent";
-import { red } from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import CloseIcon from "@mui/icons-material/Close"
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
 import "dayjs/locale/es";
 import { FC, useState } from "react";
-import "../../style.css"
+import "../../style.css";
 import { EventCardProps } from "../../models/eventCardProps";
 import EventSubheader from "./EventSubheader";
 
@@ -44,22 +41,21 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 const EventCard: FC<EventCardProps> = ({ event }) => {
   const [expanded, setExpanded] = useState(false);
   const {
-    id_event,
     name: name,
     description: description,
-    validatedHours: validatedHours,
     startDate: startDate,
+    endDate: endDate,
     duration: duration,
     place: place,
+    responsiblePerson: responsiblePerson,
     maxInterns: maxInterns,
     minInterns: minInterns,
   } = event;
   const [dialogOpen, setDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   dayjs.locale("es");
-
-    const navigate = useNavigate();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -74,103 +70,171 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   };
 
   const handleConfirm = () => {
-    navigate("/registrationEvent/2", { state: { event } });
+    setSnackbarOpen(true);
+    setDialogOpen(false);
   };
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
 
-    return (
-        <Card sx={{ maxWidth: 345 }}>
-            <CardHeader
-                avatar={
-                    <Avatar 
-                    sx={{ bgcolor: red[500] }} aria-label="recipe">  
-                    </Avatar>
-                }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
-                }
-                title={name}
-                subheader={<EventSubheader event={event}/>}
-            />
-            <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                    {description}
-                </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-                <Tooltip title="Registrarse">
-                    <IconButton aria-label="registrarse" onClick={handleDialogOpen}>
-                        <AddIcon />
-                    </IconButton>
-                </Tooltip>
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    title="Descripción"
-                    aria-label="descripcion"
-                >
-                    <DescriptionIcon />
-                </ExpandMore>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                    <Typography align="center" paragraph>Detalles del evento:</Typography>
-                    <Typography paragraph>
-                        <strong>Duración:</strong> {duration}
-                    </Typography>
-                    <Typography paragraph>
-                        <strong>Horas becarias: </strong> {validatedHours}
-                    </Typography>
-                    <Typography paragraph>
-                        <strong>Lugar:</strong> {place}
-                    </Typography>
-                    <Typography paragraph>
-                        <strong>Máximo de Becarios:</strong> {maxInterns}
-                    </Typography>
-                    <Typography paragraph>
-                        <strong>Máximo de Suplentes:</strong> {minInterns}
-                    </Typography>
-                </CardContent>
-            </Collapse>
+  const handleDescriptionClick = () => {
+    setShowFullDescription(!showFullDescription);
+  };
 
-            <Dialog
-                open={dialogOpen}
-                onClose={handleDialogClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogContent>
-                    <Typography align="center" variant="h6">
-                        ¿Estás seguro de inscribirte al evento "{name}"?
-                    </Typography>
-                </DialogContent>
-                <DialogActions sx={{ justifyContent: "center" }}>
-                    <Button onClick={handleConfirm} variant="contained" className="confirm-button">
-                        Confirmar
-                    </Button>
-                    <Button onClick={handleDialogClose} variant="contained" className="cancel-button">
-                        Cancelar
-                    </Button>
-                </DialogActions>
-            </Dialog>
+  return (
+    <Card sx={{maxWidth: 345}} >
+      <CardHeader
+        title={name}
+        titleTypographyProps={{
+          fontSize: 20,
+          align: "center",
+          color: "primary",
+          fontWeight: "bold",
+        }}
+        sx={{ minHeight: 100, maxHeight: 150}}
+      />
+      <EventSubheader event={event} />
+      <CardContent>
+        <Typography
+          fontSize={16}
+          color="text.primary"
+          onClick={handleDescriptionClick}
+          sx={{
+            cursor: "pointer",
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            WebkitLineClamp: showFullDescription ? "unset" : 1,
+            flex: 1,
+            textAlign: "justify",
+          }}
+        >
+          {description}
+        </Typography>
+        {!showFullDescription && description.length > 0 && (
+          <Typography
+            fontSize={16}
+            color="primary"
+            onClick={handleDescriptionClick}
+            sx={{ cursor: "pointer" }}
+          >
+            [Ver más]
+          </Typography>
+        )}
+      </CardContent>
+      <CardActions disableSpacing>
+        <Tooltip title="Registrarse">
+          <IconButton aria-label="registrarse" onClick={handleDialogOpen}>
+            <AddIcon />
+          </IconButton>
+        </Tooltip>
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          title="Descripción"
+          aria-label="descripcion"
+        >
+          <DescriptionIcon />
+        </ExpandMore>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography align="center" fontSize={17} color="primary">
+            <strong>Detalles del evento</strong>
+          </Typography>
+          <Typography
+            fontSize={15}
+            color="text.primary"
+            marginLeft={2}
+            marginTop={2}
+          >
+            <strong>Fecha inicial: </strong>{" "}
+            {dayjs(startDate).format("DD/MM/YYYY HH:mm")}
+          </Typography>
+          <Typography fontSize={15} color="text.primary" marginLeft={2}>
+            <strong>Fecha final: </strong>{" "}
+            {dayjs(endDate).format("DD/MM/YYYY HH:mm")}
+          </Typography>
+          <Typography fontSize={15} color="text.primary" marginLeft={2}>
+            <strong>Encargado: </strong> {responsiblePerson}
+          </Typography>
+          <Typography fontSize={15} color="text.primary" marginLeft={2}>
+            <strong>Duración: </strong> {duration}
+          </Typography>
+          <Typography fontSize={15} color="text.primary" marginLeft={2}>
+            <strong>Lugar: </strong> {place}
+          </Typography>
+          <Typography fontSize={15} color="text.primary" marginLeft={2}>
+            <strong>Máximo de Becarios: </strong> {maxInterns}
+          </Typography>
+          <Typography fontSize={15} color="text.primary" marginLeft={2}>
+            <strong>Máximo de Suplentes: </strong> {minInterns}
+          </Typography>
+        </CardContent>
+      </Collapse>
+      <Dialog
+          open={dialogOpen}
+          onClose={(event, reason) => {
+            if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
+              handleDialogClose();
+            }
+          }}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+        <IconButton
+            aria-label="close"
+            onClick={handleDialogClose}
+            sx={{
+              position: "absolute",
+              right: 4,
+              top: 4,
+              color: (theme) => theme.palette.grey[800],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography align="center" variant="h6">
+            ¿Estás seguro de inscribirte al evento "{name}"?
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: "center" }}>
+          <Button
+            onClick={handleConfirm}
+            variant="contained"
+            className="confirm-button"
+          >
+            Confirmar
+          </Button>
+          <Button
+            onClick={handleDialogClose}
+            variant="contained"
+            className="cancel-button"
+          >
+            Cancelar
+          </Button>
+        </DialogActions>
+      </Dialog>
 
-            <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={6000}
-                onClose={handleSnackbarClose}
-            >
-            <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: "100%" }}>
-                ¡Te has registrado con éxito en el evento {name}!
-            </Alert>
-            </Snackbar>
-        </Card>
-    );
-}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          ¡Te has registrado con éxito en el evento {name}!
+        </Alert>
+      </Snackbar>
+    </Card>
+  );
+};
 
 export default EventCard;

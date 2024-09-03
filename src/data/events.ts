@@ -15,7 +15,7 @@ export const events = [
     responsiblePerson: "Ernesto",
     pendingInterns: 8,
     selectedInterns: 5,
-    status: "PENDIENTE",
+    status: "SUPLENTE",
   },
   {
     id_event: 2,

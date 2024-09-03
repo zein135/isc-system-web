@@ -42,8 +42,8 @@ const EventsPage: React.FC = () => {
           aria-label="event tabs"
         >
           <Tab label="Eventos del mes" />
-          <Tab label="Evento próximo" />
-          <Tab label="Evento pasado" />
+          <Tab label="Eventos próximos" />
+          <Tab label="Eventos pasados" />
         </Tabs>
       </Box>
 

@@ -10,7 +10,7 @@ interface IUser {
   userId: number;
   name?: string;
   email?: string;
-  role?: string;
+  role_name?: string;
   token: string;
 }
 interface IUserStore {
