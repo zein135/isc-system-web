@@ -44,7 +44,7 @@ export const menu = [
     key: "events",
     path: "/events",
     text: "Eventos",
-    icon: <LocalActivityIcon color="primary" />,
+    icon: <EventIcon color="primary" />,
     roles: [STUDENT],
   },
   {
