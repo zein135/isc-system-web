@@ -24,12 +24,12 @@ import StudentPage from "../pages/Student/StudentsPage";
 import HoursPage from "../pages/ScholarshipHours/HoursPage";
 import EventTable from "../pages/Events/EventTable";
 import CompleteScholarshipHourPage from "../pages/CompleteScholarshipHour/CompleteScholarshipHourPage";
-import RegistrationEvent from "../components/cards/RegistrationEvent";
 import MyEventsTable from "../pages/interns/MyEventsTable";
 import "../style.css";
 import UsersPage from "../pages/Users/UsersPage";
 import AdministratorPage from "../pages/Administrator/AdministratorPage";
 import CreateUserPage from "../pages/Users/CreateUserPage";
+import EventHistory from "../components/cards/EventHistory";
 
 function loader() {
   return getProcess();
@@ -74,9 +74,8 @@ const protectedRoutes = [
       },
       {
         path: "/professors",
-        loader: loader,
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["admin", "professor"]}>
             <ProfessorPage />
           </RoleGuard>
         ),
@@ -183,10 +182,10 @@ const protectedRoutes = [
         ),
       },
       {
-        path: "/registrationEvent/:id_event",
+        path: "/EventHistory/:id_event",
         element: (
           <RoleGuard allowedRoles={["admin", "professor"]}>
-            <RegistrationEvent />
+            <EventHistory />
           </RoleGuard>
         ),
       },
@@ -211,6 +210,14 @@ const protectedRoutes = [
         element: (
           <RoleGuard allowedRoles={["admin", "student"]}>
             <CompleteScholarshipHourPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/eventHistory",
+        element: (
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <EventHistory />
           </RoleGuard>
         ),
       },

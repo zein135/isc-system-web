@@ -15,6 +15,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 import { events } from "../../data/events";
 import dayjs from "dayjs";
 
@@ -158,14 +159,29 @@ const EventTable = () => {
           }}
           pageSizeOptions={[5, 10]}
         />
-        <Dialog
+         <Dialog
           open={open}
-          onClose={handleClose}
+          onClose={(_, reason) => {
+            if (reason !== "backdropClick") { 
+              handleClose();
+            }
+          }}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">
+          <DialogTitle
+            id="alert-dialog-title"
+            sx={{ display: "flex", justifyContent: "space-between" }} 
+          >
             {"Confirmar eliminación"}
+            <IconButton
+              edge="end"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
@@ -177,7 +193,13 @@ const EventTable = () => {
             <Button onClick={handleClose} color="primary">
               Cancelar
             </Button>
-            <Button onClick={handleDelete} color="secondary" autoFocus>
+            <Button onClick={handleDelete} 
+            sx={{
+              backgroundColor: "red",
+              color: "white",
+              "&:hover": { backgroundColor: "darkred" },
+            }}
+            >
               Eliminar
             </Button>
           </DialogActions>

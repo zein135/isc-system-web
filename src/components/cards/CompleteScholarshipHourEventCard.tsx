@@ -1,8 +1,8 @@
-import { Button, Card, CardContent, Dialog, DialogActions, DialogTitle, Grid, Typography } from "@mui/material";
+import { Button, Card, CardContent, Dialog, DialogActions, DialogTitle, Grid, Typography, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import dayjs, { Dayjs } from "dayjs";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 
 interface CompleteScholarshipHourEventCardProps {
     event: {
@@ -19,7 +19,7 @@ interface CompleteScholarshipHourEventCardProps {
 }
 
 const CompleteScholarshipHourEventCard: FC<CompleteScholarshipHourEventCardProps> = ({ event }) => {
-    const { id_event: id_event, name: name, description: description, validatedHours: validatedHours, startDate: startDate, duration: duration, place: place, maxInterns: maxInterns, minInterns: minInterns } = event;
+    const { id_event, name, description, validatedHours, startDate, duration, place, maxInterns, minInterns } = event;
     const [dialogConfirmationFinishEvent, setDialogConfirmationFinishEventOpen] = useState(false);
     const [dialogShowTheResultsFinishEvent, setDialogShowTheResultsFinishEventOpen] = useState(false);
 
@@ -113,11 +113,23 @@ const CompleteScholarshipHourEventCard: FC<CompleteScholarshipHourEventCardProps
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
+                <DialogTitle id="alert-dialog-title" sx={{ position: "relative" }}>
+                    <IconButton
+                        aria-label="close"
+                        onClick={handleDialogConfirmationFinishEventClose}
+                        sx={{
+                            position: "absolute",
+                            right: 1,
+                            top: 1,
+                            color: (theme) => theme.palette.grey[800],
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
                     ¿Desea finalizar el evento {name}?
                 </DialogTitle>
                 <DialogActions sx={{ justifyContent: "center" }}>
-                    <Button onClick={handleDialogShowTheResultsFinishEventOpen} color="primary" autoFocus >
+                    <Button onClick={handleDialogShowTheResultsFinishEventOpen} color="error" variant="contained" autoFocus >
                         Finalizar
                     </Button>
                     <Button onClick={handleDialogConfirmationFinishEventClose} color="primary" autoFocus>
@@ -139,7 +151,6 @@ const CompleteScholarshipHourEventCard: FC<CompleteScholarshipHourEventCardProps
                         Ver resultados
                     </Button>
                 </DialogActions>
-
             </Dialog>
         </Card>
     );

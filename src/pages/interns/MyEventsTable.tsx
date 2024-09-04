@@ -1,14 +1,35 @@
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { events } from "../../data/events";
-import dayjs from "dayjs";
-import ContainerPage from "../../components/common/ContainerPage";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+import { events } from "../../data/events";
+import ContainerPage from "../../components/common/ContainerPage";
 
 const MyEventsTable = () => {
-  //TODO: add real logic to "no podre asistir" button
-  const [isDeleted, setIsDeleted] = useState(false);
+  const navigate = useNavigate();
+  const handleBackClick = () => {
+    navigate("/scholarshipHours");
+  };
+
+const [isDeleted, setIsDeleted] = useState(false);
   //TODO: change any to an interface
+
+  const buttonStyle = {
+    borderRadius: "5px",
+    width: "120px",
+    height: "30px",
+    transition: "background-color 0.3s ease",
+  };
+
+  const statusButtonStyle = {
+    ...buttonStyle,
+    borderRadius: "30px",
+    padding: "5px 10px",
+    textTransform: "none",
+  };
+
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -49,8 +70,19 @@ const MyEventsTable = () => {
           variant="contained"
           color="info"
           onClick={() => setIsDeleted((prev) => !prev)}
+          style={{
+            ...buttonStyle,
+            backgroundColor: "#191970",
+            color: "#FFFFFF",
+          }}
+          onMouseOver={(e) =>
+            (e.currentTarget.style.backgroundColor = "#99c2ff")
+          }
+          onMouseOut={(e) =>
+            (e.currentTarget.style.backgroundColor = "#191970")
+          }
         >
-          No podré asistir
+          Cancelar
         </Button>
       ),
     },
@@ -61,13 +93,20 @@ const MyEventsTable = () => {
       renderCell: (params: any) => (
         <Button
           variant="contained"
-          color={
-            params.row.status === "PENDIENTE"
-              ? "info"
-              : params.row.status === "ACEPTADO"
-              ? "success"
-              : "error"
-          }
+          style={{
+            ...statusButtonStyle,
+            backgroundColor:
+              params.row.status === "PENDIENTE"
+                ? "#5F9EA0"
+                : params.row.status === "ACEPTADO"
+                ? "#32CD32"
+                : params.row.status === "SUPLENTE"
+                ? "#000000"
+                : "#FF0000",
+            color: "#FFFFFF",
+            cursor: "default",
+          }}
+          disabled
         >
           {params.row.status}
         </Button>
@@ -86,35 +125,51 @@ const MyEventsTable = () => {
   const updatedRows = rows.slice(1, rows.length);
 
   return (
-    <ContainerPage
-      title="Eventos actuales"
-      subtitle="Administra y visualiza tus eventos"
-      actions={
-        <Button variant="contained" color="primary">
+    <div style={{ position: 'relative', height: '100vh', paddingTop: '19px' }}> 
+      <IconButton 
+        onClick={handleBackClick} 
+        aria-label="back"
+        style={{ 
+          position: 'absolute',
+          top: '17px', 
+          left: '-9px', 
+          zIndex: 1
+        }}
+      >
+        <ArrowBackIcon />
+      </IconButton>
+      <ContainerPage
+        title="Eventos actuales"
+        subtitle="Administra y visualiza tus eventos"
+        actions={
+          <>
+        <Button variant="contained" color="primary"  onClick={() => navigate("/eventHistory")} >
           HISTORIAL
         </Button>
-      }
-    >
-      <div style={{ height: 500, width: "100%" }}>
-        <DataGrid
-          rows={!isDeleted ? rows : updatedRows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          classes={{
-            root: "bg-white dark:bg-gray-800",
-            columnHeader: "bg-gray-200 dark:bg-gray-800 ",
-            cell: "bg-white dark:bg-gray-800",
-            row: "bg-white dark:bg-gray-800",
-            columnHeaderTitle: "!font-bold text-center",
-          }}
-          pageSizeOptions={[5, 10]}
-        />
-      </div>
-    </ContainerPage>
+          </>
+        }
+      >
+        <div style={{ height: 500, width: "100%" }}>
+          <DataGrid 
+            rows={!isDeleted ? rows : updatedRows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            classes={{
+              root: "bg-white dark:bg-gray-800",
+              columnHeader: "bg-gray-200 dark:bg-gray-800 ",
+              cell: "bg-white dark:bg-gray-800",
+              row: "bg-white dark:bg-gray-800",
+              columnHeaderTitle: "!font-bold text-center",
+            }}
+            pageSizeOptions={[5, 10]}
+          />
+        </div>
+      </ContainerPage>
+    </div>
   );
 };
 
