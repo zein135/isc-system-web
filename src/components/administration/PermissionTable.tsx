@@ -95,7 +95,7 @@ const PermissionTable = () => {
           <Button
             variant="contained"
             color="primary"
-            sx={{ marginRight: '20px' }}
+            sx={{ marginRight: '20px', borderRadius: '16px'}}
             onClick={() => { setShowModal(true) }}
           >
             Guardar
@@ -103,6 +103,7 @@ const PermissionTable = () => {
           <Button
             variant="outlined"
             color="secondary"
+            sx={{ borderRadius: '16px'}}
             onClick={cancelChanges}
           >
             Cancelar
