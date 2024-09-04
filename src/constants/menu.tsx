@@ -7,7 +7,7 @@ import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
-import EventIcon from '@mui/icons-material/Event';
+import LocalActivityIcon from '@mui/icons-material/Event';
 
 import { roles } from "./roles";
 const { ADMIN, PROFESSOR, STUDENT } = roles;
