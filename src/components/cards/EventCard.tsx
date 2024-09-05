@@ -15,7 +15,7 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import DialogContent from "@mui/material/DialogContent";
-import CloseIcon from "@mui/icons-material/Close"
+import CloseIcon from "@mui/icons-material/Close";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { FC, useState } from "react";
@@ -83,7 +83,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   };
 
   return (
-    <Card sx={{maxWidth: 345}} >
+    <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         title={name}
         titleTypographyProps={{
@@ -92,6 +92,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           color: "primary",
           fontWeight: "bold",
         }}
+        sx={{ minHeight: 100, maxHeight: 150 }}
       />
       <EventSubheader event={event} />
       <CardContent sx={{ flexGrow: 1 }}>
@@ -175,17 +176,17 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         </CardContent>
       </Collapse>
       <Dialog
-          open={dialogOpen}
-          onClose={(event, reason) => {
-            if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
-              handleDialogClose();
-            }
-          }}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+        open={dialogOpen}
+        onClose={(event, reason) => {
+          if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
+            handleDialogClose();
+          }
+        }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-        <IconButton
+          <IconButton
             aria-label="close"
             onClick={handleDialogClose}
             sx={{
