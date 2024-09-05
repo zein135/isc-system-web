@@ -92,10 +92,9 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           color: "primary",
           fontWeight: "bold",
         }}
-        sx={{ minHeight: 100, maxHeight: 150}}
       />
       <EventSubheader event={event} />
-      <CardContent>
+      <CardContent sx={{ flexGrow: 1 }}>
         <Typography
           fontSize={16}
           color="text.primary"
