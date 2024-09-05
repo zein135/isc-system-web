@@ -40,20 +40,22 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const EventCard: FC<EventCardProps> = ({ event }) => {
   const [expanded, setExpanded] = useState(false);
-  const {
-    name: name,
-    description: description,
-    startDate: startDate,
-    endDate: endDate,
-    duration: duration,
-    place: place,
-    responsiblePerson: responsiblePerson,
-    maxInterns: maxInterns,
-    minInterns: minInterns,
-  } = event;
   const [dialogOpen, setDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const {
+    title: title,
+    description: description,
+    start_date: start_date,
+    end_date: end_date,
+    duration_hours: duration_hours,
+    location: location,
+    max_interns: max_interns,
+    min_interns: min_interns,
+    responsible_intern_id: responsible_intern_id,
+    //TODO: get responsible intern info
+  } = event;
 
   dayjs.locale("es");
 
@@ -85,7 +87,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
-        title={name}
+        title={title}
         titleTypographyProps={{
           fontSize: 20,
           align: "center",
@@ -113,7 +115,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         >
           {description}
         </Typography>
-        {!showFullDescription && description.length > 0 && (
+        {!showFullDescription && description && description.length > 0 && (
           <Typography
             fontSize={16}
             color="primary"
@@ -152,26 +154,26 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
             marginTop={2}
           >
             <strong>Fecha inicial: </strong>{" "}
-            {dayjs(startDate).format("DD/MM/YYYY HH:mm")}
+            {dayjs(start_date).format("DD/MM/YYYY HH:mm")}
           </Typography>
           <Typography fontSize={15} color="text.primary" marginLeft={2}>
             <strong>Fecha final: </strong>{" "}
-            {dayjs(endDate).format("DD/MM/YYYY HH:mm")}
+            {dayjs(end_date).format("DD/MM/YYYY HH:mm")}
           </Typography>
           <Typography fontSize={15} color="text.primary" marginLeft={2}>
-            <strong>Encargado: </strong> {responsiblePerson}
+            <strong>Encargado: </strong> {responsible_intern_id}
           </Typography>
           <Typography fontSize={15} color="text.primary" marginLeft={2}>
-            <strong>Duración: </strong> {duration}
+            <strong>Duración: </strong> {duration_hours} horas
           </Typography>
           <Typography fontSize={15} color="text.primary" marginLeft={2}>
-            <strong>Lugar: </strong> {place}
+            <strong>Lugar: </strong> {location}
           </Typography>
           <Typography fontSize={15} color="text.primary" marginLeft={2}>
-            <strong>Máximo de Becarios: </strong> {maxInterns}
+            <strong>Máximo de Becarios: </strong> {max_interns}
           </Typography>
           <Typography fontSize={15} color="text.primary" marginLeft={2}>
-            <strong>Máximo de Suplentes: </strong> {minInterns}
+            <strong>Máximo de Suplentes: </strong> {min_interns}
           </Typography>
         </CardContent>
       </Collapse>
@@ -199,7 +201,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
             <CloseIcon />
           </IconButton>
           <Typography align="center" variant="h6">
-            ¿Estás seguro de inscribirte al evento "{name}"?
+            ¿Estás seguro de inscribirte al evento "{title}"?
           </Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
@@ -230,7 +232,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           severity="success"
           sx={{ width: "100%" }}
         >
-          ¡Te has registrado con éxito en el evento {name}!
+          ¡Te has registrado con éxito en el evento {title}!
         </Alert>
       </Snackbar>
     </Card>
