@@ -3,7 +3,15 @@ import { useNavigate } from "react-router-dom";
 import ContainerPage from "../../components/common/ContainerPage";
 import { useEffect, useState } from "react";
 import { getMentors } from "../../services/mentorsService";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
@@ -190,8 +198,8 @@ const ProfessorPage = () => {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                ¿Estás seguro de que deseas eliminar este docente? Esta
-                acción no se puede deshacer.
+                ¿Estás seguro de que deseas eliminar este docente? Esta acción
+                no se puede deshacer.
               </DialogContentText>
             </DialogContent>
             <DialogActions>

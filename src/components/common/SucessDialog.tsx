@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  Typography,  
+  Typography,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 

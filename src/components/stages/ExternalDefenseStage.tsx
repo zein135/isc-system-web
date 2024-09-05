@@ -95,21 +95,21 @@ export const ExternalDefenseStage: FC<ExternalDefenseStageProps> = ({
 
   const handlePresidentChange = (
     _event: React.ChangeEvent<unknown>,
-    value: Mentor | null
+    value: Mentor | null,
   ) => {
     formik.setFieldValue("president", value?.id || "");
   };
 
   const handleFirstJurorChange = (
     _event: React.ChangeEvent<unknown>,
-    value: Mentor | null
+    value: Mentor | null,
   ) => {
     formik.setFieldValue("firstJuror", value?.id || "");
   };
 
   const handleSecondJurorChange = (
     _event: React.ChangeEvent<unknown>,
-    value: Mentor | null
+    value: Mentor | null,
   ) => {
     formik.setFieldValue("secondJuror", value?.id || "");
   };

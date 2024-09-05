@@ -10,7 +10,6 @@ export interface Student {
   id: number;
 }
 
-
 export interface StudentForm {
   id: number;
   name: string;

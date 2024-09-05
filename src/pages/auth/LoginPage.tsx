@@ -11,7 +11,7 @@ import { useUserStore } from "../../store/store";
 const LoginPage = () => {
   const navigate = useNavigate();
   const { setUser } = useUserStore();
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const formik = useFormik({
@@ -33,7 +33,7 @@ const LoginPage = () => {
       try {
         const isAuthenticated = await authenticateUser(
           values.email,
-          values.password
+          values.password,
         );
         if (isAuthenticated) {
           localStorage.setItem("token", isAuthenticated.token);
