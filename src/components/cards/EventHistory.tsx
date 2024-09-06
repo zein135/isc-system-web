@@ -61,9 +61,9 @@ const SplitButton = ({ options }: { options: { label: string, onClick: () => voi
 
   return (
     <>
-      <ButtonGroup variant="contained" ref={anchorRef}>
+      <ButtonGroup variant="contained" ref={anchorRef}  style={{ marginLeft: '3%', marginTop:'19px' }}>
         <Button onClick={handleClick}>{options[selectedIndex].label}</Button>
-        <Button size="small" onClick={handleToggle}>
+        <Button size="small" onClick={handleToggle} >
           <ArrowDropDownIcon />
         </Button>
       </ButtonGroup>
@@ -98,15 +98,14 @@ const SplitButton = ({ options }: { options: { label: string, onClick: () => voi
   const groupedEvents = (semester: number) => groupEventsByMonth(filteredEvents(semester));
 
   return (
-    <div style={{ position: 'relative', padding: '40px' }}>
+    <div style={{ position: 'relative'}}>
       <IconButton
         onClick={() => window.history.back()}
         aria-label="back"
         style={{
           position: 'absolute',
-          top: '35px',
-          left: '-8px',
-          zIndex: 1
+          top: '17px',
+          left: '-9px',
         }}
       >
         <ArrowBackIcon />
@@ -124,13 +123,12 @@ const SplitButton = ({ options }: { options: { label: string, onClick: () => voi
           <Typography variant="h6" style={{ color: 'blue' }}>{month}</Typography>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px', maxWidth: '100%' }}>
             {events.map(({ id_event, name, startDate, place, validatedHours, status }) => (
-              <div key={id_event} style={{ border: '1px solid #ccc', padding: '10px', boxSizing: 'border-box', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div key={id_event} style={{ border: '1px solid #ccc', padding: '20px', boxSizing: 'border-box', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <Typography variant="body2" style={{ fontWeight: 'bold' }}>
                   {name} - {startDate.format("DD MMM YYYY")}
                 </Typography>
                 <div style={{ borderTop: '1px solid #ddd', paddingTop: '10px', marginTop: '10px', flexGrow: 1 }}>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
-                    {/* ... */}
                   </div>
                 </div>
                 <Typography variant="body2">Lugar: {place}</Typography>

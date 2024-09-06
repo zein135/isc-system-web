@@ -168,9 +168,8 @@ const InternsListPage = () => {
         aria-label="back"
         style={{
           position: 'absolute',
-          top: '20px',
-          left: '1px',
-          zIndex: 1
+          top: '17px',
+          left: '-9px',
         }}
       >
         <ArrowBackIcon />
