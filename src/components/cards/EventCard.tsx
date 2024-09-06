@@ -15,8 +15,8 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import DialogContent from "@mui/material/DialogContent";
+import CloseIcon from "@mui/icons-material/Close";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
 import "dayjs/locale/es";
 import { FC, useState } from "react";
 import "../../style.css";
@@ -57,8 +57,6 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
 
   dayjs.locale("es");
 
-  const navigate = useNavigate();
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -72,7 +70,8 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   };
 
   const handleConfirm = () => {
-    navigate("/registrationEvent/2", { state: { event } });
+    setSnackbarOpen(true);
+    setDialogOpen(false);
   };
 
   const handleSnackbarClose = () => {
@@ -84,14 +83,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   };
 
   return (
-    <Card
-      sx={{
-        maxWidth: 345,
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-      }}
-    >
+    <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         title={name}
         titleTypographyProps={{
@@ -100,6 +92,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           color: "primary",
           fontWeight: "bold",
         }}
+        sx={{ minHeight: 100, maxHeight: 150 }}
       />
       <EventSubheader event={event} />
       <CardContent sx={{ flexGrow: 1 }}>
@@ -182,14 +175,29 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           </Typography>
         </CardContent>
       </Collapse>
-
       <Dialog
         open={dialogOpen}
-        onClose={handleDialogClose}
+        onClose={(event, reason) => {
+          if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
+            handleDialogClose();
+          }
+        }}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogContent>
+          <IconButton
+            aria-label="close"
+            onClick={handleDialogClose}
+            sx={{
+              position: "absolute",
+              right: 4,
+              top: 4,
+              color: (theme) => theme.palette.grey[800],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
           <Typography align="center" variant="h6">
             ¿Estás seguro de inscribirte al evento "{name}"?
           </Typography>

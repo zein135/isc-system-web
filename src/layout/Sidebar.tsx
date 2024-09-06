@@ -12,6 +12,7 @@ import { Divider, ListItemButton } from "@mui/material";
 
 import UPB_LOGO from "../assets/upb_logo.png";
 import { menu } from "../constants/menu";
+import { useUserStore } from "../store/store";
 
 const drawerWidth = 240;
 
@@ -67,6 +68,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
+  const user = useUserStore((state) => state.user);
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -78,11 +80,16 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
     navigate(path);
   };
 
+  const filteredMenu = menu.filter((item) =>
+    item.roles?.some((role) => user?.roles?.includes(role))
+  );
+
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
         <img
           src={UPB_LOGO}
+          alt="UPB Logo"
           style={{ width: "100%", height: "auto", maxWidth: "125px" }}
           className="h-10 ms-6 me-1"
         />
@@ -96,20 +103,16 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
       </DrawerHeader>
       <Divider />
       <List>
-        {menu.map((item) => {
+        {filteredMenu.map((item) => {
           return (
-            <ListItem
-              key={item.key}
-              disablePadding
-              sx={{ display: "block" }}
-            >
+            <ListItem key={item.key} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
-                onClick={()=>goToPage(item.path)}
+                onClick={() => goToPage(item.path)}
               >
                 <ListItemIcon
                   sx={{
