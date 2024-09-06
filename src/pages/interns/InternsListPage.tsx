@@ -210,7 +210,6 @@ const InternsListPage = () => {
               }}
               pageSizeOptions={[5, 10]}
             />
-
             <Dialog
               open={editHoursOpen}
               onClose={handleEditHoursClose}
