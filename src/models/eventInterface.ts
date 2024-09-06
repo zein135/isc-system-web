@@ -16,7 +16,7 @@ export interface EventDetails {
 }
 
 export interface Event {
-  id?: number;
+  id: number;
   title: string;
   description?: string;
   assigned_hours: number;
