@@ -20,7 +20,7 @@ const InternsListPage = () => {
       code: "608555",
       time: "22:23",
       status: "Rechazado",
-      hours: "4 horas",
+      hours: 10,
     },
     {
       id: 2,
@@ -28,7 +28,7 @@ const InternsListPage = () => {
       code: "679523",
       time: "08:49",
       status: "Aceptado",
-      hours: "4 horas",
+      hours: 20,
     },
   ]);
   
@@ -44,7 +44,7 @@ const InternsListPage = () => {
   const handleHoursSave = () => {
     setStudents((prevStudents) =>
       prevStudents.map((student) =>
-        student.id === selectedId ? { ...student, hours: newHours } : student
+        student.id === selectedId ? { ...student, hours:Number (newHours) } : student
       )
     );
     handleEditHoursClose();
@@ -127,6 +127,7 @@ const InternsListPage = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+      renderCell: (params) => `${params.value} horas`,
     },
     {
       field: "edit",
@@ -214,8 +215,9 @@ const InternsListPage = () => {
               open={editHoursOpen}
               onClose={handleEditHoursClose}
               aria-labelledby="edit-hours-dialog-title"
+              
             >
-              <DialogTitle id="edit-hours-dialog-title">
+              <DialogTitle id="edit-hours-dialog-title" sx={{ mt: 2 }}>
                 Editar Horas Becarias de{" "}
                 {students.find((student) => student.id === selectedId)?.name}
               </DialogTitle>
@@ -228,6 +230,7 @@ const InternsListPage = () => {
                   right: 1,
                   top: 1,
                   color: (theme) => theme.palette.grey[800],
+                  padding:'7px'
                 }}
               >
                 <CloseIcon />
@@ -237,15 +240,15 @@ const InternsListPage = () => {
                   value={newHours}
                   onChange={(e) => setNewHours(e.target.value)}
                   label="Horas Becarias"
-                  type="text"
+                  type="number" 
                   margin="dense"
                 />
               </DialogContent>
-              <DialogActions>
-                <Button onClick={handleEditHoursClose} color="secondary">
+              <DialogActions sx={{ justifyContent: "flex", padding:'24px', marginTop:-4}}>
+                <Button onClick={handleEditHoursClose} className="cancel-button" variant="contained" sx={{ mr: 1 }}>
                   Cancelar
                 </Button>
-                <Button onClick={handleHoursSave} color="primary">
+                <Button onClick={handleHoursSave} className="confirm-button" variant="contained">
                   Guardar
                 </Button>
               </DialogActions>
