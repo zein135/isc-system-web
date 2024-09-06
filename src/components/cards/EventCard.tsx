@@ -22,7 +22,7 @@ import { FC, useState } from "react";
 import "../../style.css";
 import { EventCardProps } from "../../models/eventCardProps";
 import EventSubheader from "./EventSubheader";
-import { registerInternEventService } from "../../services/internsService";
+import { registerInternEventService } from "../../services/eventsService";
 import { useUserStore } from "../../store/store";
 
 interface ExpandMoreProps extends IconButtonProps {

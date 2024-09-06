@@ -7,13 +7,35 @@ export const getEventsService = async () => {
     if (response.status === 200) {
       return response.data;
     } else {
-      throw new Error("Failed to get events");
+      return { error: "Failed to get events" };
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data.message || "Network error");
+      return { error: error.response?.data.message || "Network error" };
     } else {
-      throw new Error("An unexpected error occurred");
+      return { error: "An unexpected error occurred" };
+    }
+  }
+};
+
+export const registerInternEventService = async (
+  id_event: number,
+  id_intern: number
+) => {
+  try {
+    const response = await apiClient.post(`events/${id_event}/register`, {
+      id_becario: id_intern,
+    });
+    if (response.status === 201) {
+      return response.data;
+    } else {
+      return { error: "Failed to register intern on event" };
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return { error: error.response?.data.message || "Network error" };
+    } else {
+      return { error: "An unexpected error occurred" };
     }
   }
 };
