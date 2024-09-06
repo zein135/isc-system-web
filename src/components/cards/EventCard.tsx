@@ -22,6 +22,8 @@ import { FC, useState } from "react";
 import "../../style.css";
 import { EventCardProps } from "../../models/eventCardProps";
 import EventSubheader from "./EventSubheader";
+import { registerInternEventService } from "../../services/internsService";
+import { useUserStore } from "../../store/store";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -43,8 +45,14 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [alert, setAlert] = useState<{
+    severity: "success" | "error";
+    message: string;
+  } | null>(null);
+  const user = useUserStore((state) => state.user);
 
   const {
+    id: id_event,
     title: title,
     description: description,
     start_date: start_date,
@@ -71,7 +79,19 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
     setDialogOpen(false);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
+    const res = await registerInternEventService(id_event, user!.id);
+    if (res.success) {
+      setAlert({
+        severity: "success",
+        message: `¡Te has registrado con éxito en el evento ${title}!`,
+      });
+    } else {
+      setAlert({
+        severity: "error",
+        message: `No se pudo completar el registro para el evento ${title}. Por favor, intenta de nuevo más tarde.`,
+      });
+    }
     setSnackbarOpen(true);
     setDialogOpen(false);
   };
@@ -222,19 +242,21 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         </DialogActions>
       </Dialog>
 
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-      >
-        <Alert
+      {alert && (
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
           onClose={handleSnackbarClose}
-          severity="success"
-          sx={{ width: "100%" }}
         >
-          ¡Te has registrado con éxito en el evento {title}!
-        </Alert>
-      </Snackbar>
+          <Alert
+            onClose={handleSnackbarClose}
+            severity={alert.severity}
+            sx={{ width: "100%" }}
+          >
+            {alert.message}
+          </Alert>
+        </Snackbar>
+      )}
     </Card>
   );
 };
