@@ -58,7 +58,7 @@ const protectedRoutes = [
       {
         path: "/dashboard",
         element: (
-          <RoleGuard allowedRoles={["admin", "student", "professor"]}>
+          <RoleGuard allowedRoles={["admin", "professor", "student"]}>
             <DashboardPage />
           </RoleGuard>
         ),
@@ -75,7 +75,7 @@ const protectedRoutes = [
       {
         path: "/professors",
         element: (
-          <RoleGuard allowedRoles={["admin", "professor"]}>
+          <RoleGuard allowedRoles={["professor", "student"]}>
             <ProfessorPage />
           </RoleGuard>
         ),
@@ -84,7 +84,7 @@ const protectedRoutes = [
         path: "/students",
         loader: loader,
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["professor"]}>
             <StudentPage />
           </RoleGuard>
         ),
@@ -152,7 +152,7 @@ const protectedRoutes = [
       {
         path: "/events",
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["admin", "student", "professor"]}>
             <EventsPage />
           </RoleGuard>
         ),
@@ -192,7 +192,7 @@ const protectedRoutes = [
       {
         path: "/scholarshipHours",
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["student"]}>
             <HoursPage />
           </RoleGuard>
         ),
@@ -200,7 +200,7 @@ const protectedRoutes = [
       {
         path: "/programDirector",
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["admin", "professor"]}>
             <EventTable />
           </RoleGuard>
         ),
@@ -208,7 +208,7 @@ const protectedRoutes = [
       {
         path: "/CompleteScholarshipHour",
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["admin", "professor"]}>
             <CompleteScholarshipHourPage />
           </RoleGuard>
         ),
@@ -232,25 +232,33 @@ const protectedRoutes = [
       {
         path: "/administration",
         element: (
-          <AdministratorPage/>
+          <RoleGuard allowedRoles={["admin"]}>
+            <AdministratorPage/>
+          </RoleGuard>
         )
       },
       {
         path: "/users",
         element: (
-          <UsersPage/>
+          <RoleGuard allowedRoles={["admin"]}>
+            <UsersPage/>
+          </RoleGuard>
         )
       },
       {
         path: "/create-user",
         element: (
-          <CreateUserPage/>
+          <RoleGuard allowedRoles={["admin"]}>
+            <CreateUserPage/>
+          </RoleGuard>
         )
       },
       {
         path: "/edit-user/:id",
         element: (
-          <CreateUserPage/>
+          <RoleGuard allowedRoles={["admin"]}>
+            <CreateUserPage/>
+          </RoleGuard>
         )
       }
     ],
