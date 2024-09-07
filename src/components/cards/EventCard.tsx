@@ -215,7 +215,7 @@ const EventCard = ({ event }: EventCardProps) => {
             onClick={handleDialogClose}
             variant="contained"
             sx={{
-              backgroundColor: "blue",
+              backgroundColor: "primary",
               color: "white",
               marginRight: 2,
               fontWeight: 'bold',

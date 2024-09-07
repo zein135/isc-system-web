@@ -1,15 +1,14 @@
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import ContainerPage from "../../components/common/ContainerPage";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-} from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
@@ -31,7 +30,6 @@ const EventTable = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
-      // TODO: change any to an interface 
       valueGetter: (params: any) =>
         dayjs(params.startDate).format("DD/MM/YYYY"),
     },
@@ -102,7 +100,6 @@ const EventTable = () => {
   };
 
   const handleView = (id: number) => {
-    // TODO: use id to show proper event details
     navigate(`/interns`);
   };
 
@@ -173,7 +170,9 @@ const EventTable = () => {
             id="alert-dialog-title"
             sx={{ display: "flex", justifyContent: "space-between" }} 
           >
-            {"Confirmar eliminación"}
+            <Typography sx={{ textAlign: 'center', width: '100%', fontWeight: 'bold' }}>
+              Confirmar eliminación
+            </Typography>
             <IconButton
               edge="end"
               color="inherit"
@@ -184,21 +183,32 @@ const EventTable = () => {
             </IconButton>
           </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" sx={{ textAlign: 'center' }}>
               ¿Estás seguro de que deseas eliminar este evento? Esta acción no
               se puede deshacer.
             </DialogContentText>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
+          <DialogActions sx={{ justifyContent: "flex-end", padding: '16px', gap: '16px' }}>
+            <Button
+              onClick={handleClose}
+              color="primary"
+              variant="contained"
+              sx={{
+                color: 'white',
+                fontWeight: 'bold',
+                marginRight: '8px',
+              }}
+            >
               Cancelar
             </Button>
-            <Button onClick={handleDelete} 
-            sx={{
-              backgroundColor: "red",
-              color: "white",
-              "&:hover": { backgroundColor: "darkred" },
-            }}
+            <Button
+              onClick={handleDelete}
+              sx={{
+                backgroundColor: "red",
+                color: "white",
+                fontWeight: 'bold',
+                "&:hover": { backgroundColor: "darkred" },
+              }}
             >
               Eliminar
             </Button>

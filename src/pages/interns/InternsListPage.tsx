@@ -1,4 +1,13 @@
-import { Button, IconButton, TextField, Dialog, DialogActions, DialogTitle, DialogContent, MenuItem, Select, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add'; 
 import CloseIcon from "@mui/icons-material/Close";
@@ -220,7 +229,7 @@ const InternsListPage = () => {
                 <Typography variant="h6" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
                   Editar Horas Becarias
                 </Typography>
-                <Typography variant="subtitle1" sx={{ textAlign: 'center', mt: 1 }}>
+                <Typography variant="subtitle1" sx={{ textAlign: 'left', mt: 1 }}>
                   {students.find((student) => student.id === selectedId)?.name}
                 </Typography>
               </DialogTitle>
@@ -250,7 +259,7 @@ const InternsListPage = () => {
               <DialogActions sx={{ justifyContent: 'flex-end', padding: '24px' }}>
                 <Button
                   onClick={handleEditHoursClose}
-                  sx={{color: 'white', backgroundColor: 'blue', '&:hover': {backgroundColor: 'darkblue'},fontWeight: 'bold', marginRight: 2}}
+                  sx={{color: 'white', backgroundColor: 'primary', '&:hover': {backgroundColor: 'darkblue'},fontWeight: 'bold', marginRight: 2}}
                   variant="contained"
                 >
                   Cancelar

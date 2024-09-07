@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -99,29 +99,60 @@ const CompleteScholarshipHourEventCard = ({ event }) => {
                     </Grid>
                 </Grid>
             </CardContent>
+            
             <Dialog
                 open={dialogConfirmationFinishEvent}
-                onClose={handleDialogConfirmationFinishEventClose}
+                onClose={(_, reason) => {
+                    if (reason !== "backdropClick") {
+                        handleDialogConfirmationFinishEventClose();
+                    }
+                }}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
+                <DialogTitle id="alert-dialog-title" sx={{ textAlign: "center", position: "relative" }}>
                     <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                         Seguro de finalizar evento
                     </Typography>
-                    <Typography variant="body1">
+                    <Button
+                        onClick={handleDialogConfirmationFinishEventClose}
+                        sx={{
+                            position: "absolute",
+                            top: 8,
+                            right: 8,
+                            minWidth: 32,
+                            minHeight: 32,
+                            padding: 0,
+                            color: "grey",
+                            fontSize: "1.25rem",
+                        }}
+                    >
+                        &#10005;
+                    </Button>
+                    <Typography variant="body1" sx={{ marginTop: 1 }}>
                         ¿Estás seguro de que deseas finalizar este evento? Esta acción no se puede deshacer.
                     </Typography>
                 </DialogTitle>
-                <DialogActions sx={{ justifyContent: "flex-end", padding: "16px" }}>
-                    <Button onClick={handleDialogShowTheResultsFinishEventOpen} color="error" variant="contained" autoFocus>
+                <DialogActions sx={{ justifyContent: "flex-end", padding: "16px", gap: 2 }}>
+                    <Button
+                        onClick={handleDialogShowTheResultsFinishEventOpen}
+                        color="error"
+                        variant="contained"
+                        sx={{ textTransform: "none", fontWeight: "bold" }}
+                    >
                         Finalizar
                     </Button>
-                    <Button onClick={handleDialogConfirmationFinishEventClose} color="primary" autoFocus>
+                    <Button
+                        onClick={handleDialogConfirmationFinishEventClose}
+                        color="primary"
+                        variant="contained"
+                        sx={{ textTransform: "none", fontWeight: "bold", backgroundColor: "blue", color: "white" }}
+                    >
                         Cancelar
                     </Button>
                 </DialogActions>
             </Dialog>
+
             <Dialog
                 open={dialogShowTheResultsFinishEvent}
                 onClose={handleDialogShowTheResultsFinishEventClose}
@@ -132,7 +163,7 @@ const CompleteScholarshipHourEventCard = ({ event }) => {
                     {name} finalizado exitosamente.
                 </DialogTitle>
                 <DialogActions sx={{ justifyContent: "center" }}>
-                    <Button onClick={handleConfirmationEnding} color="primary" autoFocus >
+                    <Button onClick={handleConfirmationEnding} color="primary" autoFocus>
                         Ver resultados
                     </Button>
                 </DialogActions>
