@@ -4,8 +4,6 @@ import apiClient from "./apiInstance";
 export const getInternService = async (intern_id: number) => {
     try {
       const response = await apiClient.get(`/interns/${intern_id}`);
-      console.log(response);
-      debugger;
       if (response.status === 200) {
         return response.data;
       } else {
