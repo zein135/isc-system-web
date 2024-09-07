@@ -1,16 +1,7 @@
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import Typography from "@mui/material/Typography";
+import { Button, IconButton, TextField, Dialog, DialogActions, DialogTitle, DialogContent, MenuItem, Select, Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add'; 
 import CloseIcon from "@mui/icons-material/Close";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
@@ -104,6 +95,7 @@ const InternsListPage = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+
       renderCell: (params) => (
         <Select
           fullWidth
@@ -143,6 +135,7 @@ const InternsListPage = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+
       renderCell: (params) => (
         <Button
           variant="contained"
@@ -223,14 +216,11 @@ const InternsListPage = () => {
               aria-labelledby="edit-hours-dialog-title"
               sx={{ '& .MuiDialog-paper': { width: '500px', maxWidth: '80%' } }}
             >
-              <DialogTitle id="edit-hours-dialog-title">
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: 'bold', color: 'text.primary' }}
-            >
-                Editar Horas Becarias
+              <DialogTitle id="edit-hours-dialog-title" sx={{ mt: 2 }}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+                  Editar Horas Becarias
                 </Typography>
-                <Typography variant="h6" sx={{ mt: 1 }}>
+                <Typography variant="subtitle1" sx={{ textAlign: 'center', mt: 1 }}>
                   {students.find((student) => student.id === selectedId)?.name}
                 </Typography>
               </DialogTitle>
@@ -243,6 +233,7 @@ const InternsListPage = () => {
                     right: 8,
                     top: 8,
                     color: (theme) => theme.palette.grey[800],
+                    padding: '7px'
                   }}
                 >
                   <CloseIcon />
@@ -252,21 +243,21 @@ const InternsListPage = () => {
                   value={newHours}
                   onChange={(e) => setNewHours(e.target.value)}
                   label="Horas Becarias"
-                  type="number"
+                  type="number" 
                   margin="dense"
                 />
               </DialogContent>
-              <DialogActions>
+              <DialogActions sx={{ justifyContent: 'flex-end', padding: '24px' }}>
                 <Button
                   onClick={handleEditHoursClose}
-                  sx={{ color: 'blue', borderColor: 'blue', '&:hover': { backgroundColor: 'lightblue', borderColor: 'blue' } }}
-                  variant="outlined"
+                  sx={{color: 'white', backgroundColor: 'blue', '&:hover': {backgroundColor: 'darkblue'},fontWeight: 'bold', marginRight: 2}}
+                  variant="contained"
                 >
                   Cancelar
                 </Button>
                 <Button
                   onClick={handleHoursSave}
-                  sx={{ color: 'white', backgroundColor: 'red', '&:hover': { backgroundColor: 'darkred' } }}
+                  sx={{color: 'white', backgroundColor: 'red', '&:hover': {backgroundColor: 'darkred'},fontWeight: 'bold'}}
                   variant="contained"
                 >
                   Guardar

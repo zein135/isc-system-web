@@ -187,10 +187,9 @@ const EventCard = ({ event }: EventCardProps) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         maxWidth="sm" 
-        fullWidth
       >
         <DialogTitle>
-          <Typography variant="h5" align="center" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+          <Typography variant="h5" align="center">
             Confirmar inscripción
           </Typography>
           <IconButton
@@ -211,18 +210,29 @@ const EventCard = ({ event }: EventCardProps) => {
             ¿Estás seguro de inscribirte al evento "{name}"?
           </Typography>
         </DialogContent>
-        <DialogActions sx={{ justifyContent: "flex-end", padding: "16px" }}>
+        <DialogActions sx={{ justifyContent: "flex-end", padding: "24px" }}>
           <Button
             onClick={handleDialogClose}
             variant="contained"
-            sx={{ backgroundColor: "blue", color: "white" }}
+            sx={{
+              backgroundColor: "blue",
+              color: "white",
+              marginRight: 2,
+              fontWeight: 'bold',
+              minWidth: '120px',
+            }}
           >
             Cancelar
           </Button>
           <Button
             onClick={handleConfirm}
             variant="contained"
-            sx={{ backgroundColor: "red", color: "white", marginLeft: "8px" }}
+            sx={{
+              backgroundColor: "red",
+              color: "white",
+              fontWeight: 'bold',
+              minWidth: '120px',
+            }}
           >
             Confirmar
           </Button>
