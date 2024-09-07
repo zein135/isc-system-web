@@ -5,7 +5,6 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -22,6 +21,7 @@ const EventTable = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedEventName, setSelectedEventName] = useState<string>("");
 
   const columns: GridColDef[] = [
     {
@@ -86,7 +86,7 @@ const EventTable = () => {
           <IconButton
             color="secondary"
             aria-label="eliminar"
-            onClick={() => handleClickOpen(params.row.id_event)}
+            onClick={() => handleClickOpen(params.row.id_event, params.row.name)}
           >
             <DeleteIcon />
           </IconButton>
@@ -107,19 +107,21 @@ const EventTable = () => {
     navigate(`/editEvent/${id}`);
   };
 
-  const handleClickOpen = (id: number) => {
+  const handleClickOpen = (id: number, name: string) => {
     setSelectedId(id);
+    setSelectedEventName(name);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
     setSelectedId(null);
+    setSelectedEventName("");
   };
 
   const handleDelete = async () => {
     // TODO: add actual delete event logic
-    setOpen(false)
+    setOpen(false);
   };
 
   return (
@@ -156,7 +158,7 @@ const EventTable = () => {
           }}
           pageSizeOptions={[5, 10]}
         />
-         <Dialog
+        <Dialog
           open={open}
           onClose={(_, reason) => {
             if (reason !== "backdropClick") { 
@@ -165,10 +167,12 @@ const EventTable = () => {
           }}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+          maxWidth="xs"
+          fullWidth
         >
           <DialogTitle
             id="alert-dialog-title"
-            sx={{ display: "flex", justifyContent: "space-between" }} 
+            sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: '8px 16px' }} 
           >
             <Typography sx={{ textAlign: 'center', width: '100%', fontWeight: 'bold' }}>
               Confirmar eliminación
@@ -182,13 +186,12 @@ const EventTable = () => {
               <CloseIcon />
             </IconButton>
           </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description" sx={{ textAlign: 'center' }}>
-              ¿Estás seguro de que deseas eliminar este evento? Esta acción no
-              se puede deshacer.
-            </DialogContentText>
+          <DialogContent sx={{ padding: '16px' }}>
+            <Typography variant="body1" align="center">
+              ¿Estás seguro de eliminar el evento "{selectedEventName}"? Esta acción no se puede deshacer.
+            </Typography>
           </DialogContent>
-          <DialogActions sx={{ justifyContent: "flex-end", padding: '16px', gap: '16px' }}>
+          <DialogActions sx={{ justifyContent: "flex-end", padding: '8px 16px', gap: '8px' }}>
             <Button
               onClick={handleClose}
               color="primary"
@@ -196,7 +199,7 @@ const EventTable = () => {
               sx={{
                 color: 'white',
                 fontWeight: 'bold',
-                marginRight: '8px',
+                minWidth: '80px',
               }}
             >
               Cancelar
@@ -207,6 +210,7 @@ const EventTable = () => {
                 backgroundColor: "red",
                 color: "white",
                 fontWeight: 'bold',
+                minWidth: '80px',
                 "&:hover": { backgroundColor: "darkred" },
               }}
             >

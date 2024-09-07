@@ -189,7 +189,7 @@ const EventCard = ({ event }: EventCardProps) => {
         maxWidth="sm" 
       >
         <DialogTitle>
-          <Typography variant="h5" align="center">
+          <Typography variant="h5" align="center" sx={{ fontWeight: 'bold' }}>
             Confirmar inscripción
           </Typography>
           <IconButton

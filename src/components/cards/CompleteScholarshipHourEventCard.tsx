@@ -111,7 +111,7 @@ const CompleteScholarshipHourEventCard = ({ event }) => {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title" sx={{ textAlign: "center", position: "relative" }}>
-                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                    <Typography variant="h5" align="center" sx={{ fontWeight: 'bold' }}>
                         Seguro de finalizar evento
                     </Typography>
                     <Button
@@ -146,7 +146,7 @@ const CompleteScholarshipHourEventCard = ({ event }) => {
                         onClick={handleDialogConfirmationFinishEventClose}
                         color="primary"
                         variant="contained"
-                        sx={{ textTransform: "none", fontWeight: "bold", backgroundColor: "blue", color: "white" }}
+                        sx={{ textTransform: "none", fontWeight: "bold", backgroundColor: "primary", color: "white" }}
                     >
                         Cancelar
                     </Button>

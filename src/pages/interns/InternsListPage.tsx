@@ -226,10 +226,10 @@ const InternsListPage = () => {
               sx={{ '& .MuiDialog-paper': { width: '500px', maxWidth: '80%' } }}
             >
               <DialogTitle id="edit-hours-dialog-title" sx={{ mt: 2 }}>
-                <Typography variant="h6" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+                <Typography variant="h5" align="center" sx={{ fontWeight: 'bold' }}>
                   Editar Horas Becarias
                 </Typography>
-                <Typography variant="subtitle1" sx={{ textAlign: 'left', mt: 1 }}>
+                <Typography variant="body1" sx={{ textAlign: 'left', mt: 1 }}>
                   {students.find((student) => student.id === selectedId)?.name}
                 </Typography>
               </DialogTitle>
