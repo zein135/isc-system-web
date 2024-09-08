@@ -11,15 +11,10 @@ import { Role } from "../../models/roleInterface";
 import { UserFormProps } from "../../models/userFormPropsInterface";
 
 const CreateUserPage = ({handleClose, openCreate, user = null} : UserFormProps) => {
-  console.log(user)
-
-  // const navigate = useNavigate()
-  // const {id} = useParams()
   const [isSuccesOpen, setIsSuccessOpen] = useState<boolean>(false)
   const [isErrorOpen, setIsErrorOpen] = useState<boolean>(false)
   const [roles, setRoles] = useState<Role[]>([])
   const [isTeacher, setIsTeacher] = useState<boolean>(false)
-  // const isTeacher = (user && user.degree)
 
   const validationSchema = Yup.object({
     name: Yup.string().required("El nombre completo es obligatorio"),
@@ -62,7 +57,6 @@ const CreateUserPage = ({handleClose, openCreate, user = null} : UserFormProps) 
           setIsSuccessOpen(true)  
           resetForm();
         } catch (error) {
-          console.log(error)
           setIsErrorOpen(true)
         }
       },

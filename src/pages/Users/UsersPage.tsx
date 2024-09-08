@@ -86,7 +86,6 @@ const UsersPage = () => {
     setFilteredUsers(filteredData);
   };
   
-
     const columns: GridColDef[] = [
         {
           field: "code",
@@ -182,7 +181,6 @@ const UsersPage = () => {
     },[])
 
     const countStudentsWithRole = (role: string) => {
-      console.log("user", user)
       return users.filter(user => user.roles.includes(role)).length
     }
 
