@@ -31,7 +31,7 @@ const EventTable = () => {
       align: "center",
       flex: 1,
       valueGetter: (params: any) =>
-        dayjs(params.startDate).format("DD/MM/YYYY"),
+        dayjs(params.row.startDate).format("DD/MM/YYYY"),
     },
     {
       field: "name",
@@ -42,7 +42,7 @@ const EventTable = () => {
     },
     {
       field: "responsiblePerson",
-      headerName: "Supervisor del evento",
+      headerName: "Supervisor del Evento",
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -60,6 +60,18 @@ const EventTable = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+      renderCell: (params) => (
+        <Typography
+          onClick={() => handleView(params.row.id_event)}
+          sx={{
+            color: 'black',
+            cursor: 'pointer',
+            textDecoration: 'underline',
+          }}
+        >
+          {params.value}
+        </Typography>
+      ),
     },
     {
       field: "actions",
@@ -67,26 +79,26 @@ const EventTable = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
-      renderCell: (params) => (
+      renderCell: () => (
         <div>
           <IconButton
-            color="primary"
+            color="default"
             aria-label="ver"
-            onClick={() => handleView(params.row.id_event)}
+            sx={{ visibility: 'hidden' }}
           >
             <VisibilityIcon />
           </IconButton>
           <IconButton
-            color="primary"
+            color="default"
             aria-label="editar"
-            onClick={() => handleEdit(params.row.id_event)}
+            sx={{ visibility: 'hidden' }}
           >
             <EditIcon />
           </IconButton>
           <IconButton
-            color="secondary"
+            color="default"
             aria-label="eliminar"
-            onClick={() => handleClickOpen(params.row.id_event, params.row.name)}
+            sx={{ visibility: 'hidden' }}
           >
             <DeleteIcon />
           </IconButton>
@@ -100,7 +112,7 @@ const EventTable = () => {
   };
 
   const handleView = (id: number) => {
-    navigate(`/interns`);
+    navigate(`/eventsByInterns/${id}`);
   };
 
   const handleEdit = (id: string) => {
@@ -151,7 +163,7 @@ const EventTable = () => {
           }}
           classes={{
             root: "bg-white dark:bg-gray-800",
-            columnHeader: "bg-gray-200 dark:bg-gray-800 ",
+            columnHeader: "bg-gray-200 dark:bg-gray-800",
             cell: "bg-white dark:bg-gray-800",
             row: "bg-white dark:bg-gray-800",
             columnHeaderTitle: "!font-bold text-center",
@@ -161,7 +173,7 @@ const EventTable = () => {
         <Dialog
           open={open}
           onClose={(_, reason) => {
-            if (reason !== "backdropClick") { 
+            if (reason !== "backdropClick") {
               handleClose();
             }
           }}
@@ -172,7 +184,7 @@ const EventTable = () => {
         >
           <DialogTitle
             id="alert-dialog-title"
-            sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: '8px 16px' }} 
+            sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: '8px 16px' }}
           >
             <Typography sx={{ textAlign: 'center', width: '100%', fontWeight: 'bold' }}>
               Confirmar eliminación
