@@ -108,8 +108,8 @@ const CreateUserPage = ({handleClose, openCreate, user = null} : UserFormProps) 
                 label={"Estudiante o Docente"}
                 onChange={handleChangeIsTeacher}
               >
-                <MenuItem value={true}>Docente</MenuItem>
-                <MenuItem value={false}>Estudiante</MenuItem>
+                <MenuItem value={"true"}>Docente</MenuItem>
+                <MenuItem value={"false"}>Estudiante</MenuItem>
               </Select>
               
             </Grid>
