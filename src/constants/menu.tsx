@@ -77,6 +77,7 @@ export const menu = [
     key: "users",
     path: "/users",
     text: "Usuarios",
-    icon: <SwitchAccountIcon color="primary"/>
+    icon: <SwitchAccountIcon color="primary"/>,
+    roles: [ADMIN]
   }
 ];

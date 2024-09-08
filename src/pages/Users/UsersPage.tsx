@@ -12,18 +12,22 @@ import ContainerPage from "../../components/common/ContainerPage";
 import { getRoles } from "../../services/roleService";
 import { Role } from "../../models/roleInterface";
 import { User } from "../../models/userInterface";
+import CreateUserPage from "../../components/users/CreateUserPage";
 
 const UsersPage = () => {
     const navigate = useNavigate()
     const [users, setUsers] = useState<User[]>([])
     const [filteredUsers, setFilteredUsers] = useState<User[]>(users);
     const [isOpenDelete, setOpenDelete] = useState(false)
+    const [isOpenCreate, setOpenCreate] = useState(false)
     const [selectedUser, setSelectedUser] = useState<number | null>(null)
     const [roles, setRoles] = useState([])
     const [search, setSearch] = useState("");
+    const [user, setUser] = useState<User | null>(null)
 
     const handleCreateUser = () => {
-      navigate("/create-user");
+      setUser(null)
+      setOpenCreate(true)
     };
 
     const handleView = (id: number) => {
@@ -31,7 +35,9 @@ const UsersPage = () => {
     };
 
     const handleEdit = (id: number) => {
-        navigate(`/edit-user/${id}`);
+      const editUser = users.find(user => user.id == id) || null
+      setUser(editUser)
+      setOpenCreate(true)
     };
 
     const handleClickDelete = (id: number) => {
@@ -104,7 +110,7 @@ const UsersPage = () => {
             flex: 1,
         },
         {
-            field: "cellphone",
+            field: "phone",
             headerName: "Teléfono", 
             headerAlign: "center",
             align: "center",
@@ -175,9 +181,14 @@ const UsersPage = () => {
         fetchRoles()
     },[])
 
+    const countStudentsWithRole = (role: string) => {
+      console.log("user", user)
+      return users.filter(user => user.roles.includes(role)).length
+    }
+
     return (
         <ContainerPage
-          title={"Usuarios"}
+          title={`Usuarios (${users.length})`}
           subtitle={"Lista de usuarios"}
           actions={
             <Button
@@ -221,11 +232,11 @@ const UsersPage = () => {
                       style={{height: 40 }}
                     >
                       {roles.map((rol: Role) => (
-                        <MenuItem value={rol.roleName}>{rol.roleName}</MenuItem>
+                        <MenuItem value={rol.roleName}>{rol.roleName} ({countStudentsWithRole(rol.roleName)})</MenuItem>
                       ))}
                     </Select>
-                    </FormControl>
-                  </Grid>
+                  </FormControl>
+                </Grid>
               </Grid>
               <DataGrid
                 rows={filteredUsers}
@@ -277,6 +288,16 @@ const UsersPage = () => {
                   </Button>
                 </DialogActions>
               </Dialog>
+
+              {isOpenCreate && <CreateUserPage 
+                openCreate={isOpenCreate}
+                handleClose={() => { 
+                  fetchUsers()
+                  setOpenCreate(false)
+                }}
+                user={user}
+              />}
+
             </div>
           }
         />

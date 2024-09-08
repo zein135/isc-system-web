@@ -9,6 +9,7 @@ interface RoleGuardProps {
 
 const RoleGuard: React.FC<RoleGuardProps> = ({ allowedRoles, children }) => {
   const user = useUserStore((state) => state.user);
+  console.log(user)
   const userRoles = user!.roles || []
 
   if (!user) {

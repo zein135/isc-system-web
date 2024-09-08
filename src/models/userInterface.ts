@@ -9,4 +9,5 @@ export interface User {
   code: number;
   phone: string;
   degree: string;
+  roles: string[];
 }
