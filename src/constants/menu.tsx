@@ -17,21 +17,21 @@ export const menu = [
     path: "/dashboard",
     text: "Dashboard",
     icon: <HomeIcon color="primary" />,
-    roles: [ADMIN, PROFESSOR],
+    roles: [ADMIN, PROFESSOR,STUDENT],
   },
   {
     key: "process",
     path: "/process",
     text: "Procesos",
     icon: <ChecklistOutlinedIcon color="primary" />,
-    roles: [ADMIN, PROFESSOR],
+    roles: [ADMIN, PROFESSOR,STUDENT],
   },
   {
     key: "professors",
     path: "/professors",
     text: "Docentes",
     icon: <SupervisorAccountIcon color="primary" />,
-    roles: [ADMIN],
+    roles: [PROFESSOR,STUDENT],
   },
   {
     key: "students",
@@ -45,7 +45,7 @@ export const menu = [
     path: "/events",
     text: "Eventos",
     icon: <EventIcon color="primary" />,
-    roles: [STUDENT],
+    roles: [ADMIN, STUDENT, PROFESSOR],
   },
   {
     key: "hours",
@@ -58,13 +58,14 @@ export const menu = [
     path: "/programDirector",
     text: "Jefe de carrera",
     icon: <EmojiPeopleIcon color="primary" />,
-    roles: [PROFESSOR],
+    roles: [PROFESSOR, ADMIN],
   },
   {
     key: "CompleteScholarship",
     path: "/CompleteScholarshipHour",
     text: "Finalizar",
     icon: <PendingActionsIcon color="primary" />,
+    roles: [PROFESSOR, ADMIN],
   },
   {
     key: "administration",
@@ -77,6 +78,7 @@ export const menu = [
     key: "users",
     path: "/users",
     text: "Usuarios",
-    icon: <SwitchAccountIcon color="primary"/>
+    icon: <SwitchAccountIcon color="primary"/>,
+    roles: [ADMIN],
   }
 ];
