@@ -114,9 +114,6 @@ const CreateForm = () => {
         const res = await createEventService(valuesWithTimezone);
         formik.resetForm();
         navigate("/programDirector");
-        console.log(res, "res de crear");
-        console.log("gg evento");
-        console;
         setMessage("Evento creado con éxito");
         setSuccessDialog(true);
       } catch (error) {
