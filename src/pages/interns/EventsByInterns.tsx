@@ -1,15 +1,10 @@
 import { useState } from 'react';
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Typography from "@mui/material/Typography";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import CloseIcon from "@mui/icons-material/Close";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useNavigate } from "react-router-dom";
 
 const EventByInterns = () => {
   const [editHoursOpen, setEditHoursOpen] = useState(false);
@@ -50,8 +45,8 @@ const EventByInterns = () => {
     {
       field: "code",
       headerName: "Código",
-      headerAlign: "left",
-      align: "left",
+      headerAlign: "center",
+      align: "center",
       flex: 1,
       headerClassName: 'headerStyle',
       cellClassName: 'cellStyle',
@@ -68,8 +63,8 @@ const EventByInterns = () => {
     {
       field: "semester",
       headerName: "Semestre",
-      headerAlign: "left",
-      align: "left",
+      headerAlign: "center",
+      align: "center",
       flex: 1,
       headerClassName: 'headerStyle',
       cellClassName: 'cellStyle',
@@ -77,8 +72,8 @@ const EventByInterns = () => {
     {
       field: "eventsCount",
       headerName: "Eventos",
-      headerAlign: "left",
-      align: "left",
+      headerAlign: "center",
+      align: "center",
       flex: 1,
       headerClassName: 'headerStyle',
       renderCell: (params) => (
@@ -90,21 +85,12 @@ const EventByInterns = () => {
   ];
 
   return (
-    <div style={{ position: 'relative', height: '100vh', padding: '20px' }}>
-      <IconButton
-        onClick={() => window.history.back()}
-        aria-label="back"
-        style={{
-          position: 'absolute',
-          top: '10px',
-          left: '10px',
-        }}
-      >
-        <ArrowBackIcon />
-      </IconButton>
-
-      <Typography variant="h4" color="primary" style={{ marginBottom: '20px' }}>
+    <div style={{ height: '100vh', padding: '20px' }}>
+      <Typography variant="h4" color="primary" style={{ marginBottom: '10px' }}>
         Becarios
+      </Typography>
+      <Typography variant="subtitle2" color="textSecondary" style={{ marginBottom: '20px' }}>
+        Lista de becarios
       </Typography>
 
       <div style={{ height: 400, width: "100%" }}>
@@ -115,10 +101,14 @@ const EventByInterns = () => {
           rowsPerPageOptions={[5, 10]}
           getRowId={(row) => row.id}
           sx={{
-            "& .MuiDataGrid-columnHeaders": { backgroundColor: "#d3d3d3" },
-            "& .MuiDataGrid-cell, & .MuiDataGrid-columnHeaderTitle": {
+            "& .MuiDataGrid-columnHeaders": { backgroundColor: "#d3d3d3" }, 
+            "& .MuiDataGrid-columnHeaderTitle": {
               color: "#000", 
               fontWeight: "bold", 
+            },
+            "& .MuiDataGrid-cell": {
+              color: "#000", 
+              fontWeight: "normal", 
             },
           }}
         />
@@ -132,37 +122,24 @@ const EventByInterns = () => {
       >
         <DialogTitle id="edit-hours-dialog-title">
           <Typography variant="h5" align="center" color="primary" style={{ fontWeight: 'bold' }}>
-            Detalles del Becario
+            {students.find((student) => student.id === selectedId)?.name} - {students.find((student) => student.id === selectedId)?.semester}
           </Typography>
         </DialogTitle>
         <DialogContent>
-          <IconButton
-            aria-label="close"
-            onClick={handleEditHoursClose}
-            style={{ position: "absolute", right: 8, top: 8 }}
-          >
-            <CloseIcon />
-          </IconButton>
           {selectedId && (
             <div>
-              <Typography variant="h6" color="primary">
-                {students.find((student) => student.id === selectedId)?.name}
-              </Typography>
-              <Typography variant="body1">
-                Semestre: {students.find((student) => student.id === selectedId)?.semester}
-              </Typography>
-              <table style={{ width: '100%', marginTop: '10px' }}>
+              <table style={{ width: '100%', marginTop: '10px', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr>
-                    <th style={{ textAlign: 'left' }}>Evento</th>
-                    <th style={{ textAlign: 'left' }}>Estado</th>
+                    <th style={{ textAlign: 'left', padding: '8px', backgroundColor: '#f0f0f0', border: '1px solid #ddd' }}>Evento</th>
+                    <th style={{ textAlign: 'left', padding: '8px', backgroundColor: '#f0f0f0', border: '1px solid #ddd' }}>Estado</th>
                   </tr>
                 </thead>
                 <tbody>
                   {students.find((student) => student.id === selectedId)?.events.map((event, index) => (
                     <tr key={index}>
-                      <td>{event.name}</td>
-                      <td style={{ color: event.status === "Supervisor" ? 'orange' : 'blue' }}>
+                      <td style={{ padding: '8px', border: '1px solid #ddd' }}>{event.name}</td>
+                      <td style={{ padding: '8px', border: '1px solid #ddd', color: event.status === "Supervisor" ? 'orange' : 'blue' }}>
                         {event.status}
                       </td>
                     </tr>
@@ -172,15 +149,6 @@ const EventByInterns = () => {
             </div>
           )}
         </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleEditHoursClose}
-            color="primary"
-            variant="contained"
-          >
-            Cerrar
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );
