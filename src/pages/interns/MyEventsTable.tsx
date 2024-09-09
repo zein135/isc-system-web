@@ -1,6 +1,17 @@
-import { Button, IconButton } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Snackbar,
+  Typography,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
@@ -8,15 +19,33 @@ import ContainerPage from "../../components/common/ContainerPage";
 import { Event } from "../../models/eventInterface";
 import { useUserStore } from "../../store/store";
 import { getInternEvents } from "../../services/internService";
+import { deleteInternFromEventService } from "../../services/eventsService";
 
 interface EventWithType extends Event {
   type: string;
 }
 
+interface RowData {
+  id?: number;
+  name: string;
+  startDate: string;
+  inscriptionPeriod: string;
+  cancelPeriod: string;
+  hours: string;
+  status: string;
+}
+
 const MyEventsTable = () => {
   const user = useUserStore((state) => state.user);
   const [events, setEvents] = useState<EventWithType[]>();
-  const [rows, setRows] = useState<any[]>([]);
+  const [rows, setRows] = useState<RowData[]>([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
+  const [alert, setAlert] = useState<{
+    severity: "success" | "error";
+    message: string;
+  } | null>(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const navigate = useNavigate();
   const handleBackClick = () => {
@@ -32,7 +61,6 @@ const MyEventsTable = () => {
 
   useEffect(() => {
     fetchMyEvents();
-    console.log(events, `events con id ${user!.id}`);
   }, []);
 
   useEffect(() => {
@@ -98,11 +126,11 @@ const MyEventsTable = () => {
       field: "actions",
       headerName: "Acciones",
       flex: 1,
-      renderCell: () => (
+      renderCell: (params) => (
         <Button
           variant="contained"
           color="info"
-          onClick={() => handleDeleteClick()}
+          onClick={() => handleDeleteClick(params.row.id)}
           style={{
             ...buttonStyle,
             backgroundColor: "#191970",
@@ -147,59 +175,170 @@ const MyEventsTable = () => {
     },
   ];
 
-  const handleDeleteClick = () => {
-    //TODO: implemente delete logi
+  const handleDeleteClick = (eventId: number) => {
+    setSelectedEventId(eventId);
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedEventId === null) return;
+
+    const res = await deleteInternFromEventService(selectedEventId, user!.id);
+    if (res.success) {
+      setAlert({
+        severity: "success",
+        message: `Evento eliminado con éxito.`,
+      });
+      fetchMyEvents();
+    } else {
+      setAlert({
+        severity: "error",
+        message: `No se pudo eliminar el evento. Por favor, intenta de nuevo más tarde.`,
+      });
+    }
+    setSnackbarOpen(true);
+    setDialogOpen(false);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
   return (
-    <div style={{ position: "relative", height: "100vh", paddingTop: "19px" }}>
-      <IconButton
-        onClick={handleBackClick}
-        aria-label="back"
-        style={{
-          position: "absolute",
-          top: "17px",
-          left: "-9px",
-          zIndex: 1,
+    <>
+      <div
+        style={{ position: "relative", height: "100vh", paddingTop: "19px" }}
+      >
+        <IconButton
+          onClick={handleBackClick}
+          aria-label="back"
+          style={{
+            position: "absolute",
+            top: "17px",
+            left: "-9px",
+            zIndex: 1,
+          }}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <ContainerPage
+          title="Eventos actuales"
+          subtitle="Administra y visualiza tus eventos"
+          actions={
+            <>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => navigate("/eventHistory")}
+              >
+                HISTORIAL
+              </Button>
+            </>
+          }
+        >
+          <div style={{ height: 500, width: "100%" }}>
+            <DataGrid
+              rows={rows || []}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 5 },
+                },
+              }}
+              classes={{
+                root: "bg-white dark:bg-gray-800",
+                columnHeader: "bg-gray-200 dark:bg-gray-800 ",
+                cell: "bg-white dark:bg-gray-800",
+                row: "bg-white dark:bg-gray-800",
+                columnHeaderTitle: "!font-bold text-center",
+              }}
+              pageSizeOptions={[5, 10]}
+            />
+          </div>
+        </ContainerPage>
+      </div>
+
+      <Dialog
+        open={dialogOpen}
+        onClose={(event, reason) => {
+          if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
+            handleDialogClose();
+          }
         }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth="sm"
       >
-        <ArrowBackIcon />
-      </IconButton>
-      <ContainerPage
-        title="Eventos actuales"
-        subtitle="Administra y visualiza tus eventos"
-        actions={
-          <>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => navigate("/eventHistory")}
-            >
-              HISTORIAL
-            </Button>
-          </>
-        }
-      >
-        <div style={{ height: 500, width: "100%" }}>
-          <DataGrid
-            rows={rows || []}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
+        <DialogTitle>
+          <Typography variant="h5" align="center" sx={{ fontWeight: "bold" }}>
+            Confirmar eliminación
+          </Typography>
+          <IconButton
+            aria-label="close"
+            onClick={handleDialogClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
             }}
-            classes={{
-              root: "bg-white dark:bg-gray-800",
-              columnHeader: "bg-gray-200 dark:bg-gray-800 ",
-              cell: "bg-white dark:bg-gray-800",
-              row: "bg-white dark:bg-gray-800",
-              columnHeaderTitle: "!font-bold text-center",
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant="body1" align="center">
+            ¿Estás seguro de eliminar este evento?
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: "flex-end", padding: "24px" }}>
+          <Button
+            onClick={handleDialogClose}
+            variant="contained"
+            sx={{
+              backgroundColor: "primary",
+              color: "white",
+              marginRight: 2,
+              fontWeight: "bold",
+              minWidth: "120px",
             }}
-            pageSizeOptions={[5, 10]}
-          />
-        </div>
-      </ContainerPage>
-    </div>
+          >
+            Cancelar
+          </Button>
+          <Button
+            onClick={handleConfirmDelete}
+            variant="contained"
+            sx={{
+              backgroundColor: "red",
+              color: "white",
+              fontWeight: "bold",
+              minWidth: "120px",
+            }}
+          >
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {alert && (
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
+          onClose={handleSnackbarClose}
+        >
+          <Alert
+            onClose={handleSnackbarClose}
+            severity={alert.severity}
+            sx={{ width: "100%" }}
+          >
+            {alert.message}
+          </Alert>
+        </Snackbar>
+      )}
+    </>
   );
 };
 
