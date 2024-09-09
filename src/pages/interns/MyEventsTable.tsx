@@ -16,14 +16,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import ContainerPage from "../../components/common/ContainerPage";
-import { Event } from "../../models/eventInterface";
 import { useUserStore } from "../../store/store";
 import { getInternEvents } from "../../services/internService";
 import { deleteInternFromEventService } from "../../services/eventsService";
-
-interface EventWithType extends Event {
-  type: string;
-}
+import { EventInternsType } from "../../models/eventInterface";
 
 interface RowData {
   id?: number;
@@ -36,8 +32,18 @@ interface RowData {
 }
 
 const MyEventsTable = () => {
+  const statusTranslation = (status: string) => {
+    const statusMap: Record<string, string> = {
+      accepted: "ACEPTADO",
+      rejected: "RECHAZADO",
+      reserve: "SUSPLENTE",
+      pending: "PENDIENTE"
+    };
+    return statusMap[status.toLowerCase()] || status;
+  };
+  
   const user = useUserStore((state) => state.user);
-  const [events, setEvents] = useState<EventWithType[]>();
+  const [events, setEvents] = useState<EventInternsType[]>();
   const [rows, setRows] = useState<RowData[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
@@ -53,7 +59,7 @@ const MyEventsTable = () => {
   };
 
   const fetchMyEvents = async () => {
-    const res = await getInternEvents(user!.id);
+    const res = await getInternEvents(1);
     if (res.success) {
       setEvents(res.data);
     }
@@ -76,8 +82,8 @@ const MyEventsTable = () => {
           cancelPeriod: `${
             dayjs(event.start_cancellation_date)?.format("DD/MM") ?? "N/A"
           } - ${dayjs(event.end_cancellation_date)?.format("DD/MM") ?? "N/A"}`,
-          hours: `${event.assigned_hours} horas`,
-          status: event.type.toLocaleUpperCase(),
+          hours: `${event.duration_hours} horas`,
+          status: statusTranslation(event.type),
         }))
       );
   }, [events]);
@@ -157,18 +163,18 @@ const MyEventsTable = () => {
           style={{
             ...statusButtonStyle,
             backgroundColor:
-              params.row.status === "PENDING"
+              params.row.status === "PENDIENTE"
                 ? "#5F9EA0"
-                : params.row.status === "ACCEPTED"
+                : params.row.status === "ACEPTADO"
                 ? "#32CD32"
-                : params.row.status === "RESERVE"
+                : params.row.status === "SUSPLENTE"
                 ? "#000000"
                 : "#FF0000",
             color: "#FFFFFF",
             cursor: "default",
           }}
           disabled
-        >
+          >
           {params.row.status}
         </Button>
       ),
@@ -263,7 +269,7 @@ const MyEventsTable = () => {
 
       <Dialog
         open={dialogOpen}
-        onClose={(event, reason) => {
+        onClose={(reason) => {
           if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
             handleDialogClose();
           }
