@@ -1,15 +1,13 @@
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import ContainerPage from "../../components/common/ContainerPage";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-} from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
@@ -23,6 +21,7 @@ const EventTable = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedEventName, setSelectedEventName] = useState<string>("");
 
   const columns: GridColDef[] = [
     {
@@ -31,7 +30,6 @@ const EventTable = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
-      // TODO: change any to an interface 
       valueGetter: (params: any) =>
         dayjs(params.startDate).format("DD/MM/YYYY"),
     },
@@ -88,7 +86,7 @@ const EventTable = () => {
           <IconButton
             color="secondary"
             aria-label="eliminar"
-            onClick={() => handleClickOpen(params.row.id_event)}
+            onClick={() => handleClickOpen(params.row.id_event, params.row.name)}
           >
             <DeleteIcon />
           </IconButton>
@@ -102,7 +100,6 @@ const EventTable = () => {
   };
 
   const handleView = (id: number) => {
-    // TODO: use id to show proper event details
     navigate(`/interns`);
   };
 
@@ -110,19 +107,21 @@ const EventTable = () => {
     navigate(`/editEvent/${id}`);
   };
 
-  const handleClickOpen = (id: number) => {
+  const handleClickOpen = (id: number, name: string) => {
     setSelectedId(id);
+    setSelectedEventName(name);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
     setSelectedId(null);
+    setSelectedEventName("");
   };
 
   const handleDelete = async () => {
     // TODO: add actual delete event logic
-    setOpen(false)
+    setOpen(false);
   };
 
   return (
@@ -159,7 +158,7 @@ const EventTable = () => {
           }}
           pageSizeOptions={[5, 10]}
         />
-         <Dialog
+        <Dialog
           open={open}
           onClose={(_, reason) => {
             if (reason !== "backdropClick") { 
@@ -168,12 +167,16 @@ const EventTable = () => {
           }}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+          maxWidth="xs"
+          fullWidth
         >
           <DialogTitle
             id="alert-dialog-title"
-            sx={{ display: "flex", justifyContent: "space-between" }} 
+            sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: '8px 16px' }} 
           >
-            {"Confirmar eliminación"}
+            <Typography sx={{ textAlign: 'center', width: '100%', fontWeight: 'bold' }}>
+              Confirmar eliminación
+            </Typography>
             <IconButton
               edge="end"
               color="inherit"
@@ -183,22 +186,33 @@ const EventTable = () => {
               <CloseIcon />
             </IconButton>
           </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              ¿Estás seguro de que deseas eliminar este evento? Esta acción no
-              se puede deshacer.
-            </DialogContentText>
+          <DialogContent sx={{ padding: '16px' }}>
+            <Typography variant="body1" align="center">
+              ¿Estás seguro de eliminar el evento "{selectedEventName}"? Esta acción no se puede deshacer.
+            </Typography>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
+          <DialogActions sx={{ justifyContent: "flex-end", padding: '8px 16px', gap: '8px' }}>
+            <Button
+              onClick={handleClose}
+              color="primary"
+              variant="contained"
+              sx={{
+                color: 'white',
+                fontWeight: 'bold',
+                minWidth: '80px',
+              }}
+            >
               Cancelar
             </Button>
-            <Button onClick={handleDelete} 
-            sx={{
-              backgroundColor: "red",
-              color: "white",
-              "&:hover": { backgroundColor: "darkred" },
-            }}
+            <Button
+              onClick={handleDelete}
+              sx={{
+                backgroundColor: "red",
+                color: "white",
+                fontWeight: 'bold',
+                minWidth: '80px',
+                "&:hover": { backgroundColor: "darkred" },
+              }}
             >
               Eliminar
             </Button>
