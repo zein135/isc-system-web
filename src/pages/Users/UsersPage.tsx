@@ -12,28 +12,34 @@ import ContainerPage from "../../components/common/ContainerPage";
 import { getRoles } from "../../services/roleService";
 import { Role } from "../../models/roleInterface";
 import { User } from "../../models/userInterface";
+import CreateUserPage from "../../components/users/CreateUserPage";
 
 const UsersPage = () => {
   const navigate = useNavigate()
   const [users, setUsers] = useState<User[]>([])
   const [filteredUsers, setFilteredUsers] = useState<User[]>(users);
   const [isOpenDelete, setOpenDelete] = useState(false)
+  const [isOpenCreate, setOpenCreate] = useState(false)
   const [selectedUser, setSelectedUser] = useState<number | null>(null)
   const [roles, setRoles] = useState([])
   const [filterRoles, setFilterRoles] = useState("")
   const [search, setSearch] = useState("");
+  const [user, setUser] = useState<User | null>(null)
 
-  const handleCreateUser = () => {
-    navigate("/create-user");
-  };
+    const handleCreateUser = () => {
+      setUser(null)
+      setOpenCreate(true)
+    };
 
   const handleView = (id: number) => {
     navigate(`/profile/${id}`);
   };
 
-  const handleEdit = (id: number) => {
-    navigate(`/edit-user/${id}`);
-  };
+    const handleEdit = (id: number) => {
+      const editUser = users.find(user => user.id == id) || null
+      setUser(editUser)
+      setOpenCreate(true)
+    };
 
   const handleClickDelete = (id: number) => {
     setSelectedUser(id)
@@ -94,7 +100,7 @@ const applyFilters = () => {
     }
 
     setFilteredUsers(filteredData);
-};
+  };
 
     const columns: GridColDef[] = [
         {
@@ -119,7 +125,7 @@ const applyFilters = () => {
             flex: 1,
         },
         {
-            field: "cellphone",
+            field: "phone",
             headerName: "Teléfono", 
             headerAlign: "center",
             align: "center",
@@ -190,9 +196,13 @@ const applyFilters = () => {
     fetchRoles()
   }, [])
 
+    const countStudentsWithRole = (role: string) => {
+      return users.filter(user => user.roles.includes(role)).length
+    }
+
     return (
         <ContainerPage
-          title={"Usuarios"}
+          title={`Usuarios (${users.length})`}
           subtitle={"Lista de usuarios"}
           actions={
             <Button
@@ -237,11 +247,11 @@ const applyFilters = () => {
                       onChange={handleSelectRoleChange}
                     >
                       {roles.map((rol: Role) => (
-                        <MenuItem value={rol.roleName}>{rol.roleName}</MenuItem>
+                        <MenuItem value={rol.roleName}>{rol.roleName} ({countStudentsWithRole(rol.roleName)})</MenuItem>
                       ))}
                     </Select>
-                    </FormControl>
-                  </Grid>
+                  </FormControl>
+                </Grid>
               </Grid>
               <DataGrid
                 rows={filteredUsers}
@@ -279,24 +289,34 @@ const applyFilters = () => {
               </DialogContentText>
             </DialogContent>
 
-            <DialogActions>
-              <Button
-                onClick={handleCloseDelete}
-                color="primary">
-                Cancelar
-              </Button>
+                <DialogActions>
+                  <Button 
+                    onClick={handleCloseDelete} 
+                    color="primary">
+                    Cancelar
+                  </Button>
+                  
+                  <Button 
+                    onClick={handleDelete} 
+                    color="secondary" autoFocus>
+                    Eliminar
+                  </Button>
+                </DialogActions>
+              </Dialog>
 
-              <Button
-                onClick={handleDelete}
-                color="secondary" autoFocus>
-                Eliminar
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-      }
-    />
-  )
+              {isOpenCreate && <CreateUserPage 
+                openCreate={isOpenCreate}
+                handleClose={() => { 
+                  fetchUsers()
+                  setOpenCreate(false)
+                }}
+                user={user}
+              />}
+
+            </div>
+          }
+        />
+    )
 }
 
 export default UsersPage;

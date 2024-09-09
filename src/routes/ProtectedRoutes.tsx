@@ -28,7 +28,6 @@ import MyEventsTable from "../pages/interns/MyEventsTable";
 import "../style.css";
 import UsersPage from "../pages/Users/UsersPage";
 import AdministratorPage from "../pages/Administrator/AdministratorPage";
-import CreateUserPage from "../pages/Users/CreateUserPage";
 import EventHistory from "../components/cards/EventHistory";
 
 function loader() {
@@ -242,22 +241,6 @@ const protectedRoutes = [
         element: (
           <RoleGuard allowedRoles={["admin"]}>
             <UsersPage/>
-          </RoleGuard>
-        )
-      },
-      {
-        path: "/create-user",
-        element: (
-          <RoleGuard allowedRoles={["admin"]}>
-            <CreateUserPage/>
-          </RoleGuard>
-        )
-      },
-      {
-        path: "/edit-user/:id",
-        element: (
-          <RoleGuard allowedRoles={["admin"]}>
-            <CreateUserPage/>
           </RoleGuard>
         )
       }
