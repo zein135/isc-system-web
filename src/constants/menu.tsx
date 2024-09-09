@@ -8,6 +8,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import EventIcon from "@mui/icons-material/Event";
+import ViewListIcon from "@mui/icons-material/ViewList";
 
 import { roles } from "./roles";
 const { ADMIN, PROFESSOR, STUDENT } = roles;
@@ -102,5 +103,12 @@ export const menu = [
     path: "/users",
     text: "Usuarios",
     icon: <SwitchAccountIcon color="primary" />,
+  },
+  {
+    key: "viewInterns", 
+    path: "/eventsByInterns", 
+    text: "Inscritos",
+    icon: <ViewListIcon color="primary" />, 
+    roles: [ADMIN, PROFESSOR],
   },
 ];

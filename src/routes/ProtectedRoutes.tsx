@@ -29,6 +29,7 @@ import "../style.css";
 import UsersPage from "../pages/Users/UsersPage";
 import AdministratorPage from "../pages/Administrator/AdministratorPage";
 import EventHistory from "../components/cards/EventHistory";
+import EventsByInternsPage from "../pages/interns/EventsByInterns";
 
 function loader() {
   return getProcess();
@@ -217,6 +218,14 @@ const protectedRoutes = [
         element: (
           <RoleGuard allowedRoles={["admin", "student"]}>
             <EventHistory />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "/eventsByInterns",  // Nueva ruta
+        element: (
+          <RoleGuard allowedRoles={["admin", "professor"]}>
+            <EventsByInternsPage />  // Componente que renderizará
           </RoleGuard>
         ),
       },
