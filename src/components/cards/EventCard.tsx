@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -15,10 +16,10 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import DialogContent from "@mui/material/DialogContent";
-import CloseIcon from "@mui/icons-material/Close"
+import DialogTitle from "@mui/material/DialogTitle";
+import CloseIcon from "@mui/icons-material/Close";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
-import { FC, useState } from "react";
 import "../../style.css";
 import { EventCardProps } from "../../models/eventCardProps";
 import EventSubheader from "./EventSubheader";
@@ -38,22 +39,23 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-const EventCard: FC<EventCardProps> = ({ event }) => {
+const EventCard = ({ event }: EventCardProps) => {
   const [expanded, setExpanded] = useState(false);
-  const {
-    name: name,
-    description: description,
-    startDate: startDate,
-    endDate: endDate,
-    duration: duration,
-    place: place,
-    responsiblePerson: responsiblePerson,
-    maxInterns: maxInterns,
-    minInterns: minInterns,
-  } = event;
   const [dialogOpen, setDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const {
+    name,
+    description,
+    startDate,
+    endDate,
+    duration,
+    place,
+    responsiblePerson,
+    maxInterns,
+    minInterns,
+  } = event;
 
   dayjs.locale("es");
 
@@ -83,7 +85,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   };
 
   return (
-    <Card sx={{maxWidth: 345}} >
+    <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         title={name}
         titleTypographyProps={{
@@ -92,10 +94,10 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           color: "primary",
           fontWeight: "bold",
         }}
-        sx={{ minHeight: 100, maxHeight: 150}}
+        sx={{ minHeight: 100, maxHeight: 150 }}
       />
       <EventSubheader event={event} />
-      <CardContent>
+      <CardContent sx={{ flexGrow: 1 }}>
         <Typography
           fontSize={16}
           color="text.primary"
@@ -176,46 +178,63 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         </CardContent>
       </Collapse>
       <Dialog
-          open={dialogOpen}
-          onClose={(event, reason) => {
-            if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
-              handleDialogClose();
-            }
-          }}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+        open={dialogOpen}
+        onClose={(event, reason) => {
+          if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
+            handleDialogClose();
+          }
+        }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth="sm" 
       >
-        <DialogContent>
-        <IconButton
+        <DialogTitle>
+          <Typography variant="h5" align="center" sx={{ fontWeight: 'bold' }}>
+            Confirmar inscripción
+          </Typography>
+          <IconButton
             aria-label="close"
             onClick={handleDialogClose}
             sx={{
               position: "absolute",
-              right: 4,
-              top: 4,
-              color: (theme) => theme.palette.grey[800],
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
             }}
           >
             <CloseIcon />
           </IconButton>
-          <Typography align="center" variant="h6">
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant="body1" align="center">
             ¿Estás seguro de inscribirte al evento "{name}"?
           </Typography>
         </DialogContent>
-        <DialogActions sx={{ justifyContent: "center" }}>
-          <Button
-            onClick={handleConfirm}
-            variant="contained"
-            className="confirm-button"
-          >
-            Confirmar
-          </Button>
+        <DialogActions sx={{ justifyContent: "flex-end", padding: "24px" }}>
           <Button
             onClick={handleDialogClose}
             variant="contained"
-            className="cancel-button"
+            sx={{
+              backgroundColor: "primary",
+              color: "white",
+              marginRight: 2,
+              fontWeight: 'bold',
+              minWidth: '120px',
+            }}
           >
             Cancelar
+          </Button>
+          <Button
+            onClick={handleConfirm}
+            variant="contained"
+            sx={{
+              backgroundColor: "red",
+              color: "white",
+              fontWeight: 'bold',
+              minWidth: '120px',
+            }}
+          >
+            Confirmar
           </Button>
         </DialogActions>
       </Dialog>

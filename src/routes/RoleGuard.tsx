@@ -9,12 +9,14 @@ interface RoleGuardProps {
 
 const RoleGuard: React.FC<RoleGuardProps> = ({ allowedRoles, children }) => {
   const user = useUserStore((state) => state.user);
+  const userRoles = "admin" //user!.roles || [];
+  //TODO: use real roles
 
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  const hasRole = allowedRoles.includes(user.role_name || "");
+  const hasRole = allowedRoles.some((role) => userRoles.includes(role));
 
   if (!hasRole) {
     return <Navigate to="/unauthorized" replace />;

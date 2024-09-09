@@ -2,7 +2,7 @@ import { Grid, Box, Button, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import GraphicHours from "./GraphicHours";
-import NumberCard from "../../components/common/NumberCard";
+import HoursCard from "../../components/common/HoursCard";
 
 interface HoursStats {
     totalHorasRequeridas: number;
@@ -16,10 +16,14 @@ function HoursPage() {
 
     useEffect(() => {
     setTimeout(() => {
+        const totalHorasRequeridas = 50;
+        const horasRealizadas = 50;
+        const horasFaltantes = totalHorasRequeridas - horasRealizadas;
+
         setStats({
-        totalHorasRequeridas: 50,
-        horasRealizadas: 0,
-        horasFaltantes: 50,
+            totalHorasRequeridas,
+            horasRealizadas,
+            horasFaltantes,
         });
     }, 1000);
     }, []);
@@ -38,7 +42,7 @@ function HoursPage() {
         <Grid item xs={22} md={4}>
             <Grid container spacing={3}>
             <Grid item xs={12}>
-                <NumberCard
+                <HoursCard
                 backgroundColor="#f3a43f"
                 textColor="#FFFFFF"
                 title="Total de Horas Requeridas"
@@ -48,7 +52,7 @@ function HoursPage() {
                 />
             </Grid>
             <Grid item xs={12}>
-                <NumberCard
+                <HoursCard
                 backgroundColor="#359be5"
                 textColor="#FFFFFF"
                 title="Horas Realizadas"
@@ -58,13 +62,13 @@ function HoursPage() {
                 />
             </Grid>
             <Grid item xs={12}>
-                <NumberCard
+                <HoursCard
                 backgroundColor="#ef4444"
                 textColor="#FFFFFF"
                 title="Horas Faltantes"
                 subtitle=""
                 count={stats?.horasFaltantes || 0}
-                percentage={100}
+                percentage={(stats?.horasFaltantes || 0) / (stats?.totalHorasRequeridas || 1) * 100}
                 />
             </Grid>
             </Grid>

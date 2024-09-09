@@ -89,11 +89,14 @@ const CreateForm = () => {
     },
   });
   return (
+    <Grid container spacing={0} alignItems="center">
+      <Grid container spacing={4} sx={{ padding: 2, position: 'relative' }}>
+        <IconButton onClick={handleBackNavigate} aria-label="back" sx={{ position: "absolute", left: 21, top: 60 }}>
+          <ArrowBackIcon />
+        </IconButton>
+    </Grid>
     <FormContainer>
       {loading && <LoadingOverlay message="Creando Evento..." />}
-          <IconButton onClick={handleBackNavigate} aria-label="back">
-              <ArrowBackIcon />
-          </IconButton>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2} sx={{ padding: 2 }}>
           <Grid item xs={12}>
@@ -317,6 +320,7 @@ const CreateForm = () => {
         subtitle={message}
       />
     </FormContainer>
+    </Grid>
   );
 };
 
