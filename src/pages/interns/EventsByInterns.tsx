@@ -54,8 +54,8 @@ const EventByInterns = () => {
     {
       field: "name",
       headerName: "Nombre",
-      headerAlign: "left",
-      align: "left",
+      headerAlign: "center",
+      align: "center",
       flex: 1,
       headerClassName: 'headerStyle',
       cellClassName: 'cellStyle',
