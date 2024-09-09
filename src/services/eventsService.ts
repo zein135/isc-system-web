@@ -5,10 +5,7 @@ import { Event } from "../models/eventInterface";
 export const getEventsService = async () => {
   try {
     const response = await apiClient.get("/events");
-    console.log(response);
-    console.log(response.data);
     if (response.status === 200) {
-      // SACA INFROMACION, SIN PROBLEMAS
       return response.data;
     } else {
       return { error: "Failed to get events" };
@@ -31,7 +28,6 @@ export const registerInternEventService = async (
       id_becario: id_intern,
     });
     if (response.status === 201) {
-      // SIN PROBLEMAS, CREA REGISTROS
       return response.data;
     } else {
       return { error: "Failed to register intern on event" };
