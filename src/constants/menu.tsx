@@ -6,6 +6,7 @@ import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import EventIcon from "@mui/icons-material/Event";
 
@@ -82,6 +83,13 @@ export const menu = [
     text: "Jefe de carrera",
     icon: <EmojiPeopleIcon color="primary" />,
     roles: [ADMIN, PROFESSOR],
+  },
+  {
+    key: "supervisor",
+    path: "/supervisor",
+    text: "Supervisor",
+    icon: <SupervisedUserCircleIcon color="primary" />,
+    roles: [ADMIN, STUDENT]
   },
   {
     key: "CompleteScholarship",
