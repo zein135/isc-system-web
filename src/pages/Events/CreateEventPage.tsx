@@ -41,9 +41,7 @@ const validationSchema = Yup.object({
     .required("La cantidad mínima de becarios es obligatoria")
     .min(1, "Debe haber al menos 1 becario"),
 
-  responsible_intern_id: Yup.string().required(
-    "El nombre del responsable es obligatorio"
-  ),
+  responsible_intern_id: Yup.number().notRequired(),
 });
 
 const CreateForm = () => {
@@ -76,6 +74,7 @@ const CreateForm = () => {
 
   const formik = useFormik<Event>({
     initialValues: {
+      // id: 4,
       title: "",
       description: "",
       assigned_hours: 0,
@@ -88,6 +87,7 @@ const CreateForm = () => {
       registration_deadline: "",
       start_cancellation_date: "",
       end_cancellation_date: "",
+      responsible_intern_id: 0
     },
     validationSchema,
     onSubmit: async () => {
@@ -431,27 +431,31 @@ const CreateForm = () => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={9}>
-                <TextField
-                  id="responsible_intern_id"
-                  name="responsible_intern_id"
-                  label="Encargado"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                  value={formik.values.responsible_intern_id}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.responsible_intern_id &&
-                    Boolean(formik.errors.responsible_intern_id)
-                  }
-                  helperText={
-                    formik.touched.responsible_intern_id &&
-                    formik.errors.responsible_intern_id
-                  }
-                />
-              </Grid>
             </Grid>
+            <Grid item xs={12} >
+            <Grid container spacing={2} sx={{padding: 2}}>
+              <Grid item xs={3}>
+                <Typography variant="h6" >Encargado</Typography>
+              </Grid>
+              <Grid item xs={9}>
+              <TextField
+                id="responsible_intern_id"
+                name="responsible_intern_id"
+                label="Encargado"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                type="number"
+                value={formik.values.responsible_intern_id}
+                onChange={formik.handleChange}
+                error={formik.touched.responsible_intern_id && Boolean(formik.errors.responsible_intern_id)}
+                helperText={formik.touched.responsible_intern_id && formik.errors.responsible_intern_id}
+              />
+              </Grid>
+
+            </Grid>
+          </Grid>    
+          
           </Grid>
           <Grid
             container
