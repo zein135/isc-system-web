@@ -105,4 +105,4 @@ const RoleComponent : React.FC<RoleComponentProps> = ({ role, selectedRole, onRo
     )
 }
 
-export default RoleComponent
+export default RoleComponent;
