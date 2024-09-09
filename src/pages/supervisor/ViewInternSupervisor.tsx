@@ -1,7 +1,8 @@
-import { Checkbox, TextField } from "@mui/material";
-import { DataGrid, GridColDef, GridRenderCellParams, GridRowId } from "@mui/x-data-grid";
 import { useState } from "react";
-
+import { Checkbox, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Grid } from "@mui/material";
+import dayjs from "dayjs";
+import * as XLSX from "xlsx"; 
+import EventDetailsPage from "../../components/common/EventDetailsPage"; 
 interface StudentRow {
   id: number;
   name: string;
@@ -10,21 +11,42 @@ interface StudentRow {
   assistance: boolean;
 }
 
+const eventDetails = {
+  title: "Evento de 100 mejores",
+  date: dayjs("2024-07-01T10:00:00Z"),
+  endDate: dayjs("2024-07-01T16:00:00Z"),
+  duration: 6,
+  scholarshipHours: "4 horas",
+  location: "Centro de Eventos, Campus Achocalla",
+  maxParticipants: 30,
+  minParticipants: 5,
+  responsiblePerson: "Juan",
+  description: "Se necesitan becarios que ayuden en la logística del evento donde se recibirá a los estudiantes ganadores de la beca 100 mejores.",
+  status: "PENDIENTE",
+};
+
 const ViewInternSupervisor = () => {
   const [students, setStudents] = useState<StudentRow[]>([
     {
       id: 1,
       name: "Alexia Diana Marín Mamani",
-      code: "608555",
-      observations: "",
-      assistance: true
+      code: "60855",
+      observations: "Hizo más de lo esperado",
+      assistance: true,
     },
     {
       id: 2,
       name: "Rodrigo Gustavo Reyes Monzón",
-      code: "679523",
-      observations: "",
-      assistance: false
+      code: "67952",
+      observations: "Desapareció después de la primera hora...",
+      assistance: false,
+    },
+    {
+      id: 3,
+      name: "Mishel Salma Espinoza Santander",
+      code: "61729",
+      observations: "Participación regular.",
+      assistance: false,
     },
   ]);
 
@@ -42,71 +64,67 @@ const ViewInternSupervisor = () => {
     setStudents(updatedStudents);
   };
 
-  const columns: GridColDef<StudentRow>[] = [
-    {
-      field: "name",
-      headerName: "Nombre del becario/a",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-    },
-    {
-      field: "code",
-      headerName: "Código",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-    },
-    {
-      field: "observations",
-      headerName: "Observaciones",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-      editable: true,
-      renderCell: (params: GridRenderCellParams<StudentRow, string>) => (
-        <TextField
-          value={params.value || ""}
-          onChange={(event) => handleObservationChange(params.id as number, event.target.value)}
-          inputProps={{ maxLength: 2500 }}
-          variant="standard"
-          fullWidth
-        />
-      ),
-    },
-    {
-      field: "assistance",
-      headerName: "Asistencia",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-      renderCell: (params: GridRenderCellParams<StudentRow, boolean>) => (
-        <Checkbox
-          checked={params.value}
-          onChange={(event) =>
-            handleCheckboxChange(params.id as number, event.target.checked)
-          }
-        />
-      ),
-    },
-  ];
+  const handleExportToExcel = () => {
+    const worksheetData = students.map((student) => ({
+      Nombre: student.name,
+      Código: student.code,
+      Observaciones: student.observations,
+      Asistencia: student.assistance ? "Sí" : "No",
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(worksheetData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Asistentes");
+    XLSX.writeFile(wb, "lista_asistentes_evento.xlsx");
+  };
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={students}
-        columns={columns}
-        pageSizeOptions={[5]} // Cambiado a `pageSizeOptions` porque `pageSize` fue eliminado en versiones recientes
-        processRowUpdate={(newRow: StudentRow) => {
-          if (newRow.observations.length > 2500) {
-            alert("El texto no puede superar los 2500 caracteres.");
-            return { ...newRow, observations: newRow.observations.slice(0, 2500) };
-          }
-          return newRow;
-        }}
-      />
-    </div>
+     <EventDetailsPage event={eventDetails}>
+      <TableContainer component={Paper} sx={{ mt: 4 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nombre</TableCell>
+              <TableCell>Código</TableCell>
+              <TableCell>Observaciones</TableCell>
+              <TableCell>Asistencia</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {students.map((student) => (
+              <TableRow key={student.id}>
+                <TableCell>{student.name}</TableCell>
+                <TableCell>{student.code}</TableCell>
+                <TableCell>
+                  <TextField
+                    value={student.observations}
+                    onChange={(e) => handleObservationChange(student.id, e.target.value)}
+                    fullWidth
+                  />
+                </TableCell>
+                <TableCell>
+                  <Checkbox
+                    checked={student.assistance}
+                    onChange={(e) => handleCheckboxChange(student.id, e.target.checked)}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer> 
+      <Grid container justifyContent="center" sx={{ mt: 4 }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleExportToExcel}  
+          >
+            Cerrar Registro
+          </Button>
+        </Grid> 
+     </EventDetailsPage>
   );
 };
 
 export default ViewInternSupervisor;
+

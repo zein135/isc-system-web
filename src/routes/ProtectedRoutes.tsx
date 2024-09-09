@@ -29,6 +29,7 @@ import "../style.css";
 import UsersPage from "../pages/Users/UsersPage";
 import AdministratorPage from "../pages/Administrator/AdministratorPage";
 import EventHistory from "../components/cards/EventHistory";
+import ViewInternSupervisor from "../pages/supervisor/ViewInternSupervisor";
 
 function loader() {
   return getProcess();
@@ -238,6 +239,12 @@ const protectedRoutes = [
         path: "/users",
         element: (
           <UsersPage/>
+        )
+      },
+      {
+        path: "/supervisor",
+        element: (
+          <ViewInternSupervisor/>
         )
       }
     ],
