@@ -28,7 +28,6 @@ import MyEventsTable from "../pages/interns/MyEventsTable";
 import "../style.css";
 import UsersPage from "../pages/Users/UsersPage";
 import AdministratorPage from "../pages/Administrator/AdministratorPage";
-import CreateUserPage from "../pages/Users/CreateUserPage";
 import EventHistory from "../components/cards/EventHistory";
 
 function loader() {
@@ -58,7 +57,7 @@ const protectedRoutes = [
       {
         path: "/dashboard",
         element: (
-          <RoleGuard allowedRoles={["admin", "student", "professor"]}>
+          <RoleGuard allowedRoles={["admin", "professor", "student"]}>
             <DashboardPage />
           </RoleGuard>
         ),
@@ -75,7 +74,7 @@ const protectedRoutes = [
       {
         path: "/professors",
         element: (
-          <RoleGuard allowedRoles={["admin", "professor"]}>
+          <RoleGuard allowedRoles={["professor","student"]}>
             <ProfessorPage />
           </RoleGuard>
         ),
@@ -84,7 +83,7 @@ const protectedRoutes = [
         path: "/students",
         loader: loader,
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["professor"]}>
             <StudentPage />
           </RoleGuard>
         ),
@@ -128,7 +127,7 @@ const protectedRoutes = [
         path: "/createProcess",
         loader: loader,
         element: (
-          <RoleGuard allowedRoles={["admin", "professor"]}>
+          <RoleGuard allowedRoles={["admin", "professor","student"]}>
             <CreateProcessPage />
           </RoleGuard>
         ),
@@ -152,7 +151,7 @@ const protectedRoutes = [
       {
         path: "/events",
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["admin", "student", "professor"]}>
             <EventsPage />
           </RoleGuard>
         ),
@@ -192,7 +191,7 @@ const protectedRoutes = [
       {
         path: "/scholarshipHours",
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["student"]}>
             <HoursPage />
           </RoleGuard>
         ),
@@ -200,7 +199,7 @@ const protectedRoutes = [
       {
         path: "/programDirector",
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["admin", "professor"]}>
             <EventTable />
           </RoleGuard>
         ),
@@ -208,7 +207,7 @@ const protectedRoutes = [
       {
         path: "/CompleteScholarshipHour",
         element: (
-          <RoleGuard allowedRoles={["admin", "student"]}>
+          <RoleGuard allowedRoles={["admin", "professor"]}>
             <CompleteScholarshipHourPage />
           </RoleGuard>
         ),
@@ -232,25 +231,17 @@ const protectedRoutes = [
       {
         path: "/administration",
         element: (
-          <AdministratorPage/>
+          <RoleGuard allowedRoles={["admin"]}>
+            <AdministratorPage/>
+          </RoleGuard>
         )
       },
       {
         path: "/users",
         element: (
-          <UsersPage/>
-        )
-      },
-      {
-        path: "/create-user",
-        element: (
-          <CreateUserPage/>
-        )
-      },
-      {
-        path: "/edit-user/:id",
-        element: (
-          <CreateUserPage/>
+          <RoleGuard allowedRoles={["admin"]}>
+            <UsersPage/>
+          </RoleGuard>
         )
       }
     ],
