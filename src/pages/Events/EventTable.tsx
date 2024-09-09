@@ -44,6 +44,7 @@ const EventTable = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+      // TODO: change any to an interface 
       valueGetter: (params: any) =>
         dayjs(params.startDate).format("DD/MM/YYYY"),
     },
@@ -114,6 +115,7 @@ const EventTable = () => {
   };
 
   const handleView = (id: number) => {
+    // TODO: use id to show proper event details
     navigate(`/interns`);
   };
 
@@ -121,21 +123,19 @@ const EventTable = () => {
     navigate(`/editEvent/${id}`);
   };
 
-  const handleClickOpen = (id: number, name: string) => {
+  const handleClickOpen = (id: number) => {
     setSelectedId(id);
-    setSelectedEventName(name);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
     setSelectedId(null);
-    setSelectedEventName("");
   };
 
   const handleDelete = async () => {
     // TODO: add actual delete event logic
-    setOpen(false);
+    setOpen(false)
   };
 
   return (
@@ -172,7 +172,7 @@ const EventTable = () => {
           }}
           pageSizeOptions={[5, 10]}
         />
-        <Dialog
+         <Dialog
           open={open}
           onClose={(_, reason) => {
             if (reason !== "backdropClick") { 
@@ -181,16 +181,12 @@ const EventTable = () => {
           }}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          maxWidth="xs"
-          fullWidth
         >
           <DialogTitle
             id="alert-dialog-title"
-            sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: '8px 16px' }} 
+            sx={{ display: "flex", justifyContent: "space-between" }} 
           >
-            <Typography sx={{ textAlign: 'center', width: '100%', fontWeight: 'bold' }}>
-              Confirmar eliminación
-            </Typography>
+            {"Confirmar eliminación"}
             <IconButton
               edge="end"
               color="inherit"
@@ -200,33 +196,22 @@ const EventTable = () => {
               <CloseIcon />
             </IconButton>
           </DialogTitle>
-          <DialogContent sx={{ padding: '16px' }}>
-            <Typography variant="body1" align="center">
-              ¿Estás seguro de eliminar el evento "{selectedEventName}"? Esta acción no se puede deshacer.
-            </Typography>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              ¿Estás seguro de que deseas eliminar este evento? Esta acción no
+              se puede deshacer.
+            </DialogContentText>
           </DialogContent>
-          <DialogActions sx={{ justifyContent: "flex-end", padding: '8px 16px', gap: '8px' }}>
-            <Button
-              onClick={handleClose}
-              color="primary"
-              variant="contained"
-              sx={{
-                color: 'white',
-                fontWeight: 'bold',
-                minWidth: '80px',
-              }}
-            >
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
               Cancelar
             </Button>
-            <Button
-              onClick={handleDelete}
-              sx={{
-                backgroundColor: "red",
-                color: "white",
-                fontWeight: 'bold',
-                minWidth: '80px',
-                "&:hover": { backgroundColor: "darkred" },
-              }}
+            <Button onClick={handleDelete} 
+            sx={{
+              backgroundColor: "red",
+              color: "white",
+              "&:hover": { backgroundColor: "darkred" },
+            }}
             >
               Eliminar
             </Button>
