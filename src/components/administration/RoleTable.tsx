@@ -68,4 +68,4 @@ const RoleTable: React.FC<RoleTableProps> = ({ roles, onRoleSelect, setIsModalVi
   )
 }
 
-export default RoleTable
+export default RoleTable;
