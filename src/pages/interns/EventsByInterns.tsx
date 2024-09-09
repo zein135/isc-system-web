@@ -5,11 +5,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import AddIcon from '@mui/icons-material/Add'; 
 import CloseIcon from "@mui/icons-material/Close";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -22,24 +19,22 @@ const EventByInterns = () => {
       id: 1,
       name: "Alexia Diana Marín Mamani",
       code: "608555",
-      semester: "Semestre I - 2024",
+      semester: "6",
       events: [
-        { name: "Evento A", status: "Participante" },
-        { name: "Evento B", status: "Supervisor" }
+        { name: "Seminario de Innovación Tecnológica", status: "Participante" },
+        { name: "Curso de Gestión de Proyectos", status: "Supervisor" }
       ]
     },
     {
       id: 2,
       name: "Rodrigo Gustavo Reyes Monzón",
       code: "679523",
-      semester: "Semestre II - 2024",
+      semester: "8",
       events: [
-        { name: "Evento C", status: "Participante" }
+        { name: "Curso de Gestión de Proyectos", status: "Participante" }
       ]
     }
   ]);
-
-  const navigate = useNavigate();
 
   const handleEditHoursOpen = (id: number) => {
     setSelectedId(id);
@@ -51,44 +46,44 @@ const EventByInterns = () => {
     setSelectedId(null);
   };
 
-  const handleAddStudent = () => {
-    navigate("/students"); 
-  };
-
   const columns: GridColDef[] = [
     {
       field: "code",
       headerName: "Código",
-      headerAlign: "center",
-      align: "center",
+      headerAlign: "left",
+      align: "left",
       flex: 1,
+      headerClassName: 'headerStyle',
+      cellClassName: 'cellStyle',
     },
     {
       field: "name",
       headerName: "Nombre",
-      headerAlign: "center",
-      align: "center",
+      headerAlign: "left",
+      align: "left",
       flex: 1,
+      headerClassName: 'headerStyle',
+      cellClassName: 'cellStyle',
     },
     {
       field: "semester",
       headerName: "Semestre",
-      headerAlign: "center",
-      align: "center",
+      headerAlign: "left",
+      align: "left",
       flex: 1,
+      headerClassName: 'headerStyle',
+      cellClassName: 'cellStyle',
     },
     {
-      field: "edit",
-      headerName: "Detalles",
-      headerAlign: "center",
-      align: "center",
+      field: "eventsCount",
+      headerName: "Eventos",
+      headerAlign: "left",
+      align: "left",
       flex: 1,
+      headerClassName: 'headerStyle',
       renderCell: (params) => (
-        <Button
-          variant="contained"
-          onClick={() => handleEditHoursOpen(params.row.id)}
-        >
-          Ver Detalles
+        <Button onClick={() => handleEditHoursOpen(params.row.id)}>
+          {params.row.events.length}
         </Button>
       ),
     },
@@ -107,32 +102,10 @@ const EventByInterns = () => {
       >
         <ArrowBackIcon />
       </IconButton>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleAddStudent}
-        startIcon={<AddIcon />}
-        style={{
-          position: 'absolute',
-          top: '10px',
-          right: '10px',
-        }}
-      >
-        Agregar Estudiante
-      </Button>
 
       <Typography variant="h4" color="primary" style={{ marginBottom: '20px' }}>
         Becarios
       </Typography>
-      
-      <Select
-        defaultValue="Semestre I - 2024"
-        style={{ marginBottom: '20px' }}
-        variant="standard"
-      >
-        <MenuItem value="Semestre I - 2024">Semestre I - 2024</MenuItem>
-        <MenuItem value="Semestre II - 2024">Semestre II - 2024</MenuItem>
-      </Select>
 
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
@@ -141,6 +114,13 @@ const EventByInterns = () => {
           pageSize={5}
           rowsPerPageOptions={[5, 10]}
           getRowId={(row) => row.id}
+          sx={{
+            "& .MuiDataGrid-columnHeaders": { backgroundColor: "#d3d3d3" },
+            "& .MuiDataGrid-cell, & .MuiDataGrid-columnHeaderTitle": {
+              color: "#000", 
+              fontWeight: "bold", 
+            },
+          }}
         />
       </div>
 
@@ -171,21 +151,24 @@ const EventByInterns = () => {
               <Typography variant="body1">
                 Semestre: {students.find((student) => student.id === selectedId)?.semester}
               </Typography>
-              <div>
-                <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
-                  Eventos:
-                </Typography>
-                {students.find((student) => student.id === selectedId)?.events.map((event, index) => (
-                  <div key={index} style={{ marginBottom: '10px' }}>
-                    <Typography variant="body1" style={{ fontWeight: 'bold' }}>
-                      Evento: {event.name}
-                    </Typography>
-                    <Typography variant="body1" style={{ color: event.status === "Supervisor" ? 'orange' : 'blue' }}>
-                      Estado: {event.status}
-                    </Typography>
-                  </div>
-                ))}
-              </div>
+              <table style={{ width: '100%', marginTop: '10px' }}>
+                <thead>
+                  <tr>
+                    <th style={{ textAlign: 'left' }}>Evento</th>
+                    <th style={{ textAlign: 'left' }}>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {students.find((student) => student.id === selectedId)?.events.map((event, index) => (
+                    <tr key={index}>
+                      <td>{event.name}</td>
+                      <td style={{ color: event.status === "Supervisor" ? 'orange' : 'blue' }}>
+                        {event.status}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
         </DialogContent>
