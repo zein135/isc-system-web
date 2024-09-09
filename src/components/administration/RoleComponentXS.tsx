@@ -3,8 +3,6 @@ import { useState } from 'react';
 import { Card, CardContent, Collapse, IconButton, IconButtonProps, styled, Typography, Box, Button, Icon } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Card, CardContent, Collapse, IconButton, IconButtonProps, styled, Typography, Box, Button, Icon } from '@mui/material';
-import { useState } from 'react';
 import ConfirmDelete from './ConfirmDelete';
 import PermissionTable from './PermissionTable';
 import { Role } from '../../models/roleInterface';
