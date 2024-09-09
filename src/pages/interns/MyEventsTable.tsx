@@ -1,20 +1,58 @@
 import { Button, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useState } from "react";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { events } from "../../data/events";
 import ContainerPage from "../../components/common/ContainerPage";
+import { Event } from "../../models/eventInterface";
+import { useUserStore } from "../../store/store";
+import { getInternEvents } from "../../services/internService";
+
+interface EventWithType extends Event {
+  type: string;
+}
 
 const MyEventsTable = () => {
+  const user = useUserStore((state) => state.user);
+  const [events, setEvents] = useState<EventWithType[]>();
+  const [rows, setRows] = useState<any[]>([]);
+
   const navigate = useNavigate();
   const handleBackClick = () => {
     navigate("/scholarshipHours");
   };
 
-const [isDeleted, setIsDeleted] = useState(false);
-  //TODO: change any to an interface
+  const fetchMyEvents = async () => {
+    const res = await getInternEvents(user!.id);
+    if (res.success) {
+      setEvents(res.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchMyEvents();
+    console.log(events, `events con id ${user!.id}`);
+  }, []);
+
+  useEffect(() => {
+    events &&
+      setRows(
+        events.map((event) => ({
+          id: event.id,
+          name: event.title,
+          startDate: `${dayjs(event.start_date).format("DD/MM")} -${dayjs(
+            event.end_date
+          ).format("DD/MM")}`,
+          inscriptionPeriod: dayjs(event.registration_deadline).format("DD/MM"),
+          cancelPeriod: `${
+            dayjs(event.start_cancellation_date)?.format("DD/MM") ?? "N/A"
+          } - ${dayjs(event.end_cancellation_date)?.format("DD/MM") ?? "N/A"}`,
+          hours: `${event.assigned_hours} horas`,
+          status: event.type.toLocaleUpperCase(),
+        }))
+      );
+  }, [events]);
 
   const buttonStyle = {
     borderRadius: "5px",
@@ -40,26 +78,21 @@ const [isDeleted, setIsDeleted] = useState(false);
       field: "startDate",
       headerName: "Fecha",
       flex: 1,
-      valueGetter: (params: any) =>
-        dayjs(params.startDate).format("DD/MM/YYYY"),
     },
     {
       field: "inscriptionPeriod",
-      headerName: "Periodo de Inscripciones",
+      headerName: "Límite de inscripción",
       flex: 1,
-      valueGetter: () => "11AGO-30AGO",
     },
     {
       field: "cancelPeriod",
       headerName: "Periodo de Bajas",
       flex: 1,
-      valueGetter: () => "11AGO-30AGO",
     },
     {
       field: "hours",
       headerName: "Horas Becarias",
       flex: 0.5,
-      valueGetter: () => "4 horas",
     },
     {
       field: "actions",
@@ -69,7 +102,7 @@ const [isDeleted, setIsDeleted] = useState(false);
         <Button
           variant="contained"
           color="info"
-          onClick={() => setIsDeleted((prev) => !prev)}
+          onClick={() => handleDeleteClick()}
           style={{
             ...buttonStyle,
             backgroundColor: "#191970",
@@ -96,11 +129,11 @@ const [isDeleted, setIsDeleted] = useState(false);
           style={{
             ...statusButtonStyle,
             backgroundColor:
-              params.row.status === "PENDIENTE"
+              params.row.status === "PENDING"
                 ? "#5F9EA0"
-                : params.row.status === "ACEPTADO"
+                : params.row.status === "ACCEPTED"
                 ? "#32CD32"
-                : params.row.status === "SUPLENTE"
+                : params.row.status === "RESERVE"
                 ? "#000000"
                 : "#FF0000",
             color: "#FFFFFF",
@@ -114,26 +147,19 @@ const [isDeleted, setIsDeleted] = useState(false);
     },
   ];
 
-  const rows = events.map((event) => ({
-    id: event.id_event,
-    name: event.name,
-    startDate: event.startDate,
-    endDate: event.startDate,
-    status: event.status,
-  }));
-
-  const updatedRows = rows.slice(1, rows.length);
-
+  const handleDeleteClick = () => {
+    //TODO: implemente delete logi
+  };
   return (
-    <div style={{ position: 'relative', height: '100vh', paddingTop: '19px' }}> 
-      <IconButton 
-        onClick={handleBackClick} 
+    <div style={{ position: "relative", height: "100vh", paddingTop: "19px" }}>
+      <IconButton
+        onClick={handleBackClick}
         aria-label="back"
-        style={{ 
-          position: 'absolute',
-          top: '17px', 
-          left: '-9px', 
-          zIndex: 1
+        style={{
+          position: "absolute",
+          top: "17px",
+          left: "-9px",
+          zIndex: 1,
         }}
       >
         <ArrowBackIcon />
@@ -143,15 +169,19 @@ const [isDeleted, setIsDeleted] = useState(false);
         subtitle="Administra y visualiza tus eventos"
         actions={
           <>
-        <Button variant="contained" color="primary"  onClick={() => navigate("/eventHistory")} >
-          HISTORIAL
-        </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => navigate("/eventHistory")}
+            >
+              HISTORIAL
+            </Button>
           </>
         }
       >
         <div style={{ height: 500, width: "100%" }}>
-          <DataGrid 
-            rows={!isDeleted ? rows : updatedRows}
+          <DataGrid
+            rows={rows || []}
             columns={columns}
             initialState={{
               pagination: {
