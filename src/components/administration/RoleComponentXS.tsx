@@ -58,8 +58,10 @@ const RoleComponentXs: React.FC<RoleComponentProps> = ({ role, selectedRole, onR
                             <Box>
                                 <IconButton
                                     color = "inherit"
+                                    icon = "MoreHoriz"
                                     aria-label='more'
                                     onClick={handleClick}
+                                    
                                 >
                                 </IconButton>
                             </Box>
