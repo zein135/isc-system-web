@@ -30,6 +30,7 @@ import UsersPage from "../pages/Users/UsersPage";
 import AdministratorPage from "../pages/Administrator/AdministratorPage";
 import CreateUserPage from "../pages/Users/CreateUserPage";
 import EventHistory from "../components/cards/EventHistory";
+import ViewInternSupervisor from "../pages/supervisor/ViewInternSupervisor";
 import EventsByInternsPage from "../pages/interns/EventsByInterns";
 
 function loader() {
@@ -223,10 +224,10 @@ const protectedRoutes = [
         ),
       },
       {
-        path: "/eventsByInterns",  // Nueva ruta
+        path: "/eventsByInterns",
         element: (
           <RoleGuard allowedRoles={["admin", "professor"]}>
-            <EventsByInternsPage />  // Componente que renderizará
+            <EventsByInternsPage />
           </RoleGuard>
         ),
       },
@@ -240,28 +241,28 @@ const protectedRoutes = [
       },
       {
         path: "/administration",
-        element: (
-          <AdministratorPage/>
-        )
+        element: <AdministratorPage />,
       },
       {
         path: "/users",
-        element: (
-          <UsersPage/>
-        )
+        element: <UsersPage />,
       },
       {
         path: "/create-user",
-        element: (
-          <CreateUserPage/>
-        )
+        element: <CreateUserPage />,
       },
       {
         path: "/edit-user/:id",
+        element: <CreateUserPage />,
+      },
+      {
+        path: "/supervisor",
         element: (
-          <CreateUserPage/>
-        )
-      }
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <ViewInternSupervisor />
+          </RoleGuard>
+        ),
+      },
     ],
   },
 ];
