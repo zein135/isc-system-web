@@ -1,4 +1,13 @@
-import { Button, IconButton, TextField, Dialog, DialogActions, DialogTitle, DialogContent, MenuItem, Select } from "@mui/material";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add'; 
 import CloseIcon from "@mui/icons-material/Close";
@@ -20,7 +29,7 @@ const InternsListPage = () => {
       code: "608555",
       time: "22:23",
       status: "Rechazado",
-      hours: "4 horas",
+      hours: 10,
     },
     {
       id: 2,
@@ -28,7 +37,7 @@ const InternsListPage = () => {
       code: "679523",
       time: "08:49",
       status: "Aceptado",
-      hours: "4 horas",
+      hours: 20,
     },
   ]);
   
@@ -44,7 +53,7 @@ const InternsListPage = () => {
   const handleHoursSave = () => {
     setStudents((prevStudents) =>
       prevStudents.map((student) =>
-        student.id === selectedId ? { ...student, hours: newHours } : student
+        student.id === selectedId ? { ...student, hours: Number(newHours) } : student
       )
     );
     handleEditHoursClose();
@@ -127,6 +136,7 @@ const InternsListPage = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+      renderCell: (params) => `${params.value} horas`,
     },
     {
       field: "edit",
@@ -168,9 +178,8 @@ const InternsListPage = () => {
         aria-label="back"
         style={{
           position: 'absolute',
-          top: '20px',
-          left: '1px',
-          zIndex: 1
+          top: '17px',
+          left: '-9px',
         }}
       >
         <ArrowBackIcon />
@@ -210,43 +219,56 @@ const InternsListPage = () => {
               }}
               pageSizeOptions={[5, 10]}
             />
-
             <Dialog
               open={editHoursOpen}
               onClose={handleEditHoursClose}
               aria-labelledby="edit-hours-dialog-title"
+              sx={{ '& .MuiDialog-paper': { width: '500px', maxWidth: '80%' } }}
             >
-              <DialogTitle id="edit-hours-dialog-title">
-                Editar Horas Becarias de{" "}
-                {students.find((student) => student.id === selectedId)?.name}
+              <DialogTitle id="edit-hours-dialog-title" sx={{ mt: 2 }}>
+                <Typography variant="h5" align="center" sx={{ fontWeight: 'bold' }}>
+                  Editar Horas Becarias
+                </Typography>
+                <Typography variant="body1" sx={{ textAlign: 'left', mt: 1 }}>
+                  {students.find((student) => student.id === selectedId)?.name}
+                </Typography>
               </DialogTitle>
               <DialogContent>
-              <IconButton
-                aria-label="close"
-                onClick={handleEditHoursClose}
-                sx={{
-                  position: "absolute",
-                  right: 1,
-                  top: 1,
-                  color: (theme) => theme.palette.grey[800],
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
+                <IconButton
+                  aria-label="close"
+                  onClick={handleEditHoursClose}
+                  sx={{
+                    position: "absolute",
+                    right: 8,
+                    top: 8,
+                    color: (theme) => theme.palette.grey[800],
+                    padding: '7px'
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
                 <TextField
                   fullWidth
                   value={newHours}
                   onChange={(e) => setNewHours(e.target.value)}
                   label="Horas Becarias"
-                  type="text"
+                  type="number" 
                   margin="dense"
                 />
               </DialogContent>
-              <DialogActions>
-                <Button onClick={handleEditHoursClose} color="secondary">
+              <DialogActions sx={{ justifyContent: 'flex-end', padding: '24px' }}>
+                <Button
+                  onClick={handleEditHoursClose}
+                  sx={{color: 'white', backgroundColor: 'primary', '&:hover': {backgroundColor: 'darkblue'},fontWeight: 'bold', marginRight: 2}}
+                  variant="contained"
+                >
                   Cancelar
                 </Button>
-                <Button onClick={handleHoursSave} color="primary">
+                <Button
+                  onClick={handleHoursSave}
+                  sx={{color: 'white', backgroundColor: 'red', '&:hover': {backgroundColor: 'darkred'},fontWeight: 'bold'}}
+                  variant="contained"
+                >
                   Guardar
                 </Button>
               </DialogActions>
