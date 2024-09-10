@@ -7,10 +7,10 @@ interface IProcessStore {
 }
 
 interface IUser {
-  userId: number;
+  id: number;
   name?: string;
   email?: string;
-  role_name?: string;
+  roles?: string[];
   token: string;
 }
 interface IUserStore {

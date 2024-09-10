@@ -207,6 +207,31 @@
           "permission": false
         }
       ]
+    },
+    {
+      "subtitle": "Usuarios",
+      "permissions": [
+        {
+          "action": "Ver lista de usuarios",
+          "permission": false
+        },
+        {
+          "action": "Ver reporte de usuarios",
+          "permission": false
+        },
+        {
+          "action": "Eliminar usuario",
+          "permission": false
+        },
+        {
+          "action": "Editar informacion de usuario",
+          "permission": false
+        },
+        {
+          "action": "Agregar usuario",
+          "permission": false
+        }
+      ]
     }
   ],
   "roles": [
@@ -266,6 +291,61 @@
     {
       "roleName": "",
       "id": 15
+    }
+  ],
+  "users": [
+    {
+      "name": "Mildret",
+      "code": "69271",
+      "lastname": "Robles",
+      "mothername": "Gutierrez",
+      "email": "mildret@quya.com",
+      "cellphone": "70182881",
+      "roles": [
+        "Becario"
+      ],
+      "degree": "",
+      "id": 12347
+    },
+    {
+      "name": "Hade",
+      "code": "12347",
+      "lastname": "Villegas",
+      "mothername": "Minerva",
+      "email": "hade@hade.com",
+      "cellphone": "79282012",
+      "roles": [
+        "Estudiante"
+      ],
+      "degree": "",
+      "id": 12348
+    },
+    {
+      "name": "Adrian",
+      "code": "12658",
+      "lastname": "Thompson",
+      "mothername": "Machaca",
+      "email": "thomas@thompson.com",
+      "cellphone": "12312412",
+      "roles": [
+        "Jefe de carrera FACED"
+      ],
+      "degree": "Ing.",
+      "id": 12349
+    },
+    {
+      "name": "Jhonny",
+      "code": "70416",
+      "lastname": "Cabezas",
+      "mothername": "Gomez",
+      "email": "jhony@jhony.com",
+      "cellphone": "78198108",
+      "roles": [
+        "Becario",
+        "Estudiante"
+      ],
+      "degree": "",
+      "id": 12350
     }
   ]
 }

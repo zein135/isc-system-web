@@ -26,7 +26,11 @@ import EventTable from "../pages/Events/EventTable";
 import CompleteScholarshipHourPage from "../pages/CompleteScholarshipHour/CompleteScholarshipHourPage";
 import MyEventsTable from "../pages/interns/MyEventsTable";
 import "../style.css";
+import UsersPage from "../pages/Users/UsersPage";
+import AdministratorPage from "../pages/Administrator/AdministratorPage";
+import CreateUserPage from "../pages/Users/CreateUserPage";
 import EventHistory from "../components/cards/EventHistory";
+import EventsByInternsPage from "../pages/interns/EventsByInterns";
 
 function loader() {
   return getProcess();
@@ -219,6 +223,14 @@ const protectedRoutes = [
         ),
       },
       {
+        path: "/eventsByInterns",  // Nueva ruta
+        element: (
+          <RoleGuard allowedRoles={["admin", "professor"]}>
+            <EventsByInternsPage />  // Componente que renderizará
+          </RoleGuard>
+        ),
+      },
+      {
         path: "/myEvents",
         element: (
           <RoleGuard allowedRoles={["admin", "student"]}>
@@ -226,6 +238,30 @@ const protectedRoutes = [
           </RoleGuard>
         ),
       },
+      {
+        path: "/administration",
+        element: (
+          <AdministratorPage/>
+        )
+      },
+      {
+        path: "/users",
+        element: (
+          <UsersPage/>
+        )
+      },
+      {
+        path: "/create-user",
+        element: (
+          <CreateUserPage/>
+        )
+      },
+      {
+        path: "/edit-user/:id",
+        element: (
+          <CreateUserPage/>
+        )
+      }
     ],
   },
 ];
