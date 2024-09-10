@@ -74,7 +74,6 @@ const CreateForm = () => {
 
   const formik = useFormik<Event>({
     initialValues: {
-      // id: 4,
       title: "",
       description: "",
       assigned_hours: 0,
@@ -110,7 +109,6 @@ const CreateForm = () => {
             formik.values.registration_deadline
           ),
         };
-        console.log(valuesWithTimezone, "values to sned");
         const res = await createEventService(valuesWithTimezone);
         formik.resetForm();
         navigate("/programDirector");

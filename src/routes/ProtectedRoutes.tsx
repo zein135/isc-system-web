@@ -223,10 +223,10 @@ const protectedRoutes = [
         ),
       },
       {
-        path: "/eventsByInterns",  // Nueva ruta
+        path: "/eventsByInterns",
         element: (
           <RoleGuard allowedRoles={["admin", "professor"]}>
-            <EventsByInternsPage />  // Componente que renderizará
+            <EventsByInternsPage />
           </RoleGuard>
         ),
       },
@@ -240,22 +240,16 @@ const protectedRoutes = [
       },
       {
         path: "/administration",
-        element: (
-          <AdministratorPage/>
-        )
+        element: <AdministratorPage />,
       },
       {
         path: "/users",
-        element: (
-          <UsersPage/>
-        )
+        element: <UsersPage />,
       },
       {
         path: "/supervisor",
-        element: (
-          <ViewInternSupervisor/>
-        )
-      }
+        element: <ViewInternSupervisor />,
+      },
     ],
   },
 ];
