@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import "dayjs/locale/es";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -11,21 +12,28 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { events } from "../../data/events";
+import { getInternEvents } from "../../services/internService";
+import { EventInternsType } from "../../models/eventInterface";
 
-type Event = {
-  id_event: number;
-  name: string;
-  validatedHours: string;
-  startDate: dayjs.Dayjs;
-  place: string;
-  status: string;
+dayjs.locale("es");
+
+const capitalizeFirstLetter = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+const statusTranslation = (status: string) => {
+  const statusMap: Record<string, string> = {
+    accepted: "Aceptado",
+    rejected: "Rechazado",
+    reserve: "Suplente",
+    pending: "Pendiente"
+  };
+  return statusMap[status.toLowerCase()] || status;
 };
 
-const groupEventsByMonth = (events: Event[]): Record<string, Event[]> => {
-  return events.reduce((acc: Record<string, Event[]>, event: Event) => {
-    const month = event.startDate.format("MMMM YYYY");
-    if (!acc[month]) {
+const groupEventsByMonth = (events: EventInternsType[]): Record<string, EventInternsType[]> => {
+  return events?.reduce((acc: Record<string, EventInternsType[]>, event: EventInternsType) => {
+    const month = capitalizeFirstLetter(dayjs(event.start_date).format("MMMM YYYY"));
+  if (!acc[month]) {
       acc[month] = [];
     }
     acc[month].push(event);
@@ -61,11 +69,9 @@ const SplitButton = ({ options }: { options: { label: string, onClick: () => voi
 
   return (
     <>
-      <ButtonGroup variant="contained" ref={anchorRef}>
-        <Button onClick={handleClick} style={{backgroundColor: '#2c387e', color: 'white'}}>
-          {options[selectedIndex].label}
-        </Button>
-        <Button size="small" onClick={handleToggle} style={{backgroundColor: '#2c387e', color: 'white'}}>
+      <ButtonGroup variant="contained" ref={anchorRef}  style={{ marginLeft: '3%', marginTop:'19px' }}>
+        <Button onClick={handleClick}>{options[selectedIndex].label}</Button>
+        <Button size="small" onClick={handleToggle} >
           <ArrowDropDownIcon />
         </Button>
       </ButtonGroup>
@@ -91,64 +97,68 @@ const SplitButton = ({ options }: { options: { label: string, onClick: () => voi
 };
 
 const EventHistory = () => {
+  
+  const [historyEvents, setHistoryEvents] = useState<EventInternsType[]>();
   const [selectedSemester, setSelectedSemester] = useState<number | null>(null);
+  const fetchEvents = async () => {
+    const res = await getInternEvents(1);
+    if (res.success) {
+      setHistoryEvents(res.data);
+    }
+  };
+  
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+  
   const filteredEvents = (semester: number) =>
-    events.filter((event) =>
-      semester === 0 ? event.startDate.isBefore(dayjs("2024-07-01")) : event.startDate.isAfter(dayjs("2024-06-30"))
-    );
-
+    historyEvents?.filter((event) =>
+      semester === 0
+        ? dayjs(event.start_date).isBefore(dayjs("2024-07-01"))
+        : dayjs(event.start_date).isAfter(dayjs("2024-06-30"))
+  );
+  
   const groupedEvents = (semester: number) => groupEventsByMonth(filteredEvents(semester));
-
+  
   return (
-    <div style={{ position: 'relative', padding: '40px' }}>
+    <div style={{ position: 'relative'}}>
       <IconButton
         onClick={() => window.history.back()}
         aria-label="back"
         style={{
           position: 'absolute',
           top: '17px',
-          left: '-9px'
-          
+          left: '-9px',
         }}
       >
         <ArrowBackIcon />
       </IconButton>
-      <div style={{ marginTop: '-20px', marginLeft: '5px' }}>
-  <SplitButton
-    options={[
-      { label: 'Primer Semestre', onClick: () => setSelectedSemester(0) },
-      { label: 'Segundo Semestre', onClick: () => setSelectedSemester(1) }
-    ]}
-  />
-</div>
+
+      <SplitButton
+        options={[
+          { label: 'Primer Semestre', onClick: () => setSelectedSemester(0) },
+          { label: 'Segundo Semestre', onClick: () => setSelectedSemester(1) }
+        ]}
+      />
 
       {selectedSemester !== null && Object.entries(groupedEvents(selectedSemester)).map(([month, events]) => (
         <div key={month} style={{ marginBottom: '20px' }}>
-          <Typography variant="h6" style={{ color: '#2c387e', fontWeight: 'bold' }}>{month}</Typography>
+          <Typography variant="h6" style={{ color: 'blue' }}>{month}</Typography>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px', maxWidth: '100%' }}>
-            {events.map(({ id_event, name, startDate, place, validatedHours, status }) => (
-              <div key={id_event} style={{ border: '1px solid #ccc', padding: '10px', height: '150px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                <Typography variant="body2" style={{ fontWeight: 'bold', fontSize: '14px' }}>
-                  {name} - {startDate.format("DD MMM YYYY")}
+            {events.map(({ id, title, start_date, location, duration_hours, type }) => (
+              <div key={id} style={{ border: '1px solid #ccc', padding: '20px', boxSizing: 'border-box', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Typography variant="body2" style={{ fontWeight: 'bold' }}>
+                  {title} - {dayjs(start_date).format("DD MMM YYYY")}
                 </Typography>
                 <div style={{ borderTop: '1px solid #ddd', paddingTop: '10px', marginTop: '10px', flexGrow: 1 }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', fontSize: '12px', textAlign: 'center' }}>
-                    <div style={{ border: '1px solid #000', padding: '5px' }}>
-                      <Typography variant="body2" style={{ fontWeight: 'bold' }}>Lugar</Typography>
-                      <Typography variant="body2">{place}</Typography>
-                    </div>
-                    <div style={{ border: '1px solid #000', padding: '5px' }}>
-                      <Typography variant="body2" style={{ fontWeight: 'bold' }}>Horas Becarias</Typography>
-                      <Typography variant="body2">{validatedHours}</Typography>
-                    </div>
-                    <div style={{ border: '1px solid #000', padding: '5px' }}>
-                      <Typography variant="body2" style={{ fontWeight: 'bold' }}>Participación</Typography>
-                      <Typography variant="body2" style={{ color: status === "Validado" ? "green" : status === "Pendiente" ? "#c49100" : "red" }}>
-                        {status}
-                      </Typography>
-                    </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
                   </div>
                 </div>
+                <Typography variant="body2">Lugar: {location}</Typography>
+                <Typography variant="body2">Horas validadas: {duration_hours}</Typography>
+                <Typography variant="body2" style={{ color: type === "accepted" ? "green" : "red" }}>
+                  {statusTranslation(type)}
+                </Typography>
               </div>
             ))}
           </div>
