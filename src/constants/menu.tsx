@@ -25,7 +25,7 @@ export const menu = [
 
   // 3. Item "hours":
   //    - Menú temporal: roles: [ADMIN]
-  //    - Menú original: Sin roles (acceso abierto a todos los roles)
+  //    - Menú original: Sin roles 
 
   // 4. Item "programDirector":
   //    - Menú temporal: roles: [ADMIN, PROFESSOR]
@@ -33,7 +33,7 @@ export const menu = [
 
   // 5. Item "CompleteScholarship":
   //    - Menú temporal: roles: [ADMIN]
-  //    - Menú original: Sin roles (acceso abierto a todos los roles)
+  //    - Menú original: Sin roles 
 
   {
     key: "dashboard",
