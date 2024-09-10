@@ -44,7 +44,7 @@ const EventTable = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
-      // TODO: change any to an interface 
+      // TODO: change any to an interface
       valueGetter: (params: any) =>
         dayjs(params.startDate).format("DD/MM/YYYY"),
     },
@@ -115,8 +115,7 @@ const EventTable = () => {
   };
 
   const handleView = (id: number) => {
-    // TODO: use id to show proper event details
-    navigate(`/interns`);
+    navigate(`/interns/${id}`);
   };
 
   const handleEdit = (id: string) => {
@@ -135,7 +134,7 @@ const EventTable = () => {
 
   const handleDelete = async () => {
     // TODO: add actual delete event logic
-    setOpen(false)
+    setOpen(false);
   };
 
   return (
@@ -172,10 +171,10 @@ const EventTable = () => {
           }}
           pageSizeOptions={[5, 10]}
         />
-         <Dialog
+        <Dialog
           open={open}
           onClose={(_, reason) => {
-            if (reason !== "backdropClick") { 
+            if (reason !== "backdropClick") {
               handleClose();
             }
           }}
@@ -184,7 +183,7 @@ const EventTable = () => {
         >
           <DialogTitle
             id="alert-dialog-title"
-            sx={{ display: "flex", justifyContent: "space-between" }} 
+            sx={{ display: "flex", justifyContent: "space-between" }}
           >
             {"Confirmar eliminación"}
             <IconButton
@@ -206,12 +205,13 @@ const EventTable = () => {
             <Button onClick={handleClose} color="primary">
               Cancelar
             </Button>
-            <Button onClick={handleDelete} 
-            sx={{
-              backgroundColor: "red",
-              color: "white",
-              "&:hover": { backgroundColor: "darkred" },
-            }}
+            <Button
+              onClick={handleDelete}
+              sx={{
+                backgroundColor: "red",
+                color: "white",
+                "&:hover": { backgroundColor: "darkred" },
+              }}
             >
               Eliminar
             </Button>

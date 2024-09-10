@@ -18,6 +18,7 @@ export const getEventsService = async () => {
     }
   }
 };
+
 export const getEventsInformationsService = async () => {
   try {
     const response = await apiClient.get("/events/register-information");
@@ -34,6 +35,7 @@ export const getEventsInformationsService = async () => {
     }
   }
 };
+
 export const registerInternEventService = async (
   id_event: number,
   id_intern: number
@@ -85,6 +87,23 @@ export const deleteInternFromEventService = async (
       return response.data;
     } else {
       return { error: "Failed to register intern on event" };
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return { error: error.response?.data.message || "Network error" };
+    } else {
+      return { error: "An unexpected error occurred" };
+    }
+  }
+};
+
+export const getFullEventInformationService = async (id: string) => {
+  try {
+    const response = await apiClient.get(`events/${id}/registrations`);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      return { error: "Failed to fetch full event info" };
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {
