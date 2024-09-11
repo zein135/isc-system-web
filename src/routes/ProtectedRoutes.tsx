@@ -29,6 +29,8 @@ import "../style.css";
 import UsersPage from "../pages/Users/UsersPage";
 import AdministratorPage from "../pages/Administrator/AdministratorPage";
 import EventHistory from "../components/cards/EventHistory";
+import ViewInternSupervisor from "../pages/supervisor/ViewInternSupervisor";
+import EventsByInternsPage from "../pages/interns/EventsByInterns";
 
 function loader() {
   return getProcess();
@@ -221,6 +223,14 @@ const protectedRoutes = [
         ),
       },
       {
+        path: "/eventsByInterns",
+        element: (
+          <RoleGuard allowedRoles={["admin", "professor"]}>
+            <EventsByInternsPage />
+          </RoleGuard>
+        ),
+      },
+      {
         path: "/myEvents",
         element: (
           <RoleGuard allowedRoles={["admin", "student"]}>
@@ -243,7 +253,23 @@ const protectedRoutes = [
             <UsersPage/>
           </RoleGuard>
         )
-      }
+      },
+      {
+        path: "/create-user",
+        element: <CreateUserPage />,
+      },
+      {
+        path: "/edit-user/:id",
+        element: <CreateUserPage />,
+      },
+      {
+        path: "/supervisor",
+        element: (
+          <RoleGuard allowedRoles={["admin", "student"]}>
+            <ViewInternSupervisor />
+          </RoleGuard>
+        ),
+      },
     ],
   },
 ];
