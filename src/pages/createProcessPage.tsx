@@ -14,7 +14,7 @@ const validationSchema = Yup.object({
   project_name: Yup.string().required("* Debe colocar el nombre del proyecto"),
 });
 
-const createProcessPage = () => {
+const CreateProcessPage = () => {
   const [, setError] = useState<string | null>(null);
   const [modes, setModes] = useState<Modes[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
@@ -183,4 +183,4 @@ const createProcessPage = () => {
   );
 };
 
-export default createProcessPage;
+export default CreateProcessPage;
