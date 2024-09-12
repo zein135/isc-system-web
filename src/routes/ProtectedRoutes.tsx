@@ -167,7 +167,7 @@ const protectedRoutes = [
         ),
       },
       {
-        path: "/interns",
+        path: "/interns/:id_event",
         element: (
           <RoleGuard allowedRoles={["admin", "professor"]}>
             <InternsListPage />

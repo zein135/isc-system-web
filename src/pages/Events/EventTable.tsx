@@ -19,6 +19,7 @@ import dayjs from "dayjs";
 import ContainerPage from "../../components/common/ContainerPage";
 import { getEventsInformationsService } from "../../services/eventsService";
 import { EventInformations } from "../../models/eventInterface";
+import ConfirmDialog from "../../components/common/ConfirmDialog";
 
 const EventTable = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const EventTable = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
-      // TODO: change any to an interface 
+      // TODO: change any to an interface
       valueGetter: (params: any) =>
         dayjs(params.startDate).format("DD/MM/YYYY"),
     },
@@ -115,8 +116,7 @@ const EventTable = () => {
   };
 
   const handleView = (id: number) => {
-    // TODO: use id to show proper event details
-    navigate(`/interns`);
+    navigate(`/interns/${id}`);
   };
 
   const handleEdit = (id: string) => {
@@ -135,7 +135,7 @@ const EventTable = () => {
 
   const handleDelete = async () => {
     // TODO: add actual delete event logic
-    setOpen(false)
+    setOpen(false);
   };
 
   return (
@@ -172,51 +172,13 @@ const EventTable = () => {
           }}
           pageSizeOptions={[5, 10]}
         />
-         <Dialog
+        <ConfirmDialog
           open={open}
-          onClose={(_, reason) => {
-            if (reason !== "backdropClick") { 
-              handleClose();
-            }
-          }}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle
-            id="alert-dialog-title"
-            sx={{ display: "flex", justifyContent: "space-between" }} 
-          >
-            {"Confirmar eliminación"}
-            <IconButton
-              edge="end"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              ¿Estás seguro de que deseas eliminar este evento? Esta acción no
-              se puede deshacer.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancelar
-            </Button>
-            <Button onClick={handleDelete} 
-            sx={{
-              backgroundColor: "red",
-              color: "white",
-              "&:hover": { backgroundColor: "darkred" },
-            }}
-            >
-              Eliminar
-            </Button>
-          </DialogActions>
-        </Dialog>
+          onClose={handleClose}
+          onConfirm={handleDelete}
+          title="Confirmar eliminación"
+          description="¿Estás seguro de que deseas eliminar este evento? Esta acción no se puede deshacer."
+        />
       </div>
     </ContainerPage>
   );
