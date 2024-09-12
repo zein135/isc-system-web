@@ -5,7 +5,7 @@ import { periods } from "../data/periods";
 import { Modes } from "./../models/modeInterface";
 import { getModes } from "../services/modesService";
 import { getProcess } from "../services/processServicer";
-import { Student } from "../models/studentInterface";
+import { Student } from '../models/studentInterface';
 
 const validationSchema = Yup.object({
   student: Yup.string().required("* Debe seleccionar un estudiante"),

@@ -1,6 +1,6 @@
 interface confirmModal {
   step: string;
-  nextStep: String;
+  nextStep: string;
   setShowModal: (it: boolean) => void;
   onNext: () => void;
 }

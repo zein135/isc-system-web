@@ -4,7 +4,7 @@ import {
   RouterProvider
 } from "react-router-dom";
 
-import ProcessInfoPage from './pages/ProcessInfoPage';
+import ProcessInfoPage from "./pages/ProcessInfoPage";
 import ErrorPage from "./pages/ErrorPage";
 import { getProcess, getStundentById } from "./services/processServicer";
 import StudentsPage from "./pages/StudentsPage";
