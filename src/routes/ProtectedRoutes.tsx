@@ -254,14 +254,14 @@ const protectedRoutes = [
           </RoleGuard>
         )
       },
-      {
-        path: "/create-user",
-        element: <CreateUserPage />,
-      },
-      {
-        path: "/edit-user/:id",
-        element: <CreateUserPage />,
-      },
+      // {
+      //   path: "/create-user",
+      //   element: <CreateUserPage />,
+      // },
+      // {
+      //   path: "/edit-user/:id",
+      //   element: <CreateUserPage />,
+      // },
       {
         path: "/supervisor",
         element: (
