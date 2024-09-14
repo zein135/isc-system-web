@@ -117,7 +117,7 @@ const Layout = () => {
               color="textSecondary"
               textAlign={"right"}
             >
-              {user?.role}
+              {user?.roles}
             </Typography>
           </Box>
 
