@@ -12,3 +12,13 @@ export interface User {
   degree: string;
   roles: string[]; //TODO: hacer que los roles del db.json sean roles y no strings
 }
+
+
+export interface Student {
+  id: number;
+  name: string;
+  code: string;
+  time: string;
+  status: "Rechazado" | "Pendiente" | "Aceptado";
+  hours: number;
+}
