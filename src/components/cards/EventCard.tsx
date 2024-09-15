@@ -31,7 +31,7 @@ interface ExpandMoreProps extends IconButtonProps {
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
+  const { ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
@@ -200,7 +200,7 @@ const EventCard = ({ event }: EventCardProps) => {
       </Collapse>
       <Dialog
         open={dialogOpen}
-        onClose={(event, reason) => {
+        onClose={(reason) => {
           if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
             handleDialogClose();
           }
