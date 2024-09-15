@@ -81,7 +81,7 @@ const EventCard = ({ event }: EventCardProps) => {
   };
 
   const handleConfirm = async () => {
-    const res = await registerInternEventService(id_event, user!.id);
+    const res = await registerInternEventService(Number(id_event), user!.id);
     if (res.success) {
       setAlert({
         severity: "success",
