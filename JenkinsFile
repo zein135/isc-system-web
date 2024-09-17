@@ -2,6 +2,7 @@ pipeline {
     agent any
     tools {
         nodejs 'node-20'
+        xvfb 'xvfb'
     }
     stages {
         stage('Clone Project') {
