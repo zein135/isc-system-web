@@ -1,8 +1,8 @@
 pipeline {
-    agent any
-    tools {
-        nodejs 'node-20'
-        xvfb 'xvfb'
+    agent {
+        docker {
+            image 'cypress/included:13.14.2'
+        }
     }
     stages {
         stage('Clone Project') {
@@ -12,36 +12,17 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                script {
-                    stash name: 'node_modules', include: 'node_modules/**'
-                    sh 'npm install'
-                }
-            }
-        }
-        stage('Install Cypress Dependencies') {
-            steps {
-                sh '''
-                apt-get update && apt-get install -y \
-                    libgtk2.0-0 libgtk-3-0 libgbm-dev \
-                    libnotify-dev libnss3 libxss1 \
-                    libasound2 libxtst6 xauth xvfb
-                '''
+                sh 'npm install'
             }
         }
         stage('Build') {
             steps {
-                unstash 'node_modules'
                 sh 'npm run build'
             }
         }
         stage('Run Cypress') {
             steps {
-                sh 'ls -a'
-                sh '''
-                Xvfb :99 -ac &
-                export DISPLAY=:99
-                npx cypress run --spec "cypress/e2e/**/*.cy.{ts,tsx}"
-                '''
+                sh 'npx cypress run --spec "cypress/e2e/**/*.cy.{ts,tsx}"'
             }
         }
     }
