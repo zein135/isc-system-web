@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Run Cypress'){
             steps {
-                sh 'npx run cypress'
+                sh 'npx cypress run --spec "cypress/e2e/**/*.cy.{ts,tsx}"'
             }
         }
     }
