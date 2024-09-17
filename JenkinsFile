@@ -26,12 +26,12 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'vite preview &'
+                sh 'npm run build'
             }
         }
         stage('Preview') {
             steps {
-                sh 'npm run preview'
+                sh 'vite preview &'
             }
         }
         stage('Run Cypress') {
