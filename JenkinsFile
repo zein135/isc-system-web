@@ -35,6 +35,7 @@ pipeline {
         }
         stage('Run Cypress') {
             steps {
+                sh 'ls -a'
                 sh '''
                 Xvfb :99 -ac &
                 export DISPLAY=:99
