@@ -1,12 +1,13 @@
 pipeline {
     agent any
     tools {
-        nodejs '20'
+        nodejs 'node-20'
+        xvfb 'xvfb'
     }
     stages {
         stage('Clone Project') {
             steps {
-                git 'https://github.com/PaulLandaeta/isc-system-web.git'
+                git branch: 'qa', url: 'https://github.com/PaulLandaeta/isc-system-web.git'
             }
         }
         stage('Install Dependencies') {
@@ -17,6 +18,12 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'npm run build'
+            }
+        }
+        stage('Run Cypress') {
+            steps {
+                sh 'ls -a'
+                sh 'npx cypress run --spec "cypress/e2e/**/*.cy.{ts,tsx}"'
             }
         }
     }
