@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     tools {
         nodejs 'node-20'
     }
@@ -20,9 +19,14 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Run Cypress'){  
+        stage('Run Cypress') {
             steps {
-                sh 'npx cypress run --spec "cypress/e2e/**/*.cy.{ts,tsx}"'
+                // Wrap the Cypress test execution inside the Xvfb block
+                script {
+                    xvfb(run: true) {
+                        sh 'npx cypress run --spec "cypress/e2e/**/*.cy.{ts,tsx}"'
+                    }
+                }
             }
         }
     }
