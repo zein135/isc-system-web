@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     tools {
         nodejs 'node-20'
     }
@@ -19,16 +20,9 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Run Cypress') {
+        stage('Run Cypress'){  
             steps {
-                // Pull Cypress Docker image
-                sh 'docker pull cypress/included:12.0.0'
-
-                // Run Cypress tests inside the Docker container
-                sh '''
-                docker run -v $PWD:/e2e -w /e2e cypress/included:12.0.0 \
-                  npx cypress run --spec "cypress/e2e/**/*.cy.{ts,tsx}"
-                '''
+                sh 'npx cypress run --spec "cypress/e2e/**/*.cy.{ts,tsx}"'
             }
         }
     }
