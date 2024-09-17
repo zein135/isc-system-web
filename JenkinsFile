@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters{
-        string(name: 'SPEC', defaultValue: "cypress/e2e/*/**", description: "Introduce the path of the test cases")
+        string(name: 'SPEC', defaultValue: "cypress/e2e/**/**", description: "Introduce the path of the test cases")
         choice(name: 'BROWSER', choices: ['electron', 'chrome', 'edge', 'firefox'], description: "Choice the browser")
     }
     tools {
