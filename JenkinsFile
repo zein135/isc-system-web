@@ -9,6 +9,11 @@ pipeline {
         xvfb 'xvfb'
     }
     stages {
+        stage('Node version'){
+            steps{
+                sh 'node --version'
+            }
+        }
         stage('Clone Project') {
             steps {
                 git branch: 'qa', url: 'https://github.com/PaulLandaeta/isc-system-web.git'
