@@ -20,14 +20,11 @@ pipeline {
             }
         }
         stage('Run Cypress'){
-            node {
-              wrap([$class: 'Xvfb']) {    
+            wrap([$class: 'Xvfb']) {    
                 steps {
                     sh 'npx cypress run --spec "cypress/e2e/**/*.cy.{ts,tsx}"'
                 }
-              }
             }         
-            
         }
     }
 }
