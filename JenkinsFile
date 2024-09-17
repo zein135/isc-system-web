@@ -14,6 +14,12 @@ pipeline {
                 sh 'npm install'
             }
         }
+        stage('Install Xvfb') {
+            steps {
+                // Install Xvfb if it's not already installed
+                sh 'apt-get update && apt-get install -y xvfb'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'npm run build'
@@ -21,12 +27,12 @@ pipeline {
         }
         stage('Run Cypress') {
             steps {
-                // Wrap the Cypress test execution inside the Xvfb block
-                script {
-                    xvfb(run: true) {
-                        sh 'npx cypress run --spec "cypress/e2e/**/*.cy.{ts,tsx}"'
-                    }
-                }
+                // Start Xvfb and run Cypress in headless mode
+                sh '''
+                Xvfb :99 -ac &
+                export DISPLAY=:99
+                npx cypress run --spec "cypress/e2e/**/*.cy.{ts,tsx}"
+                '''
             }
         }
     }
