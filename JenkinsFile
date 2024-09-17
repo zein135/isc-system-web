@@ -29,6 +29,11 @@ pipeline {
                 sh 'npm run build'
             }
         }
+        stage('Preview') {
+            steps {
+                sh 'npm run preview'
+            }
+        }
         stage('Run Cypress') {
             steps {
                 sh 'ls -a'
